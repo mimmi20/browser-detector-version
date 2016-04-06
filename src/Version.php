@@ -64,11 +64,11 @@ class Version implements VersionInterface, \Serializable
     private $build = null;
 
     /**
-     * @param int|string $major
-     * @param int|string $minor
-     * @param int|string $patch
+     * @param int|string   $major
+     * @param int|string   $minor
+     * @param int|string   $patch
      * @param array|string $preRelease OPTIONAL
-     * @param array|string $build OPTIONAL
+     * @param array|string $build      OPTIONAL
      */
     public function __construct($major = '0', $minor = '0', $patch = '0', $preRelease = null, $build = null)
     {
@@ -82,11 +82,11 @@ class Version implements VersionInterface, \Serializable
             throw new \InvalidArgumentException('Patch version must be a non-negative integer or a string');
         }
 
-        $this->major = (string) $major;
-        $this->minor = (string) $minor;
-        $this->micro = (string) $patch;
+        $this->major     = (string) $major;
+        $this->minor     = (string) $minor;
+        $this->micro     = (string) $patch;
         $this->stability = $preRelease;
-        $this->build = $build;
+        $this->build     = $build;
     }
 
     /**

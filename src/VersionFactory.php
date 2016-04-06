@@ -100,7 +100,7 @@ class VersionFactory
 
         $stability = (!empty($matches['6'])) ? $matches['6'] : null;
 
-        if (strlen($stability) == 0) {
+        if (strlen($stability) === 0) {
             $stability = 'stable';
         }
         $stability = strtolower($stability);
