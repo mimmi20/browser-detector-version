@@ -22,12 +22,12 @@ return Symfony\CS\Config\Config::create()
     ->fixers(
         array(
             'align_double_arrow',
+            'double_arrow_multiline_whitespaces',
             'align_equals',
             'braces',
             'concat_with_spaces',
             'duplicate_semicolon',
             'elseif',
-            'empty_return',
             'encoding',
             'eof_ending',
             'extra_empty_lines',

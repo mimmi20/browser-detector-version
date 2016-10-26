@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012-2015, Thomas Mueller <t_mueller_stolzenhain@yahoo.de>
+ * Copyright (c) 2012-2016, Thomas Mueller <t_mueller_stolzenhain@yahoo.de>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -22,7 +22,7 @@
  *
  * @category  BrowserDetector
  * @author    Thomas Mueller <t_mueller_stolzenhain@yahoo.de>
- * @copyright 2012-2015 Thomas Mueller
+ * @copyright 2012-2016 Thomas Mueller
  * @license   http://www.opensource.org/licenses/MIT MIT License
  * @link      https://github.com/mimmi20/BrowserDetector
  */
@@ -33,7 +33,7 @@ namespace BrowserDetector\Version;
  * a general version detector
  *
  * @category  BrowserDetector
- * @copyright 2012-2015 Thomas Mueller
+ * @copyright 2012-2016 Thomas Mueller
  * @license   http://www.opensource.org/licenses/MIT MIT License
  */
 class Version implements VersionInterface, \Serializable

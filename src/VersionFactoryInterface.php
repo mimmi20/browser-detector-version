@@ -21,111 +21,29 @@
  * THE SOFTWARE.
  *
  * @category  BrowserDetector
- *
  * @author    Thomas Mueller <t_mueller_stolzenhain@yahoo.de>
  * @copyright 2012-2016 Thomas Mueller
  * @license   http://www.opensource.org/licenses/MIT MIT License
- *
  * @link      https://github.com/mimmi20/BrowserDetector
  */
 
 namespace BrowserDetector\Version;
 
 /**
- * a general version detector
+ * a general version detector factory
  *
  * @category  BrowserDetector
- *
  * @copyright 2012-2016 Thomas Mueller
  * @license   http://www.opensource.org/licenses/MIT MIT License
  */
-interface VersionInterface
+interface VersionFactoryInterface
 {
     /**
-     * @var int
-     */
-    const MAJORONLY = 1;
-
-    /**
-     * @var int
-     */
-    const MINORONLY = 2;
-
-    /**
-     * @var int
-     */
-    const MAJORMINOR = 3;
-
-    /**
-     * @var int
-     */
-    const MINORMICRO = 6;
-
-    /**
-     * @var int
-     */
-    const MICROONLY = 4;
-
-    /**
-     * @var int
-     */
-    const COMPLETE = 7;
-
-    /**
-     * @var int
-     */
-    const IGNORE_NONE = 0;
-
-    /**
-     * @var int
-     */
-    const IGNORE_MINOR = 8;
-
-    /**
-     * @var int
-     */
-    const IGNORE_MICRO = 16;
-
-    /**
-     * @var int
-     */
-    const IGNORE_MINOR_IF_EMPTY = 32;
-
-    /**
-     * @var int
-     */
-    const IGNORE_MICRO_IF_EMPTY = 64;
-
-    /**
-     * @var int
-     */
-    const IGNORE_MACRO_IF_EMPTY = 128;
-
-    /**
-     * @var int
-     */
-    const COMPLETE_IGNORE_EMPTY = 231;
-
-    /**
-     * @var int
-     */
-    const GET_ZERO_IF_EMPTY = 256;
-
-    /**
-     * converts the version object into a string
+     * detects the bit count by this browser from the given user agent
      *
-     * @return string
+     * @param string $useragent
+     *
+     * @return \BrowserDetector\Version\Version
      */
-    public function __toString();
-
-    /**
-     * returns the detected version
-     *
-     * @param int $mode
-     *
-     * @throws \UnexpectedValueException
-     *
-     * @return string
-     */
-    public function getVersion($mode = null);
+    public static function detectVersion($useragent);
 }
