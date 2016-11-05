@@ -154,11 +154,11 @@ class VersionFactory implements VersionFactoryInterface
         }
 
         $modifiers = [
-            ['/', ''],
-            ['(', ')'],
+            ['\/', ''],
+            ['\(', '\)'],
             [' ', ''],
             ['', ''],
-            [' (', ';'],
+            [' \(', '\;'],
         ];
 
         /** @var $version string */
@@ -178,7 +178,7 @@ class VersionFactory implements VersionFactoryInterface
             }
 
             foreach ($modifiers as $modifier) {
-                $compareString = '/' . preg_quote($search . $modifier[0], '/') . '(\d+[\d\.\_\-\+abcdehlprstv]*)' . preg_quote($modifier[1], '/') . '/i';
+                $compareString = '/' . $search . $modifier[0] . '(\d+[\d\.\_\-\+abcdehlprstv]*)' . $modifier[1] . '/i';
 
                 $doMatch = preg_match(
                     $compareString,
