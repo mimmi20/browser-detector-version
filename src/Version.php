@@ -97,15 +97,7 @@ class Version implements VersionInterface, \Serializable
      */
     public function serialize()
     {
-        return serialize(
-            [
-                'major'     => $this->major,
-                'minor'     => $this->minor,
-                'micro'     => $this->micro,
-                'stability' => $this->stability,
-                'build'     => $this->build,
-            ]
-        );
+        return serialize($this->toArray());
     }
 
     /**
@@ -120,11 +112,49 @@ class Version implements VersionInterface, \Serializable
     {
         $unseriliazedData = unserialize($serialized);
 
-        $this->major     = $unseriliazedData['major'];
-        $this->minor     = $unseriliazedData['minor'];
-        $this->micro     = $unseriliazedData['micro'];
-        $this->stability = $unseriliazedData['stability'];
-        $this->build     = $unseriliazedData['build'];
+        $this->fromArray($unseriliazedData);
+    }
+
+    /**
+     * @return string
+     */
+    public function toJson()
+    {
+        return json_encode($this->toArray(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'major'     => $this->major,
+            'minor'     => $this->minor,
+            'micro'     => $this->micro,
+            'stability' => $this->stability,
+            'build'     => $this->build,
+        ];
+    }
+
+    /**
+     * @param array $data
+     */
+    public function fromArray(array $data)
+    {
+        $this->major     = isset($data['major']) ? $data['major'] : null;
+        $this->minor     = isset($data['minor']) ? $data['minor'] : null;
+        $this->micro     = isset($data['micro']) ? $data['micro'] : null;
+        $this->stability = isset($data['stability']) ? $data['stability'] : null;
+        $this->build     = isset($data['build']) ? $data['build'] : null;
+    }
+
+    /**
+     * @param string $json
+     */
+    public function fromJson($json)
+    {
+        $this->fromArray(json_decode($json));
     }
 
     /**
@@ -165,6 +195,22 @@ class Version implements VersionInterface, \Serializable
     public function getStability()
     {
         return $this->stability;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAlpha()
+    {
+        return ('alpha' === $this->stability);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBeta()
+    {
+        return ('beta' === $this->stability);
     }
 
     /**

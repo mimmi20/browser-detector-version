@@ -23,7 +23,7 @@
     "source": "https://github.com/mimmi20/version"
   },
   "require": {
-    "php": ">=5.6.0",
+    "php": "^7.0 || ^7.1",
     "version/version": "^2.2"
   },
   "require-dev": {
@@ -39,11 +39,6 @@
   "autoload-dev": {
     "psr-4": {
       "BrowserDetectorTest\\Version\\": "tests/"
-    }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
     }
   }
 }
