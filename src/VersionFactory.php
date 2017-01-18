@@ -223,4 +223,30 @@ class VersionFactory implements VersionFactoryInterface
 
         return $numbers;
     }
+
+    /**
+     * @param array $data
+     *
+     * @return \BrowserDetector\Version\Version
+     */
+    public static function fromArray(array $data)
+    {
+        $major     = isset($data['major']) ? $data['major'] : null;
+        $minor     = isset($data['minor']) ? $data['minor'] : null;
+        $micro     = isset($data['micro']) ? $data['micro'] : null;
+        $stability = isset($data['stability']) ? $data['stability'] : null;
+        $build     = isset($data['build']) ? $data['build'] : null;
+
+        return new Version($major, $minor, $micro, $stability, $build);
+    }
+
+    /**
+     * @param string $json
+     *
+     * @return \BrowserDetector\Version\Version
+     */
+    public static function fromJson($json)
+    {
+        return self::fromArray((array) json_decode($json));
+    }
 }

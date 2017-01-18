@@ -138,26 +138,6 @@ class Version implements VersionInterface, \Serializable
     }
 
     /**
-     * @param array $data
-     */
-    public function fromArray(array $data)
-    {
-        $this->major     = isset($data['major']) ? $data['major'] : null;
-        $this->minor     = isset($data['minor']) ? $data['minor'] : null;
-        $this->micro     = isset($data['micro']) ? $data['micro'] : null;
-        $this->stability = isset($data['stability']) ? $data['stability'] : null;
-        $this->build     = isset($data['build']) ? $data['build'] : null;
-    }
-
-    /**
-     * @param string $json
-     */
-    public function fromJson($json)
-    {
-        $this->fromArray(json_decode($json));
-    }
-
-    /**
      * @return int
      */
     public function getMajor()

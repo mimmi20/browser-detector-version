@@ -95,4 +95,56 @@ class VersionFactoryTest extends \PHPUnit_Framework_TestCase
     {
         VersionFactory::detectVersion('abc', 1);
     }
+
+    public function testFromArray()
+    {
+        $major      = '4';
+        $minor      = '0';
+        $patch      = '0';
+        $preRelease = 'beta';
+        $build      = '8';
+
+        $data = [
+            'major'     => $major,
+            'minor'     => $minor,
+            'micro'     => $patch,
+            'stability' => $preRelease,
+            'build'     => $build,
+        ];
+        $object = VersionFactory::fromArray($data);
+
+        self::assertInstanceOf('\BrowserDetector\Version\Version', $object);
+
+        self::assertSame($major, $object->getMajor(), 'major is wrong');
+        self::assertSame($minor, $object->getMinor(), 'minor is wrong');
+        self::assertSame($patch, $object->getMicro(), 'patch is wrong');
+        self::assertSame($preRelease, $object->getStability(), 'pre-release is wrong');
+        self::assertSame($build, $object->getBuild(), 'build is wrong');
+    }
+
+    public function testFromJson()
+    {
+        $major      = '4';
+        $minor      = '0';
+        $patch      = '0';
+        $preRelease = 'beta';
+        $build      = '8';
+
+        $data = [
+            'major'     => $major,
+            'minor'     => $minor,
+            'micro'     => $patch,
+            'stability' => $preRelease,
+            'build'     => $build,
+        ];
+        $object = VersionFactory::fromJson(json_encode($data));
+
+        self::assertInstanceOf('\BrowserDetector\Version\Version', $object);
+
+        self::assertSame($major, $object->getMajor(), 'major is wrong');
+        self::assertSame($minor, $object->getMinor(), 'minor is wrong');
+        self::assertSame($patch, $object->getMicro(), 'patch is wrong');
+        self::assertSame($preRelease, $object->getStability(), 'pre-release is wrong');
+        self::assertSame($build, $object->getBuild(), 'build is wrong');
+    }
 }
