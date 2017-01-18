@@ -113,14 +113,6 @@ class VersionFactoryTest extends \PHPUnit_Framework_TestCase
         VersionFactory::detectVersion('abc', 1);
     }
 
-    /**
-     * @uses Version::getMajor
-     * @uses Version::getMinor
-     * @uses Version::getMicro
-     * @uses Version::getStability
-     * @uses Version::getBuild
-     * @covers VersionFactory::fromArray
-     */
     public function testFromArray()
     {
         $major      = '4';
@@ -147,14 +139,6 @@ class VersionFactoryTest extends \PHPUnit_Framework_TestCase
         self::assertSame($build, $object->getBuild(), 'build is wrong');
     }
 
-    /**
-     * @uses Version::getMajor
-     * @uses Version::getMinor
-     * @uses Version::getMicro
-     * @uses Version::getStability
-     * @uses Version::getBuild
-     * @covers VersionFactory::fromJson
-     */
     public function testFromJson()
     {
         $major      = '4';
