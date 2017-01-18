@@ -117,18 +117,14 @@ class Version implements VersionInterface, \Serializable
 
     /**
      * @param array $data
-     *
-     * @return \BrowserDetector\Version\Version
      */
     private function fromArray(array $data)
     {
-        $major     = isset($data['major']) ? $data['major'] : null;
-        $minor     = isset($data['minor']) ? $data['minor'] : null;
-        $micro     = isset($data['micro']) ? $data['micro'] : null;
-        $stability = isset($data['stability']) ? $data['stability'] : null;
-        $build     = isset($data['build']) ? $data['build'] : null;
-
-        return new Version($major, $minor, $micro, $stability, $build);
+        $this->major     = isset($data['major']) ? $data['major'] : null;
+        $this->minor     = isset($data['minor']) ? $data['minor'] : null;
+        $this->micro     = isset($data['micro']) ? $data['micro'] : null;
+        $this->stability = isset($data['stability']) ? $data['stability'] : null;
+        $this->build     = isset($data['build']) ? $data['build'] : null;
     }
 
     /**
