@@ -21,13 +21,6 @@ class VersionFactoryTest extends \PHPUnit_Framework_TestCase
      * @param string $preRelease
      * @param string $build
      * @param string $complete
-     *
-     * @uses Version::getMajor
-     * @uses Version::getMinor
-     * @uses Version::getMicro
-     * @uses Version::getStability
-     * @uses Version::getBuild
-     * @covers VersionFactory::set
      */
     public function testVersionSet($version, $major, $minor, $patch, $preRelease, $build, $complete)
     {
@@ -70,14 +63,6 @@ class VersionFactoryTest extends \PHPUnit_Framework_TestCase
      * @param string $preRelease
      * @param string $build
      * @param string $complete
-     *
-     * @uses Version::getMajor
-     * @uses Version::getMinor
-     * @uses Version::getMicro
-     * @uses Version::getStability
-     * @uses Version::getBuild
-     * @covers VersionFactory::set
-     * @covers VersionFactory::detectVersion
      */
     public function testVersionDetectVersion($uapart, $search, $major, $minor, $patch, $preRelease, $build, $complete)
     {
@@ -105,8 +90,6 @@ class VersionFactoryTest extends \PHPUnit_Framework_TestCase
      * @expectedException \UnexpectedValueException
      * @expectedExceptionMessage a string or an array of strings is expected as parameter
      * @group        version
-     *
-     * @covers VersionFactory::detectVersion
      */
     public function testThrowExcepton()
     {

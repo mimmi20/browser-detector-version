@@ -3,10 +3,12 @@
 <phpunit
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/5.7/phpunit.xsd"
-        checkForUnintentionallyCoveredCode="true"
+        checkForUnintentionallyCoveredCode="false"
+        beStrictAboutCoversAnnotation="false"
         beStrictAboutOutputDuringTests="true"
         beStrictAboutTestsThatDoNotTestAnything="true"
         beStrictAboutTodoAnnotatedTests="true"
+        forceCoversAnnotation="false"
         verbose="true"
         bootstrap="vendor/autoload.php"
         >
