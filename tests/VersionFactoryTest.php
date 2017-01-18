@@ -48,7 +48,24 @@ class VersionFactoryTest extends \PHPUnit_Framework_TestCase
             ['v0.1.4', '0', '1', '4', 'stable', null, '0.1.4'],
             ['2.0b8', '2', '0', '0', 'beta', '8', '2.0.0-beta+8'],
             ['4.0b8', '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
+            ['4.0a1', '4', '0', '0', 'alpha', '8', '4.0.0-alpha+1'],
+            ['4.0dev2', '4', '0', '0', 'dev', '2', '4.0.0-dev+2'],
+            ['abc', '0', '0', '0', null, null, '0.0.0'],
+            ['0.0.0', '0', '0', '0', null, null, '0.0.0'],
+            ['2.0p12', '2', '0', '0', 'patch', '12', '2.0.0-patch+12'],
         ];
+    }
+
+    /**
+     * @group version
+     */
+    public function testVersionSetXp()
+    {
+        $object = VersionFactory::set('XP');
+
+        self::assertInstanceOf('\BrowserDetector\Version\Version', $object);
+
+        self::assertSame('XP', $object->getMajor(), 'major is wrong');
     }
 
     /**
