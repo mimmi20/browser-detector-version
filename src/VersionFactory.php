@@ -29,8 +29,6 @@
 
 namespace BrowserDetector\Version;
 
-use Version\Stability;
-
 /**
  * a general version detector factory
  *
@@ -65,8 +63,8 @@ class VersionFactory implements VersionFactoryInterface
             '(?:(\d+)[-|\.])?' .
             '(?:(\d+)\.)?' .
             '(?:(\d+))?' .
-            '(?:' . Stability::REGEX . ')?' .
-            '$/';
+            '(?:' . VersionInterface::REGEX . ')?' .
+            '$/i';
 
         if (preg_match($regex, $version, $matches)) {
             $numbers = self::mapMatches($matches);

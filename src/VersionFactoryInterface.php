@@ -46,4 +46,18 @@ interface VersionFactoryInterface
      * @return \BrowserDetector\Version\Version
      */
     public static function detectVersion($useragent);
+
+    /**
+     * @param array $data
+     *
+     * @return \BrowserDetector\Version\Version
+     */
+    public static function fromArray(array $data);
+
+    /**
+     * @param string $json
+     *
+     * @return \BrowserDetector\Version\Version
+     */
+    public static function fromJson($json);
 }

@@ -212,13 +212,7 @@ class Version implements VersionInterface, \Serializable
      */
     public function __toString()
     {
-        try {
-            return $this->getVersion(
-                VersionInterface::COMPLETE
-            );
-        } catch (\Exception $e) {
-            return '';
-        }
+        return $this->getVersion(VersionInterface::COMPLETE);
     }
 
     /**
@@ -231,30 +225,24 @@ class Version implements VersionInterface, \Serializable
      */
     public function getVersion($mode = VersionInterface::COMPLETE)
     {
-        $versions = [];
-        if (VersionInterface::MAJORONLY & $mode) {
-            $versions['major'] = $this->major;
-        }
-
-        if (VersionInterface::MINORONLY & $mode) {
-            $versions['minor'] = $this->minor;
-        }
-
-        if (VersionInterface::MICROONLY & $mode) {
-            $versions['micro']     = $this->micro;
-            $versions['stability'] = $this->stability;
-            $versions['build']     = $this->build;
-        }
+        $versions = $this->toArray();
 
         $microIsEmpty = false;
-        if (empty($versions['micro']) || in_array($versions['micro'], ['', '0', '00'])) {
-            $microIsEmpty = true;
-        }
 
         if (VersionInterface::IGNORE_MICRO & $mode) {
             unset($versions['micro'], $versions['stability'], $versions['build']);
-        } elseif (VersionInterface::IGNORE_MICRO_IF_EMPTY & $mode && $microIsEmpty) {
-            unset($versions['micro'], $versions['stability'], $versions['build']);
+            $microIsEmpty = true;
+        } elseif ((VersionInterface::IGNORE_MICRO_IF_EMPTY & $mode)
+            || (VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
+            || (VersionInterface::IGNORE_MACRO_IF_EMPTY & $mode)
+        ) {
+            if (empty($versions['micro']) || in_array($versions['micro'], ['', '0', '00'])) {
+                $microIsEmpty = true;
+            }
+
+            if ($microIsEmpty) {
+                unset($versions['micro'], $versions['stability'], $versions['build']);
+            }
         }
 
         $minorIsEmpty = false;
@@ -262,7 +250,9 @@ class Version implements VersionInterface, \Serializable
         if (VersionInterface::IGNORE_MINOR & $mode) {
             unset($versions['minor'], $versions['micro'], $versions['stability'], $versions['build']);
             $minorIsEmpty = true;
-        } elseif (VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode) {
+        } elseif ((VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
+            || (VersionInterface::IGNORE_MACRO_IF_EMPTY & $mode)
+        ) {
             if ($microIsEmpty && (empty($versions['minor']) || in_array($versions['minor'], ['', '0', '00']))) {
                 $minorIsEmpty = true;
             }
