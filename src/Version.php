@@ -97,15 +97,7 @@ class Version implements VersionInterface, \Serializable
      */
     public function serialize()
     {
-        return serialize(
-            [
-                'major'     => $this->major,
-                'minor'     => $this->minor,
-                'micro'     => $this->micro,
-                'stability' => $this->stability,
-                'build'     => $this->build,
-            ]
-        );
+        return serialize($this->toArray());
     }
 
     /**
@@ -120,11 +112,41 @@ class Version implements VersionInterface, \Serializable
     {
         $unseriliazedData = unserialize($serialized);
 
-        $this->major     = $unseriliazedData['major'];
-        $this->minor     = $unseriliazedData['minor'];
-        $this->micro     = $unseriliazedData['micro'];
-        $this->stability = $unseriliazedData['stability'];
-        $this->build     = $unseriliazedData['build'];
+        $this->fromArray($unseriliazedData);
+    }
+
+    /**
+     * @param array $data
+     */
+    private function fromArray(array $data)
+    {
+        $this->major     = isset($data['major']) ? $data['major'] : null;
+        $this->minor     = isset($data['minor']) ? $data['minor'] : null;
+        $this->micro     = isset($data['micro']) ? $data['micro'] : null;
+        $this->stability = isset($data['stability']) ? $data['stability'] : null;
+        $this->build     = isset($data['build']) ? $data['build'] : null;
+    }
+
+    /**
+     * @return string
+     */
+    public function toJson()
+    {
+        return json_encode($this->toArray(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'major'     => $this->major,
+            'minor'     => $this->minor,
+            'micro'     => $this->micro,
+            'stability' => $this->stability,
+            'build'     => $this->build,
+        ];
     }
 
     /**
@@ -168,19 +190,29 @@ class Version implements VersionInterface, \Serializable
     }
 
     /**
+     * @return bool
+     */
+    public function isAlpha()
+    {
+        return ('alpha' === $this->stability);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBeta()
+    {
+        return ('beta' === $this->stability);
+    }
+
+    /**
      * converts the version object into a string
      *
      * @return string
      */
     public function __toString()
     {
-        try {
-            return $this->getVersion(
-                VersionInterface::COMPLETE
-            );
-        } catch (\Exception $e) {
-            return '';
-        }
+        return $this->getVersion(VersionInterface::COMPLETE);
     }
 
     /**
@@ -193,62 +225,56 @@ class Version implements VersionInterface, \Serializable
      */
     public function getVersion($mode = VersionInterface::COMPLETE)
     {
-        $versions = [];
-        if (VersionInterface::MAJORONLY & $mode) {
-            $versions[0] = $this->major;
-        }
-
-        if (VersionInterface::MINORONLY & $mode) {
-            $versions[1] = $this->minor;
-        }
-
-        if (VersionInterface::MICROONLY & $mode) {
-            $versions[2] = $this->micro;
-            $versions[3] = $this->stability;
-            $versions[4] = $this->build;
-        }
+        $versions = $this->toArray();
 
         $microIsEmpty = false;
-        if (empty($versions[2]) || '0' === $versions[2] || '' === $versions[2]) {
-            $microIsEmpty = true;
-        }
 
         if (VersionInterface::IGNORE_MICRO & $mode) {
-            unset($versions[2], $versions[3], $versions[4]);
-        } elseif (VersionInterface::IGNORE_MICRO_IF_EMPTY & $mode && $microIsEmpty) {
-            unset($versions[2], $versions[3], $versions[4]);
+            unset($versions['micro'], $versions['stability'], $versions['build']);
+            $microIsEmpty = true;
+        } elseif ((VersionInterface::IGNORE_MICRO_IF_EMPTY & $mode)
+            || (VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
+            || (VersionInterface::IGNORE_MACRO_IF_EMPTY & $mode)
+        ) {
+            if (empty($versions['micro']) || in_array($versions['micro'], ['', '0', '00'])) {
+                $microIsEmpty = true;
+            }
+
+            if ($microIsEmpty) {
+                unset($versions['micro'], $versions['stability'], $versions['build']);
+            }
         }
 
         $minorIsEmpty = false;
 
         if (VersionInterface::IGNORE_MINOR & $mode) {
-            unset($versions[1], $versions[2], $versions[3], $versions[4]);
+            unset($versions['minor'], $versions['micro'], $versions['stability'], $versions['build']);
             $minorIsEmpty = true;
-        } elseif (VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode) {
-            if ($microIsEmpty
-                && (empty($versions[1]) || '0' === $versions[1] || '00' === $versions[1] || '' === $versions[1])
-            ) {
+        } elseif ((VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
+            || (VersionInterface::IGNORE_MACRO_IF_EMPTY & $mode)
+        ) {
+            if ($microIsEmpty && (empty($versions['minor']) || in_array($versions['minor'], ['', '0', '00']))) {
                 $minorIsEmpty = true;
             }
 
             if ($minorIsEmpty) {
-                unset($versions[1], $versions[2], $versions[3], $versions[4]);
+                unset($versions['minor'], $versions['micro'], $versions['stability'], $versions['build']);
             }
         }
 
         $macroIsEmpty = false;
 
         if (VersionInterface::IGNORE_MACRO_IF_EMPTY & $mode) {
-            if ((empty($versions[0]) || '0' === $versions[0] || '' === $versions[0]) && $minorIsEmpty) {
+            if ($minorIsEmpty && (empty($versions['major']) || in_array($versions['major'], ['', '0', '00']))) {
                 $macroIsEmpty = true;
             }
 
             if ($macroIsEmpty) {
-                unset($versions[0], $versions[1], $versions[2], $versions[3], $versions[4]);
+                unset($versions['major'], $versions['minor'], $versions['micro'], $versions['stability'], $versions['build']);
             }
         }
 
-        if (!isset($versions[0])) {
+        if (!isset($versions['major'])) {
             if (VersionInterface::GET_ZERO_IF_EMPTY & $mode) {
                 return '0';
             }
@@ -256,10 +282,10 @@ class Version implements VersionInterface, \Serializable
             return '';
         }
 
-        return $versions[0]
-            . (isset($versions[1]) ? '.' . (string) $versions[1] : '')
-            . (isset($versions[2]) ? '.' . (string) $versions[2] : '')
-            . ((isset($versions[3]) && 'stable' !== $versions[3]) ? '-' . (string) $versions[3] : '')
-            . (isset($versions[4]) ? '+' . (string) $versions[4] : '');
+        return $versions['major']
+            . (isset($versions['minor']) ? '.' . (string) $versions['minor'] : '')
+            . (isset($versions['micro']) ? '.' . (string) $versions['micro'] : '')
+            . ((isset($versions['stability']) && 'stable' !== $versions['stability']) ? '-' . (string) $versions['stability'] : '')
+            . (isset($versions['build']) ? '+' . (string) $versions['build'] : '');
     }
 }

@@ -44,72 +44,42 @@ interface VersionInterface
     /**
      * @var int
      */
-    const MAJORONLY = 1;
+    const COMPLETE = 0;
 
     /**
      * @var int
      */
-    const MINORONLY = 2;
+    const IGNORE_MINOR = 1;
 
     /**
      * @var int
      */
-    const MAJORMINOR = 3;
+    const IGNORE_MICRO = 2;
 
     /**
      * @var int
      */
-    const MINORMICRO = 6;
+    const IGNORE_MINOR_IF_EMPTY = 4;
 
     /**
      * @var int
      */
-    const MICROONLY = 4;
+    const IGNORE_MICRO_IF_EMPTY = 8;
 
     /**
      * @var int
      */
-    const COMPLETE = 7;
+    const IGNORE_MACRO_IF_EMPTY = 16;
 
     /**
      * @var int
      */
-    const IGNORE_NONE = 0;
+    const GET_ZERO_IF_EMPTY = 32;
 
     /**
-     * @var int
+     * @var string
      */
-    const IGNORE_MINOR = 8;
-
-    /**
-     * @var int
-     */
-    const IGNORE_MICRO = 16;
-
-    /**
-     * @var int
-     */
-    const IGNORE_MINOR_IF_EMPTY = 32;
-
-    /**
-     * @var int
-     */
-    const IGNORE_MICRO_IF_EMPTY = 64;
-
-    /**
-     * @var int
-     */
-    const IGNORE_MACRO_IF_EMPTY = 128;
-
-    /**
-     * @var int
-     */
-    const COMPLETE_IGNORE_EMPTY = 231;
-
-    /**
-     * @var int
-     */
-    const GET_ZERO_IF_EMPTY = 256;
+    const REGEX = '[-|_|\.]{0,1}(rc|a|alpha|b|beta|p|pl|patch|stable|dev|d)\.{0,1}(\d*)';
 
     /**
      * converts the version object into a string
@@ -128,4 +98,14 @@ interface VersionInterface
      * @return string
      */
     public function getVersion($mode = null);
+
+    /**
+     * @return array
+     */
+    public function toArray();
+
+    /**
+     * @return string
+     */
+    public function toJson();
 }
