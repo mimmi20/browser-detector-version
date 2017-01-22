@@ -94,7 +94,12 @@ class VersionFactory implements VersionFactoryInterface
 
         $major = (isset($numbers[0]) ? $numbers[0] : '0');
         $minor = (isset($numbers[1]) ? $numbers[1] : '0');
-        $patch = (isset($numbers[2]) ? $numbers[2] : '0') . (isset($numbers[3]) ? '.' . $numbers[3] : '') . (isset($numbers[4]) ? '.' . $numbers[4] : '');
+
+        if (isset($numbers[2])) {
+            $patch = $numbers[2] . (isset($numbers[3]) ? '.' . $numbers[3] . (isset($numbers[4]) ? '.' . $numbers[4] : '') : '');
+        } else {
+            $patch = '0';
+        }
 
         $stability = (!empty($matches['6'])) ? $matches['6'] : null;
 
@@ -229,9 +234,9 @@ class VersionFactory implements VersionFactoryInterface
      */
     public static function fromArray(array $data)
     {
-        $major     = isset($data['major']) ? $data['major'] : null;
-        $minor     = isset($data['minor']) ? $data['minor'] : null;
-        $micro     = isset($data['micro']) ? $data['micro'] : null;
+        $major     = isset($data['major']) ? $data['major'] : '0';
+        $minor     = isset($data['minor']) ? $data['minor'] : '0';
+        $micro     = isset($data['micro']) ? $data['micro'] : '0';
         $stability = isset($data['stability']) ? $data['stability'] : null;
         $build     = isset($data['build']) ? $data['build'] : null;
 
