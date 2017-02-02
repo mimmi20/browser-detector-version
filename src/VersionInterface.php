@@ -82,13 +82,6 @@ interface VersionInterface
     const REGEX = '[-|_|\.]{0,1}(rc|a|alpha|b|beta|p|pl|patch|stable|dev|d)\.{0,1}(\d*)';
 
     /**
-     * converts the version object into a string
-     *
-     * @return string
-     */
-    public function __toString();
-
-    /**
      * returns the detected version
      *
      * @param int $mode
@@ -103,9 +96,4 @@ interface VersionInterface
      * @return array
      */
     public function toArray();
-
-    /**
-     * @return string
-     */
-    public function toJson();
 }

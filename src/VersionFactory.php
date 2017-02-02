@@ -237,7 +237,7 @@ class VersionFactory implements VersionFactoryInterface
         $major     = isset($data['major']) ? $data['major'] : '0';
         $minor     = isset($data['minor']) ? $data['minor'] : '0';
         $micro     = isset($data['micro']) ? $data['micro'] : '0';
-        $stability = isset($data['stability']) ? $data['stability'] : null;
+        $stability = isset($data['stability']) ? $data['stability'] : 'stable';
         $build     = isset($data['build']) ? $data['build'] : null;
 
         return new Version($major, $minor, $micro, $stability, $build);
