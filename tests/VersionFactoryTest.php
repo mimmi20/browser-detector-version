@@ -30,9 +30,9 @@ class VersionFactoryTest extends \PHPUnit_Framework_TestCase
         self::assertSame($major, $object->getMajor(), 'major is wrong');
         self::assertSame($minor, $object->getMinor(), 'minor is wrong');
         self::assertSame($patch, $object->getMicro(), 'patch is wrong');
-        self::assertSame($preRelease, $object->getStability(), 'pre-release is wrong');
+        self::assertSame($preRelease, $object->getStability(), 'stability is wrong');
         self::assertSame($build, $object->getBuild(), 'build is wrong');
-        self::assertSame($complete, (string) $object, 'complete is wrong');
+        self::assertSame($complete, $object->getVersion(), 'complete is wrong');
     }
 
     public function providerSet()
@@ -49,7 +49,7 @@ class VersionFactoryTest extends \PHPUnit_Framework_TestCase
             ['4.0b8', '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
             ['4.0a1', '4', '0', '0', 'alpha', '1', '4.0.0-alpha+1'],
             ['4.0dev2', '4', '0', '0', 'dev', '2', '4.0.0-dev+2'],
-            ['abc', '0', '0', '0', null, null, '0.0.0'],
+            ['abc', '0', '0', '0', 'stable', null, '0.0.0'],
             ['0.0.0', '0', '0', '0', 'stable', null, '0.0.0'],
             ['2.0p12', '2', '0', '0', 'patch', '12', '2.0.0-patch+12'],
         ];
@@ -89,9 +89,9 @@ class VersionFactoryTest extends \PHPUnit_Framework_TestCase
         self::assertSame($major, $object->getMajor(), 'major is wrong');
         self::assertSame($minor, $object->getMinor(), 'minor is wrong');
         self::assertSame($patch, $object->getMicro(), 'patch is wrong');
-        self::assertSame($preRelease, $object->getStability(), 'pre-release is wrong');
+        self::assertSame($preRelease, $object->getStability(), 'stability is wrong');
         self::assertSame($build, $object->getBuild(), 'build is wrong');
-        self::assertSame($complete, (string) $object, 'complete is wrong');
+        self::assertSame($complete, $object->getVersion(), 'complete is wrong');
     }
 
     public function providerDetectVersion()
@@ -136,7 +136,7 @@ class VersionFactoryTest extends \PHPUnit_Framework_TestCase
         self::assertSame($major, $object->getMajor(), 'major is wrong');
         self::assertSame($minor, $object->getMinor(), 'minor is wrong');
         self::assertSame($patch, $object->getMicro(), 'patch is wrong');
-        self::assertSame($preRelease, $object->getStability(), 'pre-release is wrong');
+        self::assertSame($preRelease, $object->getStability(), 'stability is wrong');
         self::assertSame($build, $object->getBuild(), 'build is wrong');
         self::assertTrue($object->isBeta());
         self::assertFalse($object->isAlpha());
@@ -164,7 +164,7 @@ class VersionFactoryTest extends \PHPUnit_Framework_TestCase
         self::assertSame($major, $object->getMajor(), 'major is wrong');
         self::assertSame($minor, $object->getMinor(), 'minor is wrong');
         self::assertSame($patch, $object->getMicro(), 'patch is wrong');
-        self::assertSame($preRelease, $object->getStability(), 'pre-release is wrong');
+        self::assertSame($preRelease, $object->getStability(), 'stability is wrong');
         self::assertSame($build, $object->getBuild(), 'build is wrong');
         self::assertTrue($object->isBeta());
         self::assertFalse($object->isAlpha());

@@ -36,7 +36,7 @@ namespace BrowserDetector\Version;
  * @copyright 2012-2016 Thomas Mueller
  * @license   http://www.opensource.org/licenses/MIT MIT License
  */
-class Version implements VersionInterface, \Serializable
+class Version implements VersionInterface
 {
     /**
      * @var string the detected major version
@@ -56,7 +56,7 @@ class Version implements VersionInterface, \Serializable
     /**
      * @var string
      */
-    private $stability = null;
+    private $stability = 'stable';
 
     /**
      * @var string
@@ -67,10 +67,10 @@ class Version implements VersionInterface, \Serializable
      * @param int|string   $major
      * @param int|string   $minor
      * @param int|string   $patch
-     * @param array|string $preRelease OPTIONAL
-     * @param array|string $build      OPTIONAL
+     * @param array|string $stability
+     * @param array|string $build
      */
-    public function __construct($major = '0', $minor = '0', $patch = '0', $preRelease = null, $build = null)
+    public function __construct($major = '0', $minor = '0', $patch = '0', $stability = 'stable', $build = null)
     {
         if ((!is_int($major) && !is_string($major)) || $major < 0) {
             throw new \InvalidArgumentException('Major version must be a non-negative integer or a string');
@@ -85,54 +85,8 @@ class Version implements VersionInterface, \Serializable
         $this->major     = (string) $major;
         $this->minor     = (string) $minor;
         $this->micro     = (string) $patch;
-        $this->stability = $preRelease;
+        $this->stability = $stability;
         $this->build     = $build;
-    }
-
-    /**
-     * (PHP 5 &gt;= 5.1.0)<br/>
-     * String representation of object
-     * @link http://php.net/manual/en/serializable.serialize.php
-     * @return string the string representation of the object or null
-     */
-    public function serialize()
-    {
-        return serialize($this->toArray());
-    }
-
-    /**
-     * (PHP 5 &gt;= 5.1.0)<br/>
-     * Constructs the object
-     * @link http://php.net/manual/en/serializable.unserialize.php
-     * @param string $serialized <p>
-     *                           The string representation of the object.
-     *                           </p>
-     */
-    public function unserialize($serialized)
-    {
-        $unseriliazedData = unserialize($serialized);
-
-        $this->fromArray($unseriliazedData);
-    }
-
-    /**
-     * @param array $data
-     */
-    private function fromArray(array $data)
-    {
-        $this->major     = isset($data['major']) ? $data['major'] : null;
-        $this->minor     = isset($data['minor']) ? $data['minor'] : null;
-        $this->micro     = isset($data['micro']) ? $data['micro'] : null;
-        $this->stability = isset($data['stability']) ? $data['stability'] : null;
-        $this->build     = isset($data['build']) ? $data['build'] : null;
-    }
-
-    /**
-     * @return string
-     */
-    public function toJson()
-    {
-        return json_encode($this->toArray(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -203,16 +157,6 @@ class Version implements VersionInterface, \Serializable
     public function isBeta()
     {
         return ('beta' === $this->stability);
-    }
-
-    /**
-     * converts the version object into a string
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getVersion(VersionInterface::COMPLETE);
     }
 
     /**
