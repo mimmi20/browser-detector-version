@@ -1,38 +1,21 @@
 <?php
 /**
- * Copyright (c) 2012-2016, Thomas Mueller <t_mueller_stolzenhain@yahoo.de>
+ * This file is part of the browser-detector-version package.
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * Copyright (c) 2015-2017, Thomas Mueller <mimmi20@live.de>
  *
- * The above copyright notice and this permission notice shall be included
- * in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @category  BrowserDetector
- * @author    Thomas Mueller <t_mueller_stolzenhain@yahoo.de>
- * @copyright 2012-2016 Thomas Mueller
- * @license   http://www.opensource.org/licenses/MIT MIT License
- * @link      https://github.com/mimmi20/BrowserDetector
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
 namespace BrowserDetector\Version;
 
 /**
  * a general version detector
  *
  * @category  BrowserDetector
+ *
  * @copyright 2012-2016 Thomas Mueller
  * @license   http://www.opensource.org/licenses/MIT MIT License
  */
@@ -148,7 +131,7 @@ class Version implements VersionInterface
      */
     public function isAlpha()
     {
-        return ('alpha' === $this->stability);
+        return 'alpha' === $this->stability;
     }
 
     /**
@@ -156,7 +139,7 @@ class Version implements VersionInterface
      */
     public function isBeta()
     {
-        return ('beta' === $this->stability);
+        return 'beta' === $this->stability;
     }
 
     /**
@@ -165,6 +148,7 @@ class Version implements VersionInterface
      * @param int $mode
      *
      * @throws \UnexpectedValueException
+     *
      * @return string
      */
     public function getVersion($mode = VersionInterface::COMPLETE)
