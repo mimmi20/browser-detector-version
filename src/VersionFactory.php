@@ -87,9 +87,10 @@ class VersionFactory implements VersionFactoryInterface
 
         $stability = (!empty($matches['6'])) ? $matches['6'] : null;
 
-        if (mb_strlen($stability) === 0) {
+        if (null === $stability || mb_strlen($stability) === 0) {
             $stability = 'stable';
         }
+
         $stability = mb_strtolower($stability);
         switch ($stability) {
             case 'rc':
