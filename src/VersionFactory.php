@@ -1,38 +1,21 @@
 <?php
 /**
- * Copyright (c) 2012-2016, Thomas Mueller <t_mueller_stolzenhain@yahoo.de>
+ * This file is part of the browser-detector-version package.
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * Copyright (c) 2015-2017, Thomas Mueller <mimmi20@live.de>
  *
- * The above copyright notice and this permission notice shall be included
- * in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @category  BrowserDetector
- * @author    Thomas Mueller <t_mueller_stolzenhain@yahoo.de>
- * @copyright 2012-2016 Thomas Mueller
- * @license   http://www.opensource.org/licenses/MIT MIT License
- * @link      https://github.com/mimmi20/BrowserDetector
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
 namespace BrowserDetector\Version;
 
 /**
  * a general version detector factory
  *
  * @category  BrowserDetector
+ *
  * @copyright 2012-2016 Thomas Mueller
  * @license   http://www.opensource.org/licenses/MIT MIT License
  */
@@ -44,6 +27,7 @@ class VersionFactory implements VersionFactoryInterface
      * @param string $version
      *
      * @throws \UnexpectedValueException
+     *
      * @return \BrowserDetector\Version\Version
      */
     public static function set($version)
@@ -103,10 +87,11 @@ class VersionFactory implements VersionFactoryInterface
 
         $stability = (!empty($matches['6'])) ? $matches['6'] : null;
 
-        if (strlen($stability) === 0) {
+        if (null === $stability || mb_strlen($stability) === 0) {
             $stability = 'stable';
         }
-        $stability = strtolower($stability);
+
+        $stability = mb_strtolower($stability);
         switch ($stability) {
             case 'rc':
                 $stability = 'RC';
@@ -167,7 +152,7 @@ class VersionFactory implements VersionFactoryInterface
         /** @var $version string */
         $version   = $default;
 
-        if (false !== strpos($useragent, '%')) {
+        if (false !== mb_strpos($useragent, '%')) {
             $useragent = urldecode($useragent);
         }
 
@@ -176,7 +161,7 @@ class VersionFactory implements VersionFactoryInterface
                 continue;
             }
 
-            if (false !== strpos($search, '%')) {
+            if (false !== mb_strpos($search, '%')) {
                 $search = urldecode($search);
             }
 
@@ -190,7 +175,7 @@ class VersionFactory implements VersionFactoryInterface
                 );
 
                 if ($doMatch) {
-                    $version = strtolower(str_replace('_', '.', $matches[1]));
+                    $version = mb_strtolower(str_replace('_', '.', $matches[1]));
                     break 2;
                 }
             }
@@ -208,19 +193,19 @@ class VersionFactory implements VersionFactoryInterface
     {
         $numbers = [];
 
-        if (isset($matches[1]) && strlen($matches[1]) > 0) {
+        if (isset($matches[1]) && mb_strlen($matches[1]) > 0) {
             $numbers[] = $matches[1];
         }
-        if (isset($matches[2]) && strlen($matches[2]) > 0) {
+        if (isset($matches[2]) && mb_strlen($matches[2]) > 0) {
             $numbers[] = $matches[2];
         }
-        if (isset($matches[3]) && strlen($matches[3]) > 0) {
+        if (isset($matches[3]) && mb_strlen($matches[3]) > 0) {
             $numbers[] = $matches[3];
         }
-        if (isset($matches[4]) && strlen($matches[4]) > 0) {
+        if (isset($matches[4]) && mb_strlen($matches[4]) > 0) {
             $numbers[] = $matches[4];
         }
-        if (isset($matches[5]) && strlen($matches[5]) > 0) {
+        if (isset($matches[5]) && mb_strlen($matches[5]) > 0) {
             $numbers[] = $matches[5];
         }
 
