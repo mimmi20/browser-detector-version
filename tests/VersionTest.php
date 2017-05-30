@@ -18,32 +18,29 @@ use BrowserDetector\Version\VersionInterface;
 /**
  * Test class for Version
  */
-class VersionTest extends \PHPUnit_Framework_TestCase
+class VersionTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Major version must be a non-negative integer or a string
-     */
     public function testNegativeMajor()
     {
+        $this->expectException('\InvalidArgumentException');
+        $this->expectExceptionMessage('Major version must be a non-negative integer or a string');
+
         new Version(-1);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Minor version must be a non-negative integer or a string
-     */
     public function testNegativeMinor()
     {
+        $this->expectException('\InvalidArgumentException');
+        $this->expectExceptionMessage('Minor version must be a non-negative integer or a string');
+
         new Version(0, -1);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Patch version must be a non-negative integer or a string
-     */
     public function testNegativePatch()
     {
+        $this->expectException('\InvalidArgumentException');
+        $this->expectExceptionMessage('Patch version must be a non-negative integer or a string');
+
         new Version(0, 0, -1);
     }
 
