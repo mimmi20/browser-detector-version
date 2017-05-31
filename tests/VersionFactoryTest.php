@@ -16,7 +16,7 @@ use BrowserDetector\Version\VersionFactory;
 /**
  * Test class for VersionFactory
  */
-class VersionFactoryTest extends \PHPUnit_Framework_TestCase
+class VersionFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider providerSet
@@ -61,6 +61,9 @@ class VersionFactoryTest extends \PHPUnit_Framework_TestCase
             ['abc', '0', '0', '0', 'stable', null, '0.0.0'],
             ['0.0.0', '0', '0', '0', 'stable', null, '0.0.0'],
             ['2.0p12', '2', '0', '0', 'patch', '12', '2.0.0-patch+12'],
+            ['2.0.0-patch+12', '2', '0', '0', 'patch', '12', '2.0.0-patch+12'],
+            ['4.0.0-beta+8', '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
+            ['4.0.0-alpha+1', '4', '0', '0', 'alpha', '1', '4.0.0-alpha+1'],
         ];
     }
 
@@ -114,12 +117,13 @@ class VersionFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage a string or an array of strings is expected as parameter
-     * @group        version
+     * @group version
      */
     public function testThrowExcepton()
     {
+        $this->expectException('\UnexpectedValueException');
+        $this->expectExceptionMessage('a string or an array of strings is expected as parameter');
+
         VersionFactory::detectVersion('abc', 1);
     }
 

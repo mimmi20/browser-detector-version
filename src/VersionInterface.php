@@ -59,7 +59,7 @@ interface VersionInterface
     /**
      * @var string
      */
-    const REGEX = '[-|_|\.]{0,1}(rc|a|alpha|b|beta|p|pl|patch|stable|dev|d)\.{0,1}(\d*)';
+    const REGEX = '[-_\.]{0,1}(rc|a|alpha|b|beta|p|pl|patch|stable|dev|d)[\.+]{0,1}(\d*)';
 
     /**
      * returns the detected version
