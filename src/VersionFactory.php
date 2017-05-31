@@ -168,11 +168,7 @@ class VersionFactory implements VersionFactoryInterface
             foreach ($modifiers as $modifier) {
                 $compareString = '/' . $search . $modifier[0] . '(\d+[\d\.\_\-\+abcdehlprstv]*)' . $modifier[1] . '/i';
 
-                $doMatch = preg_match(
-                    $compareString,
-                    $useragent,
-                    $matches
-                );
+                $doMatch = preg_match($compareString, $useragent, $matches);
 
                 if ($doMatch) {
                     $version = mb_strtolower(str_replace('_', '.', $matches[1]));
