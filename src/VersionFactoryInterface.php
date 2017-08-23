@@ -22,13 +22,26 @@ namespace BrowserDetector\Version;
 interface VersionFactoryInterface
 {
     /**
-     * detects the bit count by this browser from the given user agent
+     * sets the detected version
      *
-     * @param string $useragent
+     * @param string $version
+     *
+     * @throws \UnexpectedValueException
      *
      * @return \BrowserDetector\Version\VersionInterface
      */
-    public static function detectVersion($useragent): VersionInterface;
+    public static function set(string $version): VersionInterface;
+
+    /**
+     * detects the bit count by this browser from the given user agent
+     *
+     * @param string $useragent
+     * @param array  $searches
+     * @param string $default
+     *
+     * @return \BrowserDetector\Version\Version
+     */
+    public static function detectVersion(string $useragent, array $searches = [], string $default = '0'): VersionInterface;
 
     /**
      * @param array $data

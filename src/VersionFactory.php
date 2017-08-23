@@ -28,9 +28,9 @@ class VersionFactory implements VersionFactoryInterface
      *
      * @throws \UnexpectedValueException
      *
-     * @return \BrowserDetector\Version\Version
+     * @return \BrowserDetector\Version\VersionInterface
      */
-    public static function set(string $version): Version
+    public static function set(string $version): VersionInterface
     {
         $stringMatches = [];
 
@@ -127,9 +127,9 @@ class VersionFactory implements VersionFactoryInterface
      * @param array  $searches
      * @param string $default
      *
-     * @return \BrowserDetector\Version\Version
+     * @return \BrowserDetector\Version\VersionInterface
      */
-    public static function detectVersion(string $useragent, array $searches = [], string $default = '0'): Version
+    public static function detectVersion(string $useragent, array $searches = [], string $default = '0'): VersionInterface
     {
         if (!is_array($searches) && !is_string($searches)) {
             throw new \UnexpectedValueException(
@@ -211,9 +211,9 @@ class VersionFactory implements VersionFactoryInterface
     /**
      * @param array $data
      *
-     * @return \BrowserDetector\Version\Version
+     * @return \BrowserDetector\Version\VersionInterface
      */
-    public static function fromArray(array $data): Version
+    public static function fromArray(array $data): VersionInterface
     {
         $major     = isset($data['major']) ? $data['major'] : '0';
         $minor     = isset($data['minor']) ? $data['minor'] : '0';
@@ -227,9 +227,9 @@ class VersionFactory implements VersionFactoryInterface
     /**
      * @param string $json
      *
-     * @return \BrowserDetector\Version\Version
+     * @return \BrowserDetector\Version\VersionInterface
      */
-    public static function fromJson(string $json): Version
+    public static function fromJson(string $json): VersionInterface
     {
         return self::fromArray((array) json_decode($json));
     }
