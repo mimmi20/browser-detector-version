@@ -70,7 +70,7 @@ interface VersionInterface
      *
      * @return string
      */
-    public function getVersion($mode = null): string;
+    public function getVersion(int $mode = self::COMPLETE): string;
 
     /**
      * @return string[]
