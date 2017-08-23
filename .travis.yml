@@ -28,6 +28,7 @@ script:
   - vendor/bin/phpunit --colors --no-coverage
 
 jobs:
+  fast_finish: true
   allow_failures:
     - php: 7.2
     - php: nightly
