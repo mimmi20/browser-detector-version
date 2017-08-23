@@ -55,5 +55,5 @@ interface VersionFactoryInterface
      *
      * @return \BrowserDetector\Version\VersionInterface
      */
-    public static function fromJson($json): VersionInterface;
+    public static function fromJson(string $json): VersionInterface;
 }
