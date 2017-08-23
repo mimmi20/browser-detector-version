@@ -47,35 +47,35 @@ class Version implements VersionInterface
     private $build = null;
 
     /**
-     * @param int|string   $major
-     * @param int|string   $minor
-     * @param int|string   $patch
-     * @param array|string $stability
-     * @param array|string $build
+     * @param string      $major
+     * @param string      $minor
+     * @param string      $patch
+     * @param string      $stability
+     * @param string|null $build
      */
-    public function __construct($major = '0', $minor = '0', $patch = '0', $stability = 'stable', $build = null)
+    public function __construct(string $major = '0', string $minor = '0', string $patch = '0', string $stability = 'stable', ?string $build = null)
     {
-        if ((!is_int($major) && !is_string($major)) || $major < 0) {
-            throw new \InvalidArgumentException('Major version must be a non-negative integer or a string');
+        if ((int) $major < 0) {
+            throw new \InvalidArgumentException('Major version must be a non-negative number formatted as string');
         }
-        if ((!is_int($minor) && !is_string($minor)) || $minor < 0) {
-            throw new \InvalidArgumentException('Minor version must be a non-negative integer or a string');
+        if ((int) $minor < 0) {
+            throw new \InvalidArgumentException('Minor version must be a non-negative number formatted as string');
         }
-        if ((!is_int($patch) && !is_string($patch)) || $patch < 0) {
-            throw new \InvalidArgumentException('Patch version must be a non-negative integer or a string');
+        if ((int) $patch < 0) {
+            throw new \InvalidArgumentException('Patch version must be a non-negative number formatted as string');
         }
 
-        $this->major     = (string) $major;
-        $this->minor     = (string) $minor;
-        $this->micro     = (string) $patch;
+        $this->major     = $major;
+        $this->minor     = $minor;
+        $this->micro     = $patch;
         $this->stability = $stability;
         $this->build     = $build;
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'major'     => $this->major,
@@ -87,25 +87,25 @@ class Version implements VersionInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getMajor()
+    public function getMajor(): string
     {
         return $this->major;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getMinor()
+    public function getMinor(): string
     {
         return $this->minor;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getMicro()
+    public function getMicro(): string
     {
         return $this->micro;
     }
@@ -113,15 +113,15 @@ class Version implements VersionInterface
     /**
      * @return null|string
      */
-    public function getBuild()
+    public function getBuild(): ?string
     {
         return $this->build;
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getStability()
+    public function getStability(): string
     {
         return $this->stability;
     }
@@ -129,7 +129,7 @@ class Version implements VersionInterface
     /**
      * @return bool
      */
-    public function isAlpha()
+    public function isAlpha(): bool
     {
         return 'alpha' === $this->stability;
     }
@@ -137,7 +137,7 @@ class Version implements VersionInterface
     /**
      * @return bool
      */
-    public function isBeta()
+    public function isBeta(): bool
     {
         return 'beta' === $this->stability;
     }
@@ -151,7 +151,7 @@ class Version implements VersionInterface
      *
      * @return string
      */
-    public function getVersion($mode = VersionInterface::COMPLETE)
+    public function getVersion(int $mode = VersionInterface::COMPLETE): string
     {
         $versions = $this->toArray();
 
