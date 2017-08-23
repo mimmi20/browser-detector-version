@@ -26,21 +26,21 @@ interface VersionFactoryInterface
      *
      * @param string $useragent
      *
-     * @return \BrowserDetector\Version\Version
+     * @return \BrowserDetector\Version\VersionInterface
      */
-    public static function detectVersion($useragent);
+    public static function detectVersion($useragent): VersionInterface;
 
     /**
      * @param array $data
      *
-     * @return \BrowserDetector\Version\Version
+     * @return \BrowserDetector\Version\VersionInterface
      */
-    public static function fromArray(array $data);
+    public static function fromArray(array $data): VersionInterface;
 
     /**
      * @param string $json
      *
-     * @return \BrowserDetector\Version\Version
+     * @return \BrowserDetector\Version\VersionInterface
      */
-    public static function fromJson($json);
+    public static function fromJson($json): VersionInterface;
 }
