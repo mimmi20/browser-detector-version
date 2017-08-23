@@ -23,25 +23,25 @@ class VersionTest extends \PHPUnit\Framework\TestCase
     public function testNegativeMajor()
     {
         $this->expectException('\InvalidArgumentException');
-        $this->expectExceptionMessage('Major version must be a non-negative integer or a string');
+        $this->expectExceptionMessage('Major version must be a non-negative number formatted as string');
 
-        new Version(-1);
+        new Version('-1');
     }
 
     public function testNegativeMinor()
     {
         $this->expectException('\InvalidArgumentException');
-        $this->expectExceptionMessage('Minor version must be a non-negative integer or a string');
+        $this->expectExceptionMessage('Minor version must be a non-negative number formatted as string');
 
-        new Version(0, -1);
+        new Version('0', '-1');
     }
 
     public function testNegativePatch()
     {
         $this->expectException('\InvalidArgumentException');
-        $this->expectExceptionMessage('Patch version must be a non-negative integer or a string');
+        $this->expectExceptionMessage('Patch version must be a non-negative number formatted as string');
 
-        new Version(0, 0, -1);
+        new Version('0', '0', '-1');
     }
 
     public function testToarray()

@@ -55,19 +55,19 @@ class Version implements VersionInterface
      */
     public function __construct(string $major = '0', string $minor = '0', string $patch = '0', string $stability = 'stable', ?string $build = null)
     {
-        if ((!is_int($major) && !is_string($major)) || $major < 0) {
-            throw new \InvalidArgumentException('Major version must be a non-negative integer or a string');
+        if ((int) $major < 0) {
+            throw new \InvalidArgumentException('Major version must be a non-negative number formatted as string');
         }
-        if ((!is_int($minor) && !is_string($minor)) || $minor < 0) {
-            throw new \InvalidArgumentException('Minor version must be a non-negative integer or a string');
+        if ((int) $minor < 0) {
+            throw new \InvalidArgumentException('Minor version must be a non-negative number formatted as string');
         }
-        if ((!is_int($patch) && !is_string($patch)) || $patch < 0) {
-            throw new \InvalidArgumentException('Patch version must be a non-negative integer or a string');
+        if ((int) $patch < 0) {
+            throw new \InvalidArgumentException('Patch version must be a non-negative number formatted as string');
         }
 
-        $this->major     = (string) $major;
-        $this->minor     = (string) $minor;
-        $this->micro     = (string) $patch;
+        $this->major     = $major;
+        $this->minor     = $minor;
+        $this->micro     = $patch;
         $this->stability = $stability;
         $this->build     = $build;
     }
