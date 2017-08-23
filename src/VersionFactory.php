@@ -131,16 +131,6 @@ class VersionFactory implements VersionFactoryInterface
      */
     public static function detectVersion(string $useragent, array $searches = [], string $default = '0'): VersionInterface
     {
-        if (!is_array($searches) && !is_string($searches)) {
-            throw new \UnexpectedValueException(
-                'a string or an array of strings is expected as parameter'
-            );
-        }
-
-        if (!is_array($searches)) {
-            $searches = [$searches];
-        }
-
         $modifiers = [
             ['\/', ''],
             ['\(', '\)'],

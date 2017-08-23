@@ -109,22 +109,11 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
     public function providerDetectVersion()
     {
         return [
-            ['Chrome/34.0.1760.0', 'Chrome', '34', '0', '1760.0', 'stable', null, '34.0.1760.0'],
-            ['Firefox/4.0b8', 'Firefox', '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
-            ['Firefox%20/4.0b8', 'Firefox%20', '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
+            ['Chrome/34.0.1760.0', ['Chrome'], '34', '0', '1760.0', 'stable', null, '34.0.1760.0'],
+            ['Firefox/4.0b8', ['Firefox'], '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
+            ['Firefox%20/4.0b8', ['Firefox%20'], '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
             ['Firefox/4.0b8', [null, false, 'Firefox'], '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
         ];
-    }
-
-    /**
-     * @group version
-     */
-    public function testThrowExcepton()
-    {
-        $this->expectException('\UnexpectedValueException');
-        $this->expectExceptionMessage('a string or an array of strings is expected as parameter');
-
-        VersionFactory::detectVersion('abc', 1);
     }
 
     public function testFromArray()
