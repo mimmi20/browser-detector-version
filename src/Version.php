@@ -111,7 +111,7 @@ class Version implements VersionInterface
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getBuild(): ?string
     {
