@@ -84,7 +84,7 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
      * @group        version
      *
      * @param string $uapart
-     * @param string $search
+     * @param array  $searches
      * @param string $major
      * @param string $minor
      * @param string $patch
@@ -92,9 +92,9 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
      * @param string $build
      * @param string $complete
      */
-    public function testVersionDetectVersion($uapart, $search, $major, $minor, $patch, $preRelease, $build, $complete)
+    public function testVersionDetectVersion($uapart, $searches, $major, $minor, $patch, $preRelease, $build, $complete)
     {
-        $object = VersionFactory::detectVersion($uapart, $search);
+        $object = VersionFactory::detectVersion($uapart, $searches);
 
         self::assertInstanceOf('\BrowserDetector\Version\Version', $object);
 
