@@ -42,7 +42,7 @@ class Version implements VersionInterface
     private $stability = 'stable';
 
     /**
-     * @var string
+     * @var string|null
      */
     private $build = null;
 
@@ -73,7 +73,7 @@ class Version implements VersionInterface
     }
 
     /**
-     * @return string[]
+     * @return (string|null)[]
      */
     public function toArray(): array
     {

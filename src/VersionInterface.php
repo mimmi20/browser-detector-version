@@ -73,7 +73,7 @@ interface VersionInterface
     public function getVersion(int $mode = self::COMPLETE): string;
 
     /**
-     * @return string[]
+     * @return (string|null)[]
      */
     public function toArray(): array;
 
