@@ -22,16 +22,23 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
      * @dataProvider providerSet
      * @group        version
      *
-     * @param string $version
-     * @param string $major
-     * @param string $minor
-     * @param string $patch
-     * @param string $preRelease
-     * @param string $build
-     * @param string $complete
+     * @param string      $version
+     * @param string      $major
+     * @param string      $minor
+     * @param string      $patch
+     * @param string      $preRelease
+     * @param string|null $build
+     * @param string      $complete
      */
-    public function testVersionSet($version, $major, $minor, $patch, $preRelease, $build, $complete)
-    {
+    public function testVersionSet(
+        string $version,
+        string $major,
+        string $minor,
+        string $patch,
+        string $preRelease,
+        ?string $build,
+        string $complete
+    ) {
         $object = VersionFactory::set($version);
 
         self::assertInstanceOf('\BrowserDetector\Version\Version', $object);
@@ -83,18 +90,26 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
      * @dataProvider providerDetectVersion
      * @group        version
      *
-     * @param string $uapart
-     * @param string $search
-     * @param string $major
-     * @param string $minor
-     * @param string $patch
-     * @param string $preRelease
-     * @param string $build
-     * @param string $complete
+     * @param string      $uapart
+     * @param array       $searches
+     * @param string      $major
+     * @param string      $minor
+     * @param string      $patch
+     * @param string      $preRelease
+     * @param string|null $build
+     * @param string      $complete
      */
-    public function testVersionDetectVersion($uapart, $search, $major, $minor, $patch, $preRelease, $build, $complete)
-    {
-        $object = VersionFactory::detectVersion($uapart, $search);
+    public function testVersionDetectVersion(
+        string $uapart,
+        array $searches,
+        string $major,
+        string $minor,
+        string $patch,
+        string $preRelease,
+        ?string $build,
+        string $complete
+    ) {
+        $object = VersionFactory::detectVersion($uapart, $searches);
 
         self::assertInstanceOf('\BrowserDetector\Version\Version', $object);
 

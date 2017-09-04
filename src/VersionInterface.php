@@ -73,7 +73,42 @@ interface VersionInterface
     public function getVersion(int $mode = self::COMPLETE): string;
 
     /**
-     * @return string[]
+     * @return (string|null)[]
      */
     public function toArray(): array;
+
+    /**
+     * @return string
+     */
+    public function getMajor(): string;
+
+    /**
+     * @return string
+     */
+    public function getMinor(): string;
+
+    /**
+     * @return string
+     */
+    public function getMicro(): string;
+
+    /**
+     * @return string|null
+     */
+    public function getBuild(): ?string;
+
+    /**
+     * @return string
+     */
+    public function getStability(): string;
+
+    /**
+     * @return bool
+     */
+    public function isAlpha(): bool;
+
+    /**
+     * @return bool
+     */
+    public function isBeta(): bool;
 }
