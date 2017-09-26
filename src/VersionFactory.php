@@ -87,7 +87,7 @@ class VersionFactory implements VersionFactoryInterface
 
         $stability = (!empty($matches['6'])) ? $matches['6'] : null;
 
-        if (null === $stability || mb_strlen($stability) === 0) {
+        if (null === $stability || 0 === mb_strlen($stability)) {
             $stability = 'stable';
         }
 
@@ -95,23 +95,28 @@ class VersionFactory implements VersionFactoryInterface
         switch ($stability) {
             case 'rc':
                 $stability = 'RC';
+
                 break;
             case 'patch':
             case 'pl':
             case 'p':
                 $stability = 'patch';
+
                 break;
             case 'beta':
             case 'b':
                 $stability = 'beta';
+
                 break;
             case 'alpha':
             case 'a':
                 $stability = 'alpha';
+
                 break;
             case 'dev':
             case 'd':
                 $stability = 'dev';
+
                 break;
         }
 
@@ -162,6 +167,7 @@ class VersionFactory implements VersionFactoryInterface
 
                 if ($doMatch) {
                     $version = mb_strtolower(str_replace('_', '.', $matches[1]));
+
                     break 2;
                 }
             }
@@ -179,19 +185,19 @@ class VersionFactory implements VersionFactoryInterface
     {
         $numbers = [];
 
-        if (isset($matches[1]) && mb_strlen($matches[1]) > 0) {
+        if (isset($matches[1]) && 0 < mb_strlen($matches[1])) {
             $numbers[] = $matches[1];
         }
-        if (isset($matches[2]) && mb_strlen($matches[2]) > 0) {
+        if (isset($matches[2]) && 0 < mb_strlen($matches[2])) {
             $numbers[] = $matches[2];
         }
-        if (isset($matches[3]) && mb_strlen($matches[3]) > 0) {
+        if (isset($matches[3]) && 0 < mb_strlen($matches[3])) {
             $numbers[] = $matches[3];
         }
-        if (isset($matches[4]) && mb_strlen($matches[4]) > 0) {
+        if (isset($matches[4]) && 0 < mb_strlen($matches[4])) {
             $numbers[] = $matches[4];
         }
-        if (isset($matches[5]) && mb_strlen($matches[5]) > 0) {
+        if (isset($matches[5]) && 0 < mb_strlen($matches[5])) {
             $numbers[] = $matches[5];
         }
 

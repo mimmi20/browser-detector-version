@@ -24,42 +24,42 @@ interface VersionInterface
     /**
      * @var int
      */
-    const COMPLETE = 0;
+    public const COMPLETE = 0;
 
     /**
      * @var int
      */
-    const IGNORE_MINOR = 1;
+    public const IGNORE_MINOR = 1;
 
     /**
      * @var int
      */
-    const IGNORE_MICRO = 2;
+    public const IGNORE_MICRO = 2;
 
     /**
      * @var int
      */
-    const IGNORE_MINOR_IF_EMPTY = 4;
+    public const IGNORE_MINOR_IF_EMPTY = 4;
 
     /**
      * @var int
      */
-    const IGNORE_MICRO_IF_EMPTY = 8;
+    public const IGNORE_MICRO_IF_EMPTY = 8;
 
     /**
      * @var int
      */
-    const IGNORE_MACRO_IF_EMPTY = 16;
+    public const IGNORE_MACRO_IF_EMPTY = 16;
 
     /**
      * @var int
      */
-    const GET_ZERO_IF_EMPTY = 32;
+    public const GET_ZERO_IF_EMPTY = 32;
 
     /**
      * @var string
      */
-    const REGEX = '[-_\.]{0,1}(rc|a|alpha|b|beta|p|pl|patch|stable|dev|d)[\.+]{0,1}(\d*)';
+    public const REGEX = '[-_\.]{0,1}(rc|a|alpha|b|beta|p|pl|patch|stable|dev|d)[\.+]{0,1}(\d*)';
 
     /**
      * returns the detected version

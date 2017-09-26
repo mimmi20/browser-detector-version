@@ -20,7 +20,7 @@ use BrowserDetector\Version\VersionInterface;
  */
 class VersionTest extends \PHPUnit\Framework\TestCase
 {
-    public function testNegativeMajor()
+    public function testNegativeMajor(): void
     {
         $this->expectException('\InvalidArgumentException');
         $this->expectExceptionMessage('Major version must be a non-negative number formatted as string');
@@ -28,7 +28,7 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         new Version('-1');
     }
 
-    public function testNegativeMinor()
+    public function testNegativeMinor(): void
     {
         $this->expectException('\InvalidArgumentException');
         $this->expectExceptionMessage('Minor version must be a non-negative number formatted as string');
@@ -36,7 +36,7 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         new Version('0', '-1');
     }
 
-    public function testNegativePatch()
+    public function testNegativePatch(): void
     {
         $this->expectException('\InvalidArgumentException');
         $this->expectExceptionMessage('Patch version must be a non-negative number formatted as string');
@@ -44,7 +44,7 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         new Version('0', '0', '-1');
     }
 
-    public function testToarray()
+    public function testToarray(): void
     {
         $major      = '4';
         $minor      = '0';
@@ -60,7 +60,7 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($version, $object);
     }
 
-    public function testGetversionWithoutMicro()
+    public function testGetversionWithoutMicro(): void
     {
         $major      = '4';
         $minor      = '0';
@@ -73,7 +73,7 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         self::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MICRO));
     }
 
-    public function testGetversionWithoutMinor()
+    public function testGetversionWithoutMinor(): void
     {
         $major      = '4';
         $minor      = '0';
@@ -86,7 +86,7 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         self::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR));
     }
 
-    public function testGetversionWithoutEmptyMicro()
+    public function testGetversionWithoutEmptyMicro(): void
     {
         $major      = '4';
         $minor      = '0';
@@ -109,7 +109,7 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         self::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MICRO_IF_EMPTY));
     }
 
-    public function testGetversionWithoutEmptyMinor()
+    public function testGetversionWithoutEmptyMinor(): void
     {
         $major      = '4';
         $minor      = '0';
@@ -132,7 +132,7 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         self::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
     }
 
-    public function testGetversionWithoutEmptyMajor()
+    public function testGetversionWithoutEmptyMajor(): void
     {
         $major      = '0';
         $minor      = '0';
