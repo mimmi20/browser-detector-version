@@ -38,7 +38,7 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
         string $preRelease,
         ?string $build,
         string $complete
-    ) {
+    ): void {
         $object = VersionFactory::set($version);
 
         self::assertInstanceOf('\BrowserDetector\Version\Version', $object);
@@ -77,7 +77,7 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
     /**
      * @group version
      */
-    public function testVersionSetXp()
+    public function testVersionSetXp(): void
     {
         $object = VersionFactory::set('XP');
 
@@ -108,7 +108,7 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
         string $preRelease,
         ?string $build,
         string $complete
-    ) {
+    ): void {
         $object = VersionFactory::detectVersion($uapart, $searches);
 
         self::assertInstanceOf('\BrowserDetector\Version\Version', $object);
@@ -131,7 +131,7 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public function testFromArray()
+    public function testFromArray(): void
     {
         $major      = '4';
         $minor      = '0';
@@ -159,7 +159,7 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
         self::assertFalse($object->isAlpha());
     }
 
-    public function testFromJson()
+    public function testFromJson(): void
     {
         $major      = '4';
         $minor      = '0';

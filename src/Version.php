@@ -24,17 +24,17 @@ class Version implements VersionInterface
     /**
      * @var string the detected major version
      */
-    private $major = null;
+    private $major;
 
     /**
      * @var string the detected minor version
      */
-    private $minor = null;
+    private $minor;
 
     /**
      * @var string the detected micro version
      */
-    private $micro = null;
+    private $micro;
 
     /**
      * @var string
@@ -44,7 +44,7 @@ class Version implements VersionInterface
     /**
      * @var string|null
      */
-    private $build = null;
+    private $build;
 
     /**
      * @param string      $major
@@ -55,13 +55,13 @@ class Version implements VersionInterface
      */
     public function __construct(string $major = '0', string $minor = '0', string $patch = '0', string $stability = 'stable', ?string $build = null)
     {
-        if ((int) $major < 0) {
+        if (0 > (int) $major) {
             throw new \InvalidArgumentException('Major version must be a non-negative number formatted as string');
         }
-        if ((int) $minor < 0) {
+        if (0 > (int) $minor) {
             throw new \InvalidArgumentException('Minor version must be a non-negative number formatted as string');
         }
-        if ((int) $patch < 0) {
+        if (0 > (int) $patch) {
             throw new \InvalidArgumentException('Patch version must be a non-negative number formatted as string');
         }
 
