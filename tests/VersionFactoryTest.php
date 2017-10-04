@@ -29,6 +29,8 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
      * @param string      $preRelease
      * @param string|null $build
      * @param string      $complete
+     *
+     * @return void
      */
     public function testVersionSet(
         string $version,
@@ -51,6 +53,9 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
         self::assertSame($complete, $object->getVersion(), 'complete is wrong');
     }
 
+    /**
+     * @return array[]
+     */
     public function providerSet()
     {
         return [
@@ -76,6 +81,8 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @group version
+     *
+     * @return void
      */
     public function testVersionSetXp(): void
     {
@@ -98,6 +105,8 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
      * @param string      $preRelease
      * @param string|null $build
      * @param string      $complete
+     *
+     * @return void
      */
     public function testVersionDetectVersion(
         string $uapart,
@@ -121,6 +130,9 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
         self::assertSame($complete, $object->getVersion(), 'complete is wrong');
     }
 
+    /**
+     * @return array[]
+     */
     public function providerDetectVersion()
     {
         return [
@@ -131,6 +143,9 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
+    /**
+     * @return void
+     */
     public function testFromArray(): void
     {
         $major      = '4';
@@ -159,6 +174,9 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
         self::assertFalse($object->isAlpha());
     }
 
+    /**
+     * @return void
+     */
     public function testFromJson(): void
     {
         $major      = '4';

@@ -20,6 +20,9 @@ use BrowserDetector\Version\VersionInterface;
  */
 class VersionTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @return void
+     */
     public function testNegativeMajor(): void
     {
         $this->expectException('\InvalidArgumentException');
@@ -28,6 +31,9 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         new Version('-1');
     }
 
+    /**
+     * @return void
+     */
     public function testNegativeMinor(): void
     {
         $this->expectException('\InvalidArgumentException');
@@ -36,6 +42,9 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         new Version('0', '-1');
     }
 
+    /**
+     * @return void
+     */
     public function testNegativePatch(): void
     {
         $this->expectException('\InvalidArgumentException');
@@ -44,6 +53,9 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         new Version('0', '0', '-1');
     }
 
+    /**
+     * @return void
+     */
     public function testToarray(): void
     {
         $major      = '4';
@@ -60,6 +72,9 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($version, $object);
     }
 
+    /**
+     * @return void
+     */
     public function testGetversionWithoutMicro(): void
     {
         $major      = '4';
@@ -73,6 +88,9 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         self::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MICRO));
     }
 
+    /**
+     * @return void
+     */
     public function testGetversionWithoutMinor(): void
     {
         $major      = '4';
@@ -86,6 +104,9 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         self::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR));
     }
 
+    /**
+     * @return void
+     */
     public function testGetversionWithoutEmptyMicro(): void
     {
         $major      = '4';
@@ -109,6 +130,9 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         self::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MICRO_IF_EMPTY));
     }
 
+    /**
+     * @return void
+     */
     public function testGetversionWithoutEmptyMinor(): void
     {
         $major      = '4';
@@ -132,6 +156,9 @@ class VersionTest extends \PHPUnit\Framework\TestCase
         self::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
     }
 
+    /**
+     * @return void
+     */
     public function testGetversionWithoutEmptyMajor(): void
     {
         $major      = '0';
