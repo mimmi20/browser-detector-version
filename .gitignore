@@ -18,3 +18,4 @@ phpunit.txt
 resources/browscap-*/
 tests/cache/
 tests/create-tests.php
+.php_cs.cache

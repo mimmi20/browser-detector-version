@@ -211,9 +211,9 @@ class Version implements VersionInterface
         }
 
         return $versions['major']
-            . (isset($versions['minor']) ? '.' . (string) $versions['minor'] : '')
-            . (isset($versions['micro']) ? '.' . (string) $versions['micro'] : '')
-            . ((isset($versions['stability']) && 'stable' !== $versions['stability']) ? '-' . (string) $versions['stability'] : '')
-            . (isset($versions['build']) ? '+' . (string) $versions['build'] : '');
+            . (isset($versions['minor']) ? '.' . $versions['minor'] : '')
+            . (isset($versions['micro']) ? '.' . $versions['micro'] : '')
+            . ((isset($versions['stability']) && 'stable' !== $versions['stability']) ? '-' . $versions['stability'] : '')
+            . (isset($versions['build']) ? '+' . $versions['build'] : '');
     }
 }
