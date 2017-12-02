@@ -144,8 +144,7 @@ class VersionFactory implements VersionFactoryInterface
             [' \(', '\;'],
         ];
 
-        /** @var $version string */
-        $version   = $default;
+        $version = $default;
 
         if (false !== mb_strpos($useragent, '%')) {
             $useragent = urldecode($useragent);
