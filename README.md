@@ -1,7 +1,14 @@
-BrowserDetector Version
-=======================
+# BrowserDetector Version
 
-[![Build Status](https://api.travis-ci.org/mimmi20/version.png?branch=master)](https://travis-ci.org/mimmi20/version)
+[![Latest Stable Version](https://poser.pugx.org/mimmi20/browser-detector-version/v/stable?format=flat-square)](https://packagist.org/packages/mimmi20/browser-detector-version)
+[![Latest Unstable Version](https://poser.pugx.org/mimmi20/browser-detector-version/v/unstable?format=flat-square)](https://packagist.org/packages/mimmi20/browser-detector-version)
+[![License](https://poser.pugx.org/mimmi20/browser-detector-version/license?format=flat-square)](https://packagist.org/packages/mimmi20/browser-detector-version)
 
-[![Latest Stable Version](https://poser.pugx.org/mimmi20/browser-detector/v/stable.png)](https://packagist.org/packages/mimmi20/version)
-[![Latest Unstable Version](https://poser.pugx.org/mimmi20/browser-detector/v/unstable.png)](https://packagist.org/packages/mimmi20/version)
+## Code Status
+
+[![Build Status](https://travis-ci.org/mimmi20/version.svg?branch=master)](https://travis-ci.org/mimmi20/version)
+[![codecov](https://codecov.io/gh/mimmi20/version/branch/master/graph/badge.svg)](https://codecov.io/gh/mimmi20/version)
+[![Maintainability](https://api.codeclimate.com/v1/badges/5575d7771677b0904dbd/maintainability)](https://codeclimate.com/github/mimmi20/version/maintainability)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/mimmi20/version.svg)](http://isitmaintained.com/project/mimmi20/version "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/mimmi20/version.svg)](http://isitmaintained.com/project/mimmi20/version "Percentage of issues still open")
+[![Dependency Status](https://gemnasium.com/badges/github.com/mimmi20/version.svg)](https://gemnasium.com/github.com/mimmi20/version)
