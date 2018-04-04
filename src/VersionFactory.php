@@ -2,7 +2,7 @@
 /**
  * This file is part of the browser-detector-version package.
  *
- * Copyright (c) 2015-2017, Thomas Mueller <mimmi20@live.de>
+ * Copyright (c) 2015-2018, Thomas Mueller <mimmi20@live.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -39,53 +39,37 @@ class VersionFactory implements VersionFactoryInterface
         }
 
         $matches = [];
+        $numbers = [];
 
         $regex = '/^' .
             'v?' .
-            '(?:(\d+)[-|\.])?' .
-            '(?:(\d+)[-|\.])?' .
-            '(?:(\d+)[-|\.])?' .
-            '(?:(\d+)\.)?' .
-            '(?:(\d+))?' .
+            '(?<major>\d+)' .
+            '(?:[-|\.](?<minor>\d+))?' .
+            '(?:[-|\.](?<micro>\d+))?' .
+            '(?:[-|\.](?<patch>\d+))?' .
+            '(?:[-|\.](?<micropatch>\d+))?' .
             '(?:' . VersionInterface::REGEX . ')?' .
-            '$/i';
+            '.*$/i';
 
         if (preg_match($regex, $version, $matches)) {
             $numbers = self::mapMatches($matches);
-        } else {
-            // fallback - version string may include characters which are not allowed in the stability regex
-            // -> use only the numbers
-            $secondMatches = [];
-            $secondRegex   = '/^' .
-                'v?' .
-                '(?:(\d+)[-|\.])?' .
-                '(?:(\d+)[-|\.])?' .
-                '(?:(\d+)[-|\.])?' .
-                '(?:(\d+)\.)?' .
-                '(?:(\d+))?' .
-                '.*$/';
-
-            if (!preg_match($secondRegex, $version, $secondMatches)) {
-                return new Version();
-            }
-
-            $numbers = self::mapMatches($secondMatches);
         }
 
         if (empty($numbers)) {
             return new Version();
         }
 
-        $major = (isset($numbers[0]) ? $numbers[0] : '0');
-        $minor = (isset($numbers[1]) ? $numbers[1] : '0');
+        $major = (isset($numbers['major']) ? $numbers['major'] : '0');
+        $minor = (isset($numbers['minor']) ? $numbers['minor'] : '0');
 
-        if (isset($numbers[2])) {
-            $patch = $numbers[2] . (isset($numbers[3]) ? '.' . $numbers[3] . (isset($numbers[4]) ? '.' . $numbers[4] : '') : '');
+        if (isset($numbers['micro'])) {
+            $patch = $numbers['micro'];
+            $patch .= (isset($numbers['patch']) ? '.' . $numbers['patch'] . (isset($numbers['micropatch']) ? '.' . $numbers['micropatch'] : '') : '');
         } else {
             $patch = '0';
         }
 
-        $stability = (!empty($matches['6'])) ? $matches['6'] : null;
+        $stability = (!empty($numbers['stability'])) ? $numbers['stability'] : null;
 
         if (null === $stability || 0 === mb_strlen($stability)) {
             $stability = 'stable';
@@ -120,7 +104,7 @@ class VersionFactory implements VersionFactoryInterface
                 break;
         }
 
-        $build = (!empty($matches['7'])) ? $matches['7'] : null;
+        $build = (!empty($numbers['build'])) ? $numbers['build'] : null;
 
         return new Version($major, $minor, $patch, $stability, $build);
     }
@@ -139,9 +123,10 @@ class VersionFactory implements VersionFactoryInterface
         $modifiers = [
             ['\/', ''],
             ['\(', '\)'],
+            [' ', ';'],
             [' ', ''],
             ['', ''],
-            [' \(', '\;'],
+            [' \(', ';'],
         ];
 
         $version = $default;
@@ -160,7 +145,7 @@ class VersionFactory implements VersionFactoryInterface
             }
 
             foreach ($modifiers as $modifier) {
-                $compareString = '/' . $search . $modifier[0] . '(\d+[\d\.\_\-\+abcdehlprstv]*)' . $modifier[1] . '/i';
+                $compareString = '/' . $search . $modifier[0] . '(\d+[\d._\-+ abcdehlprstv]*)' . $modifier[1] . '/i';
 
                 $doMatch = preg_match($compareString, $useragent, $matches);
 
@@ -184,20 +169,26 @@ class VersionFactory implements VersionFactoryInterface
     {
         $numbers = [];
 
-        if (isset($matches[1]) && 0 < mb_strlen($matches[1])) {
-            $numbers[] = $matches[1];
+        if (isset($matches['major']) && 0 < mb_strlen($matches['major'])) {
+            $numbers['major'] = $matches['major'];
         }
-        if (isset($matches[2]) && 0 < mb_strlen($matches[2])) {
-            $numbers[] = $matches[2];
+        if (isset($matches['minor']) && 0 < mb_strlen($matches['minor'])) {
+            $numbers['minor'] = $matches['minor'];
         }
-        if (isset($matches[3]) && 0 < mb_strlen($matches[3])) {
-            $numbers[] = $matches[3];
+        if (isset($matches['micro']) && 0 < mb_strlen($matches['micro'])) {
+            $numbers['micro'] = $matches['micro'];
         }
-        if (isset($matches[4]) && 0 < mb_strlen($matches[4])) {
-            $numbers[] = $matches[4];
+        if (isset($matches['patch']) && 0 < mb_strlen($matches['patch'])) {
+            $numbers['patch'] = $matches['patch'];
         }
-        if (isset($matches[5]) && 0 < mb_strlen($matches[5])) {
-            $numbers[] = $matches[5];
+        if (isset($matches['micropatch']) && 0 < mb_strlen($matches['micropatch'])) {
+            $numbers['micropatch'] = $matches['micropatch'];
+        }
+        if (isset($matches['stability']) && 0 < mb_strlen($matches['stability'])) {
+            $numbers['stability'] = $matches['stability'];
+        }
+        if (isset($matches['build']) && 0 < mb_strlen($matches['build'])) {
+            $numbers['build'] = $matches['build'];
         }
 
         return $numbers;

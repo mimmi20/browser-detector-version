@@ -2,7 +2,7 @@
 /**
  * This file is part of the browser-detector-version package.
  *
- * Copyright (c) 2015-2017, Thomas Mueller <mimmi20@live.de>
+ * Copyright (c) 2015-2018, Thomas Mueller <mimmi20@live.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -59,7 +59,7 @@ interface VersionInterface
     /**
      * @var string
      */
-    public const REGEX = '[-_\.]{0,1}(rc|a|alpha|b|beta|p|pl|patch|stable|dev|d)[\.+]{0,1}(\d*)';
+    public const REGEX = '[-_.+ ]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*)';
 
     /**
      * returns the detected version

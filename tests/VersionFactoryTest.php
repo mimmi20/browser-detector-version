@@ -2,7 +2,7 @@
 /**
  * This file is part of the browser-detector-version package.
  *
- * Copyright (c) 2015-2017, Thomas Mueller <mimmi20@live.de>
+ * Copyright (c) 2015-2018, Thomas Mueller <mimmi20@live.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,12 +11,11 @@
 declare(strict_types = 1);
 namespace BrowserDetectorTest\Version;
 
+use BrowserDetector\Version\Version;
 use BrowserDetector\Version\VersionFactory;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Test class for VersionFactory
- */
-class VersionFactoryTest extends \PHPUnit\Framework\TestCase
+class VersionFactoryTest extends TestCase
 {
     /**
      * @dataProvider providerSet
@@ -43,7 +42,7 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
     ): void {
         $object = VersionFactory::set($version);
 
-        self::assertInstanceOf('\BrowserDetector\Version\Version', $object);
+        self::assertInstanceOf(Version::class, $object);
 
         self::assertSame($major, $object->getMajor(), 'major is wrong');
         self::assertSame($minor, $object->getMinor(), 'minor is wrong');
@@ -76,6 +75,8 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
             ['2.0.0-patch+12', '2', '0', '0', 'patch', '12', '2.0.0-patch+12'],
             ['4.0.0-beta+8', '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
             ['4.0.0-alpha+1', '4', '0', '0', 'alpha', '1', '4.0.0-alpha+1'],
+            ['2.0 Beta 4', '2', '0', '0', 'beta', '4', '2.0.0-beta+4'],
+            ['3.4.3-dev-1191', '3', '4', '3', 'dev', '1191', '3.4.3-dev+1191'],
         ];
     }
 
@@ -88,7 +89,7 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
     {
         $object = VersionFactory::set('XP');
 
-        self::assertInstanceOf('\BrowserDetector\Version\Version', $object);
+        self::assertInstanceOf(Version::class, $object);
 
         self::assertSame('XP', $object->getMajor(), 'major is wrong');
     }
@@ -120,7 +121,7 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
     ): void {
         $object = VersionFactory::detectVersion($uapart, $searches);
 
-        self::assertInstanceOf('\BrowserDetector\Version\Version', $object);
+        self::assertInstanceOf(Version::class, $object);
 
         self::assertSame($major, $object->getMajor(), 'major is wrong');
         self::assertSame($minor, $object->getMinor(), 'minor is wrong');
@@ -155,15 +156,15 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
         $build      = '8';
 
         $data = [
-            'major'     => $major,
-            'minor'     => $minor,
-            'micro'     => $patch,
+            'major' => $major,
+            'minor' => $minor,
+            'micro' => $patch,
             'stability' => $preRelease,
-            'build'     => $build,
+            'build' => $build,
         ];
         $object = VersionFactory::fromArray($data);
 
-        self::assertInstanceOf('\BrowserDetector\Version\Version', $object);
+        self::assertInstanceOf(Version::class, $object);
 
         self::assertSame($major, $object->getMajor(), 'major is wrong');
         self::assertSame($minor, $object->getMinor(), 'minor is wrong');
@@ -186,15 +187,15 @@ class VersionFactoryTest extends \PHPUnit\Framework\TestCase
         $build      = '8';
 
         $data = [
-            'major'     => $major,
-            'minor'     => $minor,
-            'micro'     => $patch,
+            'major' => $major,
+            'minor' => $minor,
+            'micro' => $patch,
             'stability' => $preRelease,
-            'build'     => $build,
+            'build' => $build,
         ];
         $object = VersionFactory::fromJson(json_encode($data));
 
-        self::assertInstanceOf('\BrowserDetector\Version\Version', $object);
+        self::assertInstanceOf(Version::class, $object);
 
         self::assertSame($major, $object->getMajor(), 'major is wrong');
         self::assertSame($minor, $object->getMinor(), 'minor is wrong');

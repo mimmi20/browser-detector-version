@@ -2,7 +2,7 @@
 /**
  * This file is part of the browser-detector-version package.
  *
- * Copyright (c) 2015-2017, Thomas Mueller <mimmi20@live.de>
+ * Copyright (c) 2015-2018, Thomas Mueller <mimmi20@live.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,11 +14,9 @@ namespace BrowserDetectorTest\Version;
 use BrowserDetector\Version\Version;
 use BrowserDetector\Version\VersionFactory;
 use BrowserDetector\Version\VersionInterface;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Test class for Version
- */
-class VersionTest extends \PHPUnit\Framework\TestCase
+class VersionTest extends TestCase
 {
     /**
      * @return void
