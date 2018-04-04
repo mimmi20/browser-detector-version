@@ -2,7 +2,7 @@
 /**
  * This file is part of the browser-detector-version package.
  *
- * Copyright (c) 2015-2017, Thomas Mueller <mimmi20@live.de>
+ * Copyright (c) 2015-2018, Thomas Mueller <mimmi20@live.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -73,16 +73,16 @@ class Version implements VersionInterface
     }
 
     /**
-     * @return (string|null)[]
+     * @return array
      */
     public function toArray(): array
     {
         return [
-            'major'     => $this->major,
-            'minor'     => $this->minor,
-            'micro'     => $this->micro,
+            'major' => $this->major,
+            'minor' => $this->minor,
+            'micro' => $this->micro,
             'stability' => $this->stability,
-            'build'     => $this->build,
+            'build' => $this->build,
         ];
     }
 

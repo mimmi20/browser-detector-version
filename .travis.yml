@@ -5,6 +5,7 @@ dist: trusty
 php:
   - 7.1
   - 7.2
+  - nightly
 
 os: linux
 
@@ -22,7 +23,6 @@ addons:
 
 stages:
   - composer validate
-  - check coding style
   - static code analysis
   - test
   - test with coverage
@@ -58,7 +58,7 @@ jobs:
         - travis_retry composer self-update
       script: vendor/bin/phpunit --colors --coverage-clover=clover.xml --coverage-text
       after_success:
-        - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.2/coveralls.phar && php -n coveralls.phar --verbose --coverage_clover=clover.xml
+        - wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.0.0/php-coveralls.phar && php -n php-coveralls.phar --verbose --coverage_clover=clover.xml
         - bash <(curl -s https://codecov.io/bash) -f clover.xml -F phpunit
 
     - stage: composer validate
@@ -67,14 +67,14 @@ jobs:
       install: skip
       script: composer validate
 
-    - stage: check coding style
+    - stage: static code analysis
       php: 7.1
       env:
         - COMPOSER_FLAGS=""
         - TEST=phpcs
       script: vendor/bin/phpcs --colors
 
-    - stage: check coding style
+    - stage: static code analysis
       php: 7.1
       env:
         - COMPOSER_FLAGS=""
