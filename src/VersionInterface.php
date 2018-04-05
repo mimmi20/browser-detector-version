@@ -49,17 +49,12 @@ interface VersionInterface
     /**
      * @var int
      */
-    public const IGNORE_MACRO_IF_EMPTY = 16;
+    public const IGNORE_MAJOR_IF_EMPTY = 16;
 
     /**
      * @var int
      */
     public const GET_ZERO_IF_EMPTY = 32;
-
-    /**
-     * @var string
-     */
-    public const REGEX = '[-_.+ ]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*)';
 
     /**
      * returns the detected version

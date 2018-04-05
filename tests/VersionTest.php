@@ -23,7 +23,7 @@ class VersionTest extends TestCase
      */
     public function testNegativeMajor(): void
     {
-        $this->expectException('\InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Major version must be a non-negative number formatted as string');
 
         new Version('-1');
@@ -34,7 +34,7 @@ class VersionTest extends TestCase
      */
     public function testNegativeMinor(): void
     {
-        $this->expectException('\InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Minor version must be a non-negative number formatted as string');
 
         new Version('0', '-1');
@@ -45,7 +45,7 @@ class VersionTest extends TestCase
      */
     public function testNegativePatch(): void
     {
-        $this->expectException('\InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Patch version must be a non-negative number formatted as string');
 
         new Version('0', '0', '-1');
@@ -167,7 +167,7 @@ class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $patch, $preRelease, $build);
 
-        self::assertSame('0.0.1-beta+8', $version->getVersion(VersionInterface::IGNORE_MACRO_IF_EMPTY));
+        self::assertSame('0.0.1-beta+8', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
 
         $major      = '0';
         $minor      = '0';
@@ -177,7 +177,7 @@ class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $patch, $preRelease, $build);
 
-        self::assertSame('', $version->getVersion(VersionInterface::IGNORE_MACRO_IF_EMPTY));
+        self::assertSame('', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
 
         $major      = '0';
         $minor      = '0';
@@ -187,6 +187,6 @@ class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $patch, $preRelease, $build);
 
-        self::assertSame('0', $version->getVersion(VersionInterface::IGNORE_MACRO_IF_EMPTY | VersionInterface::GET_ZERO_IF_EMPTY));
+        self::assertSame('0', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::GET_ZERO_IF_EMPTY));
     }
 }
