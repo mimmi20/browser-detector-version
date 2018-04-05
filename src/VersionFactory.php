@@ -22,6 +22,21 @@ namespace BrowserDetector\Version;
 class VersionFactory implements VersionFactoryInterface
 {
     /**
+     * @var string
+     */
+    private $regex = VersionFactoryInterface::REGEX;
+
+    /**
+     * @param string|null $regex
+     */
+    public function __construct(?string $regex = null)
+    {
+        if (null !== $regex) {
+            $this->regex = $regex;
+        }
+    }
+
+    /**
      * sets the detected version
      *
      * @param string $version
@@ -30,29 +45,13 @@ class VersionFactory implements VersionFactoryInterface
      *
      * @return \BrowserDetector\Version\VersionInterface
      */
-    public static function set(string $version): VersionInterface
+    public function set(string $version): VersionInterface
     {
-        $stringMatches = [];
-
-        if (preg_match('/^(xp|vista|nt|me)$/i', $version, $stringMatches)) {
-            return new Version($stringMatches[1]);
-        }
-
         $matches = [];
         $numbers = [];
 
-        $regex = '/^' .
-            'v?' .
-            '(?<major>\d+)' .
-            '(?:[-|\.](?<minor>\d+))?' .
-            '(?:[-|\.](?<micro>\d+))?' .
-            '(?:[-|\.](?<patch>\d+))?' .
-            '(?:[-|\.](?<micropatch>\d+))?' .
-            '(?:' . VersionInterface::REGEX . ')?' .
-            '.*$/i';
-
-        if (preg_match($regex, $version, $matches)) {
-            $numbers = self::mapMatches($matches);
+        if (preg_match($this->regex, $version, $matches)) {
+            $numbers = $this->mapMatches($matches);
         }
 
         if (empty($numbers)) {
@@ -118,7 +117,7 @@ class VersionFactory implements VersionFactoryInterface
      *
      * @return \BrowserDetector\Version\VersionInterface
      */
-    public static function detectVersion(string $useragent, array $searches = [], string $default = '0'): VersionInterface
+    public function detectVersion(string $useragent, array $searches = [], string $default = '0'): VersionInterface
     {
         $modifiers = [
             ['\/', ''],
@@ -157,7 +156,7 @@ class VersionFactory implements VersionFactoryInterface
             }
         }
 
-        return self::set($version);
+        return $this->set($version);
     }
 
     /**
@@ -165,7 +164,7 @@ class VersionFactory implements VersionFactoryInterface
      *
      * @return array
      */
-    private static function mapMatches(array $matches): array
+    private function mapMatches(array $matches): array
     {
         $numbers = [];
 

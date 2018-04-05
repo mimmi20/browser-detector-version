@@ -52,6 +52,8 @@ class Version implements VersionInterface
      * @param string      $patch
      * @param string      $stability
      * @param string|null $build
+     *
+     * @throws \UnexpectedValueException
      */
     public function __construct(string $major = '0', string $minor = '0', string $patch = '0', string $stability = 'stable', ?string $build = null)
     {
@@ -147,14 +149,11 @@ class Version implements VersionInterface
      *
      * @param int $mode
      *
-     * @throws \UnexpectedValueException
-     *
      * @return string
      */
     public function getVersion(int $mode = VersionInterface::COMPLETE): string
     {
-        $versions = $this->toArray();
-
+        $versions     = $this->toArray();
         $microIsEmpty = false;
 
         if (VersionInterface::IGNORE_MICRO & $mode) {
@@ -162,7 +161,7 @@ class Version implements VersionInterface
             $microIsEmpty = true;
         } elseif ((VersionInterface::IGNORE_MICRO_IF_EMPTY & $mode)
             || (VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
-            || (VersionInterface::IGNORE_MACRO_IF_EMPTY & $mode)
+            || (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode)
         ) {
             if (empty($versions['micro']) || in_array($versions['micro'], ['', '0', '00'])) {
                 $microIsEmpty = true;
@@ -179,7 +178,7 @@ class Version implements VersionInterface
             unset($versions['minor'], $versions['micro'], $versions['stability'], $versions['build']);
             $minorIsEmpty = true;
         } elseif ((VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
-            || (VersionInterface::IGNORE_MACRO_IF_EMPTY & $mode)
+            || (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode)
         ) {
             if ($microIsEmpty && (empty($versions['minor']) || in_array($versions['minor'], ['', '0', '00']))) {
                 $minorIsEmpty = true;
@@ -192,7 +191,7 @@ class Version implements VersionInterface
 
         $macroIsEmpty = false;
 
-        if (VersionInterface::IGNORE_MACRO_IF_EMPTY & $mode) {
+        if (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode) {
             if ($minorIsEmpty && (empty($versions['major']) || in_array($versions['major'], ['', '0', '00']))) {
                 $macroIsEmpty = true;
             }

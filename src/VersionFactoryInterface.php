@@ -22,6 +22,11 @@ namespace BrowserDetector\Version;
 interface VersionFactoryInterface
 {
     /**
+     * @var string
+     */
+    public const REGEX = '/^v?(?<major>\d+)(?:[-|\.](?<minor>\d+))?(?:[-|\.](?<micro>\d+))?(?:[-|\.](?<patch>\d+))?(?:[-|\.](?<micropatch>\d+))?(?:[-_.+]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*))?.*$/i';
+
+    /**
      * sets the detected version
      *
      * @param string $version
@@ -30,7 +35,7 @@ interface VersionFactoryInterface
      *
      * @return \BrowserDetector\Version\VersionInterface
      */
-    public static function set(string $version): VersionInterface;
+    public function set(string $version): VersionInterface;
 
     /**
      * detects the bit count by this browser from the given user agent
@@ -41,7 +46,7 @@ interface VersionFactoryInterface
      *
      * @return \BrowserDetector\Version\Version
      */
-    public static function detectVersion(string $useragent, array $searches = [], string $default = '0'): VersionInterface;
+    public function detectVersion(string $useragent, array $searches = [], string $default = '0'): VersionInterface;
 
     /**
      * @param array $data

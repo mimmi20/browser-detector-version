@@ -40,7 +40,7 @@ class VersionFactoryTest extends TestCase
         ?string $build,
         string $complete
     ): void {
-        $object = VersionFactory::set($version);
+        $object = (new VersionFactory())->set($version);
 
         self::assertInstanceOf(Version::class, $object);
 
@@ -75,7 +75,6 @@ class VersionFactoryTest extends TestCase
             ['2.0.0-patch+12', '2', '0', '0', 'patch', '12', '2.0.0-patch+12'],
             ['4.0.0-beta+8', '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
             ['4.0.0-alpha+1', '4', '0', '0', 'alpha', '1', '4.0.0-alpha+1'],
-            ['2.0 Beta 4', '2', '0', '0', 'beta', '4', '2.0.0-beta+4'],
             ['3.4.3-dev-1191', '3', '4', '3', 'dev', '1191', '3.4.3-dev+1191'],
         ];
     }
@@ -87,11 +86,11 @@ class VersionFactoryTest extends TestCase
      */
     public function testVersionSetXp(): void
     {
-        $object = VersionFactory::set('XP');
+        $object = (new VersionFactory())->set('XP');
 
         self::assertInstanceOf(Version::class, $object);
 
-        self::assertSame('XP', $object->getMajor(), 'major is wrong');
+        self::assertSame('0', $object->getMajor(), 'major is wrong');
     }
 
     /**
@@ -119,7 +118,7 @@ class VersionFactoryTest extends TestCase
         ?string $build,
         string $complete
     ): void {
-        $object = VersionFactory::detectVersion($uapart, $searches);
+        $object = (new VersionFactory())->detectVersion($uapart, $searches);
 
         self::assertInstanceOf(Version::class, $object);
 
