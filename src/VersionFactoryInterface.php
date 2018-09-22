@@ -16,7 +16,7 @@ interface VersionFactoryInterface
     /**
      * @var string
      */
-    public const REGEX = '/^v?(?<major>\d+)(?:[-\.](?<minor>\d+))?(?:[-\.](?<micro>\d+))?(?:[-\.](?<patch>\d+))?(?:[-\.](?<micropatch>\d+))?(?:[-_+]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d))?(?:(?: ?build)?[-_.+ ]?(?<build>\d*))?.*$/i';
+    public const REGEX = '/^v?(?<major>\d+)(?:[-\.](?<minor>\d+))?(?:[-\.](?<micro>\d+))?(?:[-\.](?<patch>\d+))?(?:[-\.](?<micropatch>\d+))?(?:(?:[-_+]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?| build |\+)(?<build>\d*))?.*$/i';
 
     /**
      * sets the detected version
