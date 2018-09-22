@@ -13,6 +13,7 @@ namespace BrowserDetectorTest\Version;
 
 use BrowserDetector\Version\Version;
 use BrowserDetector\Version\VersionFactory;
+use JsonClass\Json;
 use PHPUnit\Framework\TestCase;
 
 class VersionFactoryTest extends TestCase
@@ -55,7 +56,7 @@ class VersionFactoryTest extends TestCase
     /**
      * @return array[]
      */
-    public function providerSet()
+    public function providerSet(): array
     {
         return [
             ['34.0.1760.0', '34', '0', '1760.0', 'stable', null, '34.0.1760.0'],
@@ -76,6 +77,7 @@ class VersionFactoryTest extends TestCase
             ['4.0.0-beta+8', '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
             ['4.0.0-alpha+1', '4', '0', '0', 'alpha', '1', '4.0.0-alpha+1'],
             ['3.4.3-dev-1191', '3', '4', '3', 'dev', '1191', '3.4.3-dev+1191'],
+            ['1.4 build 2', '1', '4', '0', 'stable', '2', '1.4.0+2'],
         ];
     }
 
@@ -133,7 +135,7 @@ class VersionFactoryTest extends TestCase
     /**
      * @return array[]
      */
-    public function providerDetectVersion()
+    public function providerDetectVersion(): array
     {
         return [
             ['Chrome/34.0.1760.0', ['Chrome'], '34', '0', '1760.0', 'stable', null, '34.0.1760.0'],
@@ -192,7 +194,7 @@ class VersionFactoryTest extends TestCase
             'stability' => $preRelease,
             'build' => $build,
         ];
-        $object = VersionFactory::fromJson(json_encode($data));
+        $object = VersionFactory::fromJson((new Json())->encode($data));
 
         self::assertInstanceOf(Version::class, $object);
 

@@ -11,14 +11,8 @@
 declare(strict_types = 1);
 namespace BrowserDetector\Version;
 
-/**
- * a general version detector factory
- *
- * @category  BrowserDetector
- *
- * @copyright 2012-2016 Thomas Mueller
- * @license   http://www.opensource.org/licenses/MIT MIT License
- */
+use JsonClass\Json;
+
 class VersionFactory implements VersionFactoryInterface
 {
     /**
@@ -212,10 +206,12 @@ class VersionFactory implements VersionFactoryInterface
     /**
      * @param string $json
      *
+     * @throws \ExceptionalJSON\DecodeErrorException when the decode operation fails
+     *
      * @return \BrowserDetector\Version\VersionInterface
      */
     public static function fromJson(string $json): VersionInterface
     {
-        return self::fromArray((array) json_decode($json));
+        return self::fromArray((new Json())->decode($json, true));
     }
 }

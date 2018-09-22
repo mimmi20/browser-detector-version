@@ -11,20 +11,12 @@
 declare(strict_types = 1);
 namespace BrowserDetector\Version;
 
-/**
- * a general version detector factory
- *
- * @category  BrowserDetector
- *
- * @copyright 2012-2016 Thomas Mueller
- * @license   http://www.opensource.org/licenses/MIT MIT License
- */
 interface VersionFactoryInterface
 {
     /**
      * @var string
      */
-    public const REGEX = '/^v?(?<major>\d+)(?:[-|\.](?<minor>\d+))?(?:[-|\.](?<micro>\d+))?(?:[-|\.](?<patch>\d+))?(?:[-|\.](?<micropatch>\d+))?(?:[-_+]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*))?.*$/i';
+    public const REGEX = '/^v?(?<major>\d+)(?:[-\.](?<minor>\d+))?(?:[-\.](?<micro>\d+))?(?:[-\.](?<patch>\d+))?(?:[-\.](?<micropatch>\d+))?(?:[-_+]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d))?(?:(?: ?build)?[-_.+ ]?(?<build>\d*))?.*$/i';
 
     /**
      * sets the detected version
