@@ -21,6 +21,16 @@ class VersionFactory implements VersionFactoryInterface
     private $regex = VersionFactoryInterface::REGEX;
 
     /**
+     * @param string|null $regex
+     */
+    public function __construct(?string $regex = null)
+    {
+        if (null !== $regex) {
+            $this->regex = $regex;
+        }
+    }
+
+    /**
      * sets the detected version
      *
      * @param string $version
