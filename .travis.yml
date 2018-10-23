@@ -39,7 +39,6 @@ install: travis_retry composer update --optimize-autoloader --prefer-dist --pref
 script: vendor/bin/phpunit --colors --no-coverage
 
 jobs:
-  fast_finish: true
   allow_failures:
     - php: 7.3
     - php: nightly
