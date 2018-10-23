@@ -80,6 +80,7 @@ class VersionFactoryTest extends TestCase
             ['3.4.3-dev+1191', '3', '4', '3', 'dev', '1191', '3.4.3-dev+1191'],
             ['1.4 build 2', '1', '4', '0', 'stable', '2', '1.4.0+2'],
             ['1.4.0+2', '1', '4', '0', 'stable', '2', '1.4.0+2'],
+            ['2.3.1_r747', '2', '3', '1', 'stable', '747', '2.3.1+747'],
         ];
     }
 
@@ -145,6 +146,7 @@ class VersionFactoryTest extends TestCase
             ['Firefox%20/4.0b8', ['Firefox%20'], '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
             ['Firefox/4.0b8', [null, false, 'Firefox'], '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
             ['Presto/2.8.119 320', ['Presto'], '2', '8', '119', 'stable', null, '2.8.119'],
+            ['Mobicip/2.3.1_r747', ['Mobicip'], '2', '3', '1', 'stable', '747', '2.3.1+747'],
         ];
     }
 
