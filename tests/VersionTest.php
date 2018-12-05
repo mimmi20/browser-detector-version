@@ -16,7 +16,7 @@ use BrowserDetector\Version\VersionFactory;
 use BrowserDetector\Version\VersionInterface;
 use PHPUnit\Framework\TestCase;
 
-class VersionTest extends TestCase
+final class VersionTest extends TestCase
 {
     /**
      * @return void

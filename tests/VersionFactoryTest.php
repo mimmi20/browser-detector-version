@@ -16,7 +16,7 @@ use BrowserDetector\Version\VersionFactory;
 use JsonClass\Json;
 use PHPUnit\Framework\TestCase;
 
-class VersionFactoryTest extends TestCase
+final class VersionFactoryTest extends TestCase
 {
     /**
      * @dataProvider providerSet

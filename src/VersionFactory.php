@@ -13,7 +13,7 @@ namespace BrowserDetector\Version;
 
 use JsonClass\Json;
 
-class VersionFactory implements VersionFactoryInterface
+final class VersionFactory implements VersionFactoryInterface
 {
     /**
      * @var string
