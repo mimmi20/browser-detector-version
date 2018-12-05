@@ -11,7 +11,7 @@
 declare(strict_types = 1);
 namespace BrowserDetector\Version;
 
-class Version implements VersionInterface
+final class Version implements VersionInterface
 {
     /**
      * @var string the detected major version
