@@ -46,11 +46,4 @@ interface VersionFactoryInterface
      * @return \BrowserDetector\Version\VersionInterface
      */
     public static function fromArray(array $data): VersionInterface;
-
-    /**
-     * @param string $json
-     *
-     * @return \BrowserDetector\Version\VersionInterface
-     */
-    public static function fromJson(string $json): VersionInterface;
 }

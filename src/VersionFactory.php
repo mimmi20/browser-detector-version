@@ -11,8 +11,6 @@
 declare(strict_types = 1);
 namespace BrowserDetector\Version;
 
-use JsonClass\Json;
-
 final class VersionFactory implements VersionFactoryInterface
 {
     /**
@@ -49,20 +47,23 @@ final class VersionFactory implements VersionFactoryInterface
         }
 
         if (empty($numbers)) {
-            return new Version();
+            return new Version('0');
         }
 
-        $major = (isset($numbers['major']) ? $numbers['major'] : '0');
-        $minor = (isset($numbers['minor']) ? $numbers['minor'] : '0');
+        $major = (array_key_exists('major', $numbers) ? $numbers['major'] : '0');
+        $minor = (array_key_exists('minor', $numbers) ? $numbers['minor'] : '0');
 
-        if (isset($numbers['micro'])) {
-            $patch = $numbers['micro'];
-            $patch .= (isset($numbers['patch']) ? '.' . $numbers['patch'] . (isset($numbers['micropatch']) ? '.' . $numbers['micropatch'] : '') : '');
+        if (array_key_exists('micro', $numbers)) {
+            $micro = $numbers['micro'];
+            $patch = (array_key_exists('patch', $numbers) ? $numbers['patch'] : null);
+            $micropatch = (array_key_exists('micropatch', $numbers) ? $numbers['micropatch'] : null);
         } else {
-            $patch = '0';
+            $micro = '0';
+            $patch = null;
+            $micropatch = null;
         }
 
-        $stability = (!empty($numbers['stability'])) ? $numbers['stability'] : null;
+        $stability = (array_key_exists('stability', $numbers)) ? $numbers['stability'] : null;
 
         if (null === $stability || 0 === mb_strlen($stability)) {
             $stability = 'stable';
@@ -97,9 +98,9 @@ final class VersionFactory implements VersionFactoryInterface
                 break;
         }
 
-        $build = (!empty($numbers['build'])) ? $numbers['build'] : null;
+        $build = (array_key_exists('build', $numbers)) ? $numbers['build'] : null;
 
-        return new Version($major, $minor, $patch, $stability, $build);
+        return new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
     }
 
     /**
@@ -139,7 +140,7 @@ final class VersionFactory implements VersionFactoryInterface
 
             foreach ($modifiers as $modifier) {
                 $compareString = '/' . $search . $modifier[0] . '(\d+[\d._\-+ abcdehlprstv]*)' . $modifier[1] . '/i';
-
+                $matches = [];
                 $doMatch = preg_match($compareString, $useragent, $matches);
 
                 if ($doMatch) {
@@ -162,25 +163,25 @@ final class VersionFactory implements VersionFactoryInterface
     {
         $numbers = [];
 
-        if (isset($matches['major']) && 0 < mb_strlen($matches['major'])) {
+        if (array_key_exists('major', $matches) && 0 < mb_strlen($matches['major'])) {
             $numbers['major'] = $matches['major'];
         }
-        if (isset($matches['minor']) && 0 < mb_strlen($matches['minor'])) {
+        if (array_key_exists('minor', $matches) && 0 < mb_strlen($matches['minor'])) {
             $numbers['minor'] = $matches['minor'];
         }
-        if (isset($matches['micro']) && 0 < mb_strlen($matches['micro'])) {
+        if (array_key_exists('micro', $matches) && 0 < mb_strlen($matches['micro'])) {
             $numbers['micro'] = $matches['micro'];
         }
-        if (isset($matches['patch']) && 0 < mb_strlen($matches['patch'])) {
+        if (array_key_exists('patch', $matches) && 0 < mb_strlen($matches['patch'])) {
             $numbers['patch'] = $matches['patch'];
         }
-        if (isset($matches['micropatch']) && 0 < mb_strlen($matches['micropatch'])) {
+        if (array_key_exists('micropatch', $matches) && 0 < mb_strlen($matches['micropatch'])) {
             $numbers['micropatch'] = $matches['micropatch'];
         }
-        if (isset($matches['stability']) && 0 < mb_strlen($matches['stability'])) {
+        if (array_key_exists('stability', $matches) && 0 < mb_strlen($matches['stability'])) {
             $numbers['stability'] = $matches['stability'];
         }
-        if (isset($matches['build']) && 0 < mb_strlen($matches['build'])) {
+        if (array_key_exists('build', $matches) && 0 < mb_strlen($matches['build'])) {
             $numbers['build'] = $matches['build'];
         }
 
@@ -194,24 +195,14 @@ final class VersionFactory implements VersionFactoryInterface
      */
     public static function fromArray(array $data): VersionInterface
     {
-        $major     = isset($data['major']) ? $data['major'] : '0';
-        $minor     = isset($data['minor']) ? $data['minor'] : '0';
-        $micro     = isset($data['micro']) ? $data['micro'] : '0';
-        $stability = isset($data['stability']) ? $data['stability'] : 'stable';
-        $build     = isset($data['build']) ? $data['build'] : null;
+        $major     = array_key_exists('major', $data) ? $data['major'] : '0';
+        $minor     = array_key_exists('minor', $data) ? $data['minor'] : '0';
+        $micro     = array_key_exists('micro', $data) ? $data['micro'] : '0';
+        $patch     = array_key_exists('patch', $data) ? $data['patch'] : '0';
+        $micropatch     = array_key_exists('micropatch', $data) ? $data['micropatch'] : '0';
+        $stability = array_key_exists('stability', $data) ? $data['stability'] : 'stable';
+        $build     = array_key_exists('build', $data) ? $data['build'] : null;
 
-        return new Version($major, $minor, $micro, $stability, $build);
-    }
-
-    /**
-     * @param string $json
-     *
-     * @throws \ExceptionalJSON\DecodeErrorException when the decode operation fails
-     *
-     * @return \BrowserDetector\Version\VersionInterface
-     */
-    public static function fromJson(string $json): VersionInterface
-    {
-        return self::fromArray((new Json())->decode($json, true));
+        return new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
     }
 }

@@ -60,7 +60,7 @@ interface VersionInterface
     public function getVersion(int $mode = self::COMPLETE): string;
 
     /**
-     * @return (string|null)[]
+     * @return array
      */
     public function toArray(): array;
 
@@ -78,6 +78,16 @@ interface VersionInterface
      * @return string
      */
     public function getMicro(): string;
+
+    /**
+     * @return string|null
+     */
+    public function getPatch(): ?string;
+
+    /**
+     * @return string|null
+     */
+    public function getMicropatch(): ?string;
 
     /**
      * @return string|null

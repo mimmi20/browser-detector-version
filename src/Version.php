@@ -29,6 +29,16 @@ final class Version implements VersionInterface
     private $micro;
 
     /**
+     * @var string|null the detected patch version
+     */
+    private $patch;
+
+    /**
+     * @var string|null the detected micropatch version
+     */
+    private $micropatch;
+
+    /**
      * @var string
      */
     private $stability = 'stable';
@@ -39,29 +49,44 @@ final class Version implements VersionInterface
     private $build;
 
     /**
-     * @param string      $major
-     * @param string      $minor
-     * @param string      $patch
-     * @param string      $stability
+     * @param string $major
+     * @param string $minor
+     * @param string $micro
+     * @param string|null $patch
+     * @param string|null $micropatch
+     * @param string $stability
      * @param string|null $build
      *
-     * @throws \UnexpectedValueException
      */
-    public function __construct(string $major = '0', string $minor = '0', string $patch = '0', string $stability = 'stable', ?string $build = null)
+    public function __construct(string $major, string $minor = '0', string $micro = '0', ?string $patch = null, ?string $micropatch = null, string $stability = 'stable', ?string $build = null)
     {
-        if (0 > (int) $major) {
+        if (!is_numeric($major) || '0' > $major) {
             throw new \InvalidArgumentException('Major version must be a non-negative number formatted as string');
         }
-        if (0 > (int) $minor) {
+
+        if (!is_numeric($minor) || '0' > $minor) {
             throw new \InvalidArgumentException('Minor version must be a non-negative number formatted as string');
         }
-        if (0 > (int) $patch) {
+
+        if (false !== strpos($micro, '.')) {
+            $parts = explode('.', $micro);
+            $micro = $parts[0];
+
+            if (null === $patch && array_key_exists(1, $parts)) {
+                $patch      = $parts[1];
+                $micropatch = array_key_exists(2, $parts) ? $parts[2] : null;
+            }
+        }
+
+        if (0 > (int) $micro || !is_numeric(str_replace('.', '', $micro))) {
             throw new \InvalidArgumentException('Patch version must be a non-negative number formatted as string');
         }
 
         $this->major     = $major;
         $this->minor     = $minor;
-        $this->micro     = $patch;
+        $this->micro     = $micro;
+        $this->patch     = $patch;
+        $this->micropatch     = $micropatch;
         $this->stability = $stability;
         $this->build     = $build;
     }
@@ -75,6 +100,8 @@ final class Version implements VersionInterface
             'major' => $this->major,
             'minor' => $this->minor,
             'micro' => $this->micro,
+            'patch' => $this->patch,
+            'micropatch' => $this->micropatch,
             'stability' => $this->stability,
             'build' => $this->build,
         ];
@@ -102,6 +129,22 @@ final class Version implements VersionInterface
     public function getMicro(): string
     {
         return $this->micro;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPatch(): ?string
+    {
+        return $this->patch;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMicropatch(): ?string
+    {
+        return $this->micropatch;
     }
 
     /**
@@ -149,7 +192,7 @@ final class Version implements VersionInterface
         $microIsEmpty = false;
 
         if (VersionInterface::IGNORE_MICRO & $mode) {
-            unset($versions['micro'], $versions['stability'], $versions['build']);
+            unset($versions['micro'], $versions['patch'], $versions['micropatch'], $versions['stability'], $versions['build']);
             $microIsEmpty = true;
         } elseif ((VersionInterface::IGNORE_MICRO_IF_EMPTY & $mode)
             || (VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
@@ -160,14 +203,14 @@ final class Version implements VersionInterface
             }
 
             if ($microIsEmpty) {
-                unset($versions['micro'], $versions['stability'], $versions['build']);
+                unset($versions['micro'], $versions['patch'], $versions['micropatch'], $versions['stability'], $versions['build']);
             }
         }
 
         $minorIsEmpty = false;
 
         if (VersionInterface::IGNORE_MINOR & $mode) {
-            unset($versions['minor'], $versions['micro'], $versions['stability'], $versions['build']);
+            unset($versions['minor'], $versions['micro'], $versions['patch'], $versions['micropatch'], $versions['stability'], $versions['build']);
             $minorIsEmpty = true;
         } elseif ((VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
             || (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode)
@@ -177,7 +220,7 @@ final class Version implements VersionInterface
             }
 
             if ($minorIsEmpty) {
-                unset($versions['minor'], $versions['micro'], $versions['stability'], $versions['build']);
+                unset($versions['minor'], $versions['micro'], $versions['patch'], $versions['micropatch'], $versions['stability'], $versions['build']);
             }
         }
 
@@ -189,7 +232,7 @@ final class Version implements VersionInterface
             }
 
             if ($macroIsEmpty) {
-                unset($versions['major'], $versions['minor'], $versions['micro'], $versions['stability'], $versions['build']);
+                unset($versions['major'], $versions['minor'], $versions['micro'], $versions['patch'], $versions['micropatch'], $versions['stability'], $versions['build']);
             }
         }
 
@@ -203,7 +246,7 @@ final class Version implements VersionInterface
 
         return $versions['major']
             . (isset($versions['minor']) ? '.' . $versions['minor'] : '')
-            . (isset($versions['micro']) ? '.' . $versions['micro'] : '')
+            . (isset($versions['micro']) ? '.' . $versions['micro'] . (isset($versions['patch']) ? '.' . $versions['patch'] . (isset($versions['micropatch']) ? '.' . $versions['micropatch'] : '') : '') : '')
             . ((isset($versions['stability']) && 'stable' !== $versions['stability']) ? '-' . $versions['stability'] : '')
             . (isset($versions['build']) ? '+' . $versions['build'] : '');
     }
