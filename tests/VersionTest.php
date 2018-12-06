@@ -32,6 +32,17 @@ final class VersionTest extends TestCase
     /**
      * @return void
      */
+    public function testNotNumericMajor(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Major version must be a non-negative number formatted as string');
+
+        new Version('a');
+    }
+
+    /**
+     * @return void
+     */
     public function testNegativeMinor(): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -43,7 +54,18 @@ final class VersionTest extends TestCase
     /**
      * @return void
      */
-    public function testNegativePatch(): void
+    public function testNotNumericMinor(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Minor version must be a non-negative number formatted as string');
+
+        new Version('0', 'b');
+    }
+
+    /**
+     * @return void
+     */
+    public function testNegativeMicro(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Patch version must be a non-negative number formatted as string');
@@ -54,17 +76,52 @@ final class VersionTest extends TestCase
     /**
      * @return void
      */
+    public function testNotNumericMicro(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Patch version must be a non-negative number formatted as string');
+
+        new Version('0', '0', 'c');
+    }
+
+    /**
+     * @return void
+     */
     public function testToarray(): void
     {
         $major      = '4';
         $minor      = '0';
-        $patch      = '0';
-        $preRelease = 'beta';
+        $micro      = '0';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
         $build      = '8';
 
-        $version = new Version($major, $minor, $patch, $preRelease, $build);
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
+        
+        self::assertSame($major, $version->getMajor());
+        self::assertSame($minor, $version->getMinor());
+        self::assertSame($micro, $version->getMicro());
+        self::assertSame($patch, $version->getPatch());
+        self::assertSame($micropatch, $version->getMicropatch());
+        self::assertSame($stability, $version->getStability());
+        self::assertSame($build, $version->getBuild());
 
         $array  = $version->toArray();
+        
+        self::assertArrayHasKey('major', $array);
+        self::assertInternalType('string', $array['major']);
+        self::assertArrayHasKey('minor', $array);
+        self::assertInternalType('string', $array['minor']);
+        self::assertArrayHasKey('micro', $array);
+        self::assertInternalType('string', $array['micro']);
+        self::assertArrayHasKey('patch', $array);
+        self::assertInternalType('string', $array['patch']);
+        self::assertArrayHasKey('micropatch', $array);
+        self::assertArrayHasKey('stability', $array);
+        self::assertInternalType('string', $array['stability']);
+        self::assertArrayHasKey('build', $array);
+        
         $object = VersionFactory::fromArray($array);
 
         self::assertEquals($version, $object);
@@ -77,11 +134,25 @@ final class VersionTest extends TestCase
     {
         $major      = '4';
         $minor      = '0';
-        $patch      = '0';
-        $preRelease = 'beta';
+        $micro      = '0';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
         $build      = '8';
 
-        $version = new Version($major, $minor, $patch, $preRelease, $build);
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
+
+        self::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MICRO));
+
+        $major      = '4';
+        $minor      = '0';
+        $micro      = '1';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
+        $build      = '8';
+
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
         self::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MICRO));
     }
@@ -93,11 +164,25 @@ final class VersionTest extends TestCase
     {
         $major      = '4';
         $minor      = '0';
-        $patch      = '0';
-        $preRelease = 'beta';
+        $micro      = '0';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
         $build      = '8';
 
-        $version = new Version($major, $minor, $patch, $preRelease, $build);
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
+
+        self::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR));
+
+        $major      = '4';
+        $minor      = '1';
+        $micro      = '1';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
+        $build      = '8';
+
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
         self::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR));
     }
@@ -109,21 +194,37 @@ final class VersionTest extends TestCase
     {
         $major      = '4';
         $minor      = '0';
-        $patch      = '1';
-        $preRelease = 'beta';
+        $micro      = '1';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
         $build      = '8';
 
-        $version = new Version($major, $minor, $patch, $preRelease, $build);
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        self::assertSame('4.0.1-beta+8', $version->getVersion(VersionInterface::IGNORE_MICRO_IF_EMPTY));
+        self::assertSame('4.0.1.1-beta+8', $version->getVersion(VersionInterface::IGNORE_MICRO_IF_EMPTY));
 
         $major      = '4';
         $minor      = '0';
-        $patch      = '0';
-        $preRelease = 'beta';
+        $micro      = '0';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
         $build      = '8';
 
-        $version = new Version($major, $minor, $patch, $preRelease, $build);
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
+
+        self::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MICRO_IF_EMPTY));
+
+        $major      = '4';
+        $minor      = '0';
+        $micro      = '00';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
+        $build      = '8';
+
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
         self::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MICRO_IF_EMPTY));
     }
@@ -135,23 +236,51 @@ final class VersionTest extends TestCase
     {
         $major      = '4';
         $minor      = '0';
-        $patch      = '1';
-        $preRelease = 'beta';
+        $micro      = '1';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
         $build      = '8';
 
-        $version = new Version($major, $minor, $patch, $preRelease, $build);
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        self::assertSame('4.0.1-beta+8', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
+        self::assertSame('4.0.1.1-beta+8', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
 
         $major      = '4';
         $minor      = '0';
-        $patch      = '0';
-        $preRelease = 'beta';
+        $micro      = '0';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
         $build      = '8';
 
-        $version = new Version($major, $minor, $patch, $preRelease, $build);
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
         self::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
+
+        $major      = '4';
+        $minor      = '0';
+        $micro      = '0';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
+        $build      = '8';
+
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
+
+        self::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
+
+        $major      = '4';
+        $minor      = '0';
+        $micro      = '1';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
+        $build      = '8';
+
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
+
+        self::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY | VersionInterface::IGNORE_MICRO));
     }
 
     /**
@@ -161,31 +290,61 @@ final class VersionTest extends TestCase
     {
         $major      = '0';
         $minor      = '0';
-        $patch      = '1';
-        $preRelease = 'beta';
+        $micro      = '1';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
         $build      = '8';
 
-        $version = new Version($major, $minor, $patch, $preRelease, $build);
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        self::assertSame('0.0.1-beta+8', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
+        self::assertSame('0.0.1.1-beta+8', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
 
         $major      = '0';
         $minor      = '0';
-        $patch      = '0';
-        $preRelease = 'beta';
+        $micro      = '0';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
         $build      = '8';
 
-        $version = new Version($major, $minor, $patch, $preRelease, $build);
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
+
+        self::assertSame('', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
+
+        $major      = '00';
+        $minor      = '0';
+        $micro      = '0';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
+        $build      = '8';
+
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
         self::assertSame('', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
 
         $major      = '0';
-        $minor      = '0';
-        $patch      = '0';
-        $preRelease = 'beta';
+        $minor      = '1';
+        $micro      = '0';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
         $build      = '8';
 
-        $version = new Version($major, $minor, $patch, $preRelease, $build);
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
+
+        self::assertSame('', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::IGNORE_MINOR));
+
+        $major      = '0';
+        $minor      = '0';
+        $micro      = '0';
+        $patch = '1';
+        $micropatch = null;
+        $stability = 'beta';
+        $build      = '8';
+
+        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
         self::assertSame('0', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::GET_ZERO_IF_EMPTY));
     }

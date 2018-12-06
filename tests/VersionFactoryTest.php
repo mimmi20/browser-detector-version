@@ -25,8 +25,8 @@ final class VersionFactoryTest extends TestCase
      * @param string      $version
      * @param string      $major
      * @param string      $minor
-     * @param string      $patch
-     * @param string      $preRelease
+     * @param string      $micro
+     * @param string      $stability
      * @param string|null $build
      * @param string      $complete
      *
@@ -36,8 +36,8 @@ final class VersionFactoryTest extends TestCase
         string $version,
         string $major,
         string $minor,
-        string $patch,
-        string $preRelease,
+        string $micro,
+        string $stability,
         ?string $build,
         string $complete
     ): void {
@@ -47,8 +47,8 @@ final class VersionFactoryTest extends TestCase
 
         self::assertSame($major, $object->getMajor(), 'major is wrong');
         self::assertSame($minor, $object->getMinor(), 'minor is wrong');
-        self::assertSame($patch, $object->getMicro(), 'patch is wrong');
-        self::assertSame($preRelease, $object->getStability(), 'stability is wrong');
+        self::assertSame($micro, $object->getMicro(), 'patch is wrong');
+        self::assertSame($stability, $object->getStability(), 'stability is wrong');
         self::assertSame($build, $object->getBuild(), 'build is wrong');
         self::assertSame($complete, $object->getVersion(), 'complete is wrong');
     }
@@ -59,8 +59,8 @@ final class VersionFactoryTest extends TestCase
     public function providerSet(): array
     {
         return [
-            ['34.0.1760.0', '34', '0', '1760.0', 'stable', null, '34.0.1760.0'],
-            ['3.9.0.0.22', '3', '9', '0.0.22', 'stable', null, '3.9.0.0.22'],
+            ['34.0.1760.0', '34', '0', '1760', 'stable', null, '34.0.1760.0'],
+            ['3.9.0.0.22', '3', '9', '0', 'stable', null, '3.9.0.0.22'],
             ['4.1.1', '4', '1', '1', 'stable', null, '4.1.1'],
             ['7.0', '7', '0', '0', 'stable', null, '7.0.0'],
             ['1.17.0-rc', '1', '17', '0', 'RC', null, '1.17.0-RC'],
@@ -141,7 +141,7 @@ final class VersionFactoryTest extends TestCase
     public function providerDetectVersion(): array
     {
         return [
-            ['Chrome/34.0.1760.0', ['Chrome'], '34', '0', '1760.0', 'stable', null, '34.0.1760.0'],
+            ['Chrome/34.0.1760.0', ['Chrome'], '34', '0', '1760', 'stable', null, '34.0.1760.0'],
             ['Firefox/4.0b8', ['Firefox'], '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
             ['Firefox%20/4.0b8', ['Firefox%20'], '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
             ['Firefox/4.0b8', [null, false, 'Firefox'], '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
@@ -158,14 +158,14 @@ final class VersionFactoryTest extends TestCase
         $major      = '4';
         $minor      = '0';
         $patch      = '0';
-        $preRelease = 'beta';
+        $stability = 'beta';
         $build      = '8';
 
         $data = [
             'major' => $major,
             'minor' => $minor,
             'micro' => $patch,
-            'stability' => $preRelease,
+            'stability' => $stability,
             'build' => $build,
         ];
         $object = VersionFactory::fromArray($data);
@@ -175,38 +175,7 @@ final class VersionFactoryTest extends TestCase
         self::assertSame($major, $object->getMajor(), 'major is wrong');
         self::assertSame($minor, $object->getMinor(), 'minor is wrong');
         self::assertSame($patch, $object->getMicro(), 'patch is wrong');
-        self::assertSame($preRelease, $object->getStability(), 'stability is wrong');
-        self::assertSame($build, $object->getBuild(), 'build is wrong');
-        self::assertTrue($object->isBeta());
-        self::assertFalse($object->isAlpha());
-    }
-
-    /**
-     * @return void
-     */
-    public function testFromJson(): void
-    {
-        $major      = '4';
-        $minor      = '0';
-        $patch      = '0';
-        $preRelease = 'beta';
-        $build      = '8';
-
-        $data = [
-            'major' => $major,
-            'minor' => $minor,
-            'micro' => $patch,
-            'stability' => $preRelease,
-            'build' => $build,
-        ];
-        $object = VersionFactory::fromJson((new Json())->encode($data));
-
-        self::assertInstanceOf(Version::class, $object);
-
-        self::assertSame($major, $object->getMajor(), 'major is wrong');
-        self::assertSame($minor, $object->getMinor(), 'minor is wrong');
-        self::assertSame($patch, $object->getMicro(), 'patch is wrong');
-        self::assertSame($preRelease, $object->getStability(), 'stability is wrong');
+        self::assertSame($stability, $object->getStability(), 'stability is wrong');
         self::assertSame($build, $object->getBuild(), 'build is wrong');
         self::assertTrue($object->isBeta());
         self::assertFalse($object->isAlpha());
