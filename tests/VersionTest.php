@@ -92,13 +92,13 @@ final class VersionTest extends TestCase
         $major      = '4';
         $minor      = '0';
         $micro      = '0';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
-        
+
         self::assertSame($major, $version->getMajor());
         self::assertSame($minor, $version->getMinor());
         self::assertSame($micro, $version->getMicro());
@@ -107,8 +107,8 @@ final class VersionTest extends TestCase
         self::assertSame($stability, $version->getStability());
         self::assertSame($build, $version->getBuild());
 
-        $array  = $version->toArray();
-        
+        $array = $version->toArray();
+
         self::assertArrayHasKey('major', $array);
         self::assertInternalType('string', $array['major']);
         self::assertArrayHasKey('minor', $array);
@@ -121,7 +121,7 @@ final class VersionTest extends TestCase
         self::assertArrayHasKey('stability', $array);
         self::assertInternalType('string', $array['stability']);
         self::assertArrayHasKey('build', $array);
-        
+
         $object = VersionFactory::fromArray($array);
 
         self::assertEquals($version, $object);
@@ -135,9 +135,9 @@ final class VersionTest extends TestCase
         $major      = '4';
         $minor      = '0';
         $micro      = '0';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
@@ -147,9 +147,9 @@ final class VersionTest extends TestCase
         $major      = '4';
         $minor      = '0';
         $micro      = '1';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
@@ -165,9 +165,9 @@ final class VersionTest extends TestCase
         $major      = '4';
         $minor      = '0';
         $micro      = '0';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
@@ -177,9 +177,9 @@ final class VersionTest extends TestCase
         $major      = '4';
         $minor      = '1';
         $micro      = '1';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
@@ -195,9 +195,9 @@ final class VersionTest extends TestCase
         $major      = '4';
         $minor      = '0';
         $micro      = '1';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
@@ -207,9 +207,9 @@ final class VersionTest extends TestCase
         $major      = '4';
         $minor      = '0';
         $micro      = '0';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
@@ -219,9 +219,9 @@ final class VersionTest extends TestCase
         $major      = '4';
         $minor      = '0';
         $micro      = '00';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
@@ -237,9 +237,9 @@ final class VersionTest extends TestCase
         $major      = '4';
         $minor      = '0';
         $micro      = '1';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
@@ -249,9 +249,9 @@ final class VersionTest extends TestCase
         $major      = '4';
         $minor      = '0';
         $micro      = '0';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
@@ -261,9 +261,9 @@ final class VersionTest extends TestCase
         $major      = '4';
         $minor      = '0';
         $micro      = '0';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
@@ -273,9 +273,9 @@ final class VersionTest extends TestCase
         $major      = '4';
         $minor      = '0';
         $micro      = '1';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
@@ -291,9 +291,9 @@ final class VersionTest extends TestCase
         $major      = '0';
         $minor      = '0';
         $micro      = '1';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
@@ -303,9 +303,9 @@ final class VersionTest extends TestCase
         $major      = '0';
         $minor      = '0';
         $micro      = '0';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
@@ -315,9 +315,9 @@ final class VersionTest extends TestCase
         $major      = '00';
         $minor      = '0';
         $micro      = '0';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
@@ -327,9 +327,9 @@ final class VersionTest extends TestCase
         $major      = '0';
         $minor      = '1';
         $micro      = '0';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
@@ -339,9 +339,9 @@ final class VersionTest extends TestCase
         $major      = '0';
         $minor      = '0';
         $micro      = '0';
-        $patch = '1';
+        $patch      = '1';
         $micropatch = null;
-        $stability = 'beta';
+        $stability  = 'beta';
         $build      = '8';
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
