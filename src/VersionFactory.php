@@ -54,12 +54,12 @@ final class VersionFactory implements VersionFactoryInterface
         $minor = (array_key_exists('minor', $numbers) ? $numbers['minor'] : '0');
 
         if (array_key_exists('micro', $numbers)) {
-            $micro = $numbers['micro'];
-            $patch = (array_key_exists('patch', $numbers) ? $numbers['patch'] : null);
+            $micro      = $numbers['micro'];
+            $patch      = (array_key_exists('patch', $numbers) ? $numbers['patch'] : null);
             $micropatch = (array_key_exists('micropatch', $numbers) ? $numbers['micropatch'] : null);
         } else {
-            $micro = '0';
-            $patch = null;
+            $micro      = '0';
+            $patch      = null;
             $micropatch = null;
         }
 
@@ -140,8 +140,8 @@ final class VersionFactory implements VersionFactoryInterface
 
             foreach ($modifiers as $modifier) {
                 $compareString = '/' . $search . $modifier[0] . '(\d+[\d._\-+ abcdehlprstv]*)' . $modifier[1] . '/i';
-                $matches = [];
-                $doMatch = preg_match($compareString, $useragent, $matches);
+                $matches       = [];
+                $doMatch       = preg_match($compareString, $useragent, $matches);
 
                 if ($doMatch) {
                     $version = mb_strtolower(str_replace('_', '.', $matches[1]));
@@ -195,13 +195,13 @@ final class VersionFactory implements VersionFactoryInterface
      */
     public static function fromArray(array $data): VersionInterface
     {
-        $major     = array_key_exists('major', $data) ? $data['major'] : '0';
-        $minor     = array_key_exists('minor', $data) ? $data['minor'] : '0';
-        $micro     = array_key_exists('micro', $data) ? $data['micro'] : '0';
-        $patch     = array_key_exists('patch', $data) ? $data['patch'] : '0';
-        $micropatch     = array_key_exists('micropatch', $data) ? $data['micropatch'] : '0';
-        $stability = array_key_exists('stability', $data) ? $data['stability'] : 'stable';
-        $build     = array_key_exists('build', $data) ? $data['build'] : null;
+        $major      = array_key_exists('major', $data) ? $data['major'] : '0';
+        $minor      = array_key_exists('minor', $data) ? $data['minor'] : '0';
+        $micro      = array_key_exists('micro', $data) ? $data['micro'] : '0';
+        $patch      = array_key_exists('patch', $data) ? $data['patch'] : '0';
+        $micropatch = array_key_exists('micropatch', $data) ? $data['micropatch'] : '0';
+        $stability  = array_key_exists('stability', $data) ? $data['stability'] : 'stable';
+        $build      = array_key_exists('build', $data) ? $data['build'] : null;
 
         return new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
     }

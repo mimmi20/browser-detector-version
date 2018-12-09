@@ -49,14 +49,13 @@ final class Version implements VersionInterface
     private $build;
 
     /**
-     * @param string $major
-     * @param string $minor
-     * @param string $micro
+     * @param string      $major
+     * @param string      $minor
+     * @param string      $micro
      * @param string|null $patch
      * @param string|null $micropatch
-     * @param string $stability
+     * @param string      $stability
      * @param string|null $build
-     *
      */
     public function __construct(string $major, string $minor = '0', string $micro = '0', ?string $patch = null, ?string $micropatch = null, string $stability = 'stable', ?string $build = null)
     {
@@ -68,7 +67,7 @@ final class Version implements VersionInterface
             throw new \InvalidArgumentException('Minor version must be a non-negative number formatted as string');
         }
 
-        if (false !== strpos($micro, '.')) {
+        if (false !== mb_strpos($micro, '.')) {
             $parts = explode('.', $micro);
             $micro = $parts[0];
 
@@ -82,13 +81,13 @@ final class Version implements VersionInterface
             throw new \InvalidArgumentException('Patch version must be a non-negative number formatted as string');
         }
 
-        $this->major     = $major;
-        $this->minor     = $minor;
-        $this->micro     = $micro;
-        $this->patch     = $patch;
-        $this->micropatch     = $micropatch;
-        $this->stability = $stability;
-        $this->build     = $build;
+        $this->major      = $major;
+        $this->minor      = $minor;
+        $this->micro      = $micro;
+        $this->patch      = $patch;
+        $this->micropatch = $micropatch;
+        $this->stability  = $stability;
+        $this->build      = $build;
     }
 
     /**

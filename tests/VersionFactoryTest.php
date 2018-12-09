@@ -13,7 +13,6 @@ namespace BrowserDetectorTest\Version;
 
 use BrowserDetector\Version\Version;
 use BrowserDetector\Version\VersionFactory;
-use JsonClass\Json;
 use PHPUnit\Framework\TestCase;
 
 final class VersionFactoryTest extends TestCase
@@ -155,11 +154,11 @@ final class VersionFactoryTest extends TestCase
      */
     public function testFromArray(): void
     {
-        $major      = '4';
-        $minor      = '0';
-        $patch      = '0';
+        $major     = '4';
+        $minor     = '0';
+        $patch     = '0';
         $stability = 'beta';
-        $build      = '8';
+        $build     = '8';
 
         $data = [
             'major' => $major,
