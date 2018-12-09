@@ -26,7 +26,6 @@ stages:
   - static code analysis
   - test
   - test with coverage
-  - infection
 
 before_install:
   - stty cols 120
