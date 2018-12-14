@@ -348,4 +348,78 @@ final class VersionTest extends TestCase
 
         self::assertSame('0', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::GET_ZERO_IF_EMPTY));
     }
+
+    /**
+     * @return void
+     */
+    public function testMicrowithDot(): void
+    {
+        $major = '0';
+        $minor = '1';
+        $micro = '1';
+        $patch = '1';
+
+
+        $version = new Version($major, $minor, "$micro.$patch");
+
+        self::assertSame($major, $version->getMajor());
+        self::assertSame($minor, $version->getMinor());
+        self::assertSame($micro, $version->getMicro());
+        self::assertSame($patch, $version->getPatch());
+        self::assertNull($version->getMicropatch());
+
+        $major = '0';
+        $minor = '1';
+        $micro = '1';
+        $patch = '2';
+
+        $version = new Version($major, $minor, "$micro.1", $patch);
+
+        self::assertSame($major, $version->getMajor());
+        self::assertSame($minor, $version->getMinor());
+        self::assertSame($micro, $version->getMicro());
+        self::assertSame($patch, $version->getPatch());
+        self::assertNull($version->getMicropatch());
+
+        $major = '0';
+        $minor = '1';
+        $micro = '1';
+        $patch = '1';
+        $micropatch = '4';
+
+        $version = new Version($major, $minor, "$micro.$patch.$micropatch");
+
+        self::assertSame($major, $version->getMajor());
+        self::assertSame($minor, $version->getMinor());
+        self::assertSame($micro, $version->getMicro());
+        self::assertSame($patch, $version->getPatch());
+        self::assertSame($micropatch, $version->getMicropatch());
+
+        $major = '0';
+        $minor = '1';
+        $micro = '1';
+        $patch = '2';
+
+        $version = new Version($major, $minor, "$micro.1.4", $patch);
+
+        self::assertSame($major, $version->getMajor());
+        self::assertSame($minor, $version->getMinor());
+        self::assertSame($micro, $version->getMicro());
+        self::assertSame($patch, $version->getPatch());
+        self::assertNull($version->getMicropatch());
+
+        $major = '0';
+        $minor = '1';
+        $micro = '1';
+        $patch = '2';
+        $micropatch = '4';
+
+        $version = new Version($major, $minor, "$micro.1.1", $patch, $micropatch);
+
+        self::assertSame($major, $version->getMajor());
+        self::assertSame($minor, $version->getMinor());
+        self::assertSame($micro, $version->getMicro());
+        self::assertSame($patch, $version->getPatch());
+        self::assertSame($micropatch, $version->getMicropatch());
+    }
 }
