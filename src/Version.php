@@ -197,11 +197,11 @@ final class Version implements VersionInterface
             || (VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
             || (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode)
         ) {
-            if (empty($versions['micro']) || in_array($versions['micro'], ['', '0', '00'])) {
+            if (empty($versions['micro']) || '00' === $versions['micro']) {
                 $microIsEmpty = true;
             }
 
-            if ($microIsEmpty) {
+            if ($microIsEmpty && (VersionInterface::IGNORE_MICRO_IF_EMPTY & $mode)) {
                 unset($versions['micro'], $versions['patch'], $versions['micropatch'], $versions['stability'], $versions['build']);
             }
         }
@@ -214,11 +214,11 @@ final class Version implements VersionInterface
         } elseif ((VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
             || (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode)
         ) {
-            if ($microIsEmpty && (empty($versions['minor']) || in_array($versions['minor'], ['', '0', '00']))) {
+            if ($microIsEmpty && (empty($versions['minor']) || '00' === $versions['minor'])) {
                 $minorIsEmpty = true;
             }
 
-            if ($minorIsEmpty) {
+            if ($minorIsEmpty && (VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)) {
                 unset($versions['minor'], $versions['micro'], $versions['patch'], $versions['micropatch'], $versions['stability'], $versions['build']);
             }
         }
@@ -226,7 +226,7 @@ final class Version implements VersionInterface
         $macroIsEmpty = false;
 
         if (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode) {
-            if ($minorIsEmpty && (empty($versions['major']) || in_array($versions['major'], ['', '0', '00']))) {
+            if ($minorIsEmpty && (empty($versions['major']) || '00' === $versions['major'])) {
                 $macroIsEmpty = true;
             }
 
