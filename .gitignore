@@ -9,3 +9,4 @@ composer.lock
 error.log
 .php_cs.cache
 infection-*.log
+clover.xml

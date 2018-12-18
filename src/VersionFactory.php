@@ -123,20 +123,15 @@ final class VersionFactory implements VersionFactoryInterface
             [' \(', ';'],
         ];
 
-        $version = $default;
-
-        if (false !== mb_strpos($useragent, '%')) {
-            $useragent = urldecode($useragent);
-        }
+        $version   = $default;
+        $useragent = urldecode($useragent);
 
         foreach ($searches as $search) {
             if (!is_string($search)) {
                 continue;
             }
 
-            if (false !== mb_strpos($search, '%')) {
-                $search = urldecode($search);
-            }
+            $search = urldecode($search);
 
             foreach ($modifiers as $modifier) {
                 $compareString = '/' . $search . $modifier[0] . '(\d+[\d._\-+ abcdehlprstv]*)' . $modifier[1] . '/i';
@@ -163,25 +158,25 @@ final class VersionFactory implements VersionFactoryInterface
     {
         $numbers = [];
 
-        if (array_key_exists('major', $matches) && 0 < mb_strlen($matches['major'])) {
+        if (array_key_exists('major', $matches) && mb_strlen($matches['major'])) {
             $numbers['major'] = $matches['major'];
         }
-        if (array_key_exists('minor', $matches) && 0 < mb_strlen($matches['minor'])) {
+        if (array_key_exists('minor', $matches) && mb_strlen($matches['minor'])) {
             $numbers['minor'] = $matches['minor'];
         }
-        if (array_key_exists('micro', $matches) && 0 < mb_strlen($matches['micro'])) {
+        if (array_key_exists('micro', $matches) && mb_strlen($matches['micro'])) {
             $numbers['micro'] = $matches['micro'];
         }
-        if (array_key_exists('patch', $matches) && 0 < mb_strlen($matches['patch'])) {
+        if (array_key_exists('patch', $matches) && mb_strlen($matches['patch'])) {
             $numbers['patch'] = $matches['patch'];
         }
-        if (array_key_exists('micropatch', $matches) && 0 < mb_strlen($matches['micropatch'])) {
+        if (array_key_exists('micropatch', $matches) && mb_strlen($matches['micropatch'])) {
             $numbers['micropatch'] = $matches['micropatch'];
         }
-        if (array_key_exists('stability', $matches) && 0 < mb_strlen($matches['stability'])) {
+        if (array_key_exists('stability', $matches) && mb_strlen($matches['stability'])) {
             $numbers['stability'] = $matches['stability'];
         }
-        if (array_key_exists('build', $matches) && 0 < mb_strlen($matches['build'])) {
+        if (array_key_exists('build', $matches) && mb_strlen($matches['build'])) {
             $numbers['build'] = $matches['build'];
         }
 
