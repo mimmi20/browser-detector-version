@@ -105,7 +105,7 @@ final class VersionFactoryTest extends TestCase
      * @param array       $searches
      * @param string      $major
      * @param string      $minor
-     * @param string      $patch
+     * @param string      $micro
      * @param string      $preRelease
      * @param string|null $build
      * @param string      $complete
@@ -117,7 +117,7 @@ final class VersionFactoryTest extends TestCase
         array $searches,
         string $major,
         string $minor,
-        string $patch,
+        string $micro,
         string $preRelease,
         ?string $build,
         string $complete
@@ -128,7 +128,7 @@ final class VersionFactoryTest extends TestCase
 
         self::assertSame($major, $object->getMajor(), 'major is wrong');
         self::assertSame($minor, $object->getMinor(), 'minor is wrong');
-        self::assertSame($patch, $object->getMicro(), 'patch is wrong');
+        self::assertSame($micro, $object->getMicro(), 'patch is wrong');
         self::assertSame($preRelease, $object->getStability(), 'stability is wrong');
         self::assertSame($build, $object->getBuild(), 'build is wrong');
         self::assertSame($complete, $object->getVersion(), 'complete is wrong');
@@ -146,6 +146,8 @@ final class VersionFactoryTest extends TestCase
             ['Firefox/4.0b8', [null, false, 'Firefox'], '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
             ['Presto/2.8.119 320', ['Presto'], '2', '8', '119', 'stable', null, '2.8.119'],
             ['Mobicip/2.3.1_r747', ['Mobicip'], '2', '3', '1', 'stable', '747', '2.3.1+747'],
+            ['BlackBerry9000/5.0.0.1079 Profile/MIDP-2.1 Configuration/CLDC-1.1 VendorID/114', ['BlackBerry[0-9a-z]+'], '5', '0', '0', 'stable', null, '5.0.0.1079'],
+            ['Opera%20Coast/4.03.89212 CFNetwork/711.1.16 Darwin/14.0.0', ['OperaCoast', 'Opera%20Coast', 'Coast'], '4', '03', '89212', 'stable', null, '4.03.89212'],
         ];
     }
 
