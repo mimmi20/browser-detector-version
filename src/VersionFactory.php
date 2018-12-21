@@ -123,15 +123,20 @@ final class VersionFactory implements VersionFactoryInterface
             [' \(', ';'],
         ];
 
-        $version   = $default;
-        $useragent = urldecode($useragent);
+        $version = $default;
+
+        if (false !== mb_strpos($useragent, '%')) {
+            $useragent = urldecode($useragent);
+        }
 
         foreach ($searches as $search) {
             if (!is_string($search)) {
                 continue;
             }
 
-            $search = urldecode($search);
+            if (false !== mb_strpos($search, '%')) {
+                $search = urldecode($search);
+            }
 
             foreach ($modifiers as $modifier) {
                 $compareString = '/' . $search . $modifier[0] . '(\d+[\d._\-+ abcdehlprstv]*)' . $modifier[1] . '/i';
