@@ -33,7 +33,7 @@ final class VersionFactory implements VersionFactoryInterface
      *
      * @param string $version
      *
-     * @throws \UnexpectedValueException
+     * @throws \InvalidArgumentException
      *
      * @return \BrowserDetector\Version\VersionInterface
      */
@@ -46,7 +46,7 @@ final class VersionFactory implements VersionFactoryInterface
             $numbers = $this->mapMatches($matches);
         }
 
-        if (empty($numbers)) {
+        if ([] === $numbers) {
             return new Version('0');
         }
 
@@ -109,6 +109,8 @@ final class VersionFactory implements VersionFactoryInterface
      * @param string $useragent
      * @param array  $searches
      * @param string $default
+     *
+     * @throws \InvalidArgumentException
      *
      * @return \BrowserDetector\Version\VersionInterface
      */
@@ -190,6 +192,8 @@ final class VersionFactory implements VersionFactoryInterface
 
     /**
      * @param array $data
+     *
+     * @throws \InvalidArgumentException
      *
      * @return \BrowserDetector\Version\VersionInterface
      */

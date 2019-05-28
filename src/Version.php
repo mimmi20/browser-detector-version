@@ -56,6 +56,8 @@ final class Version implements VersionInterface
      * @param string|null $micropatch
      * @param string      $stability
      * @param string|null $build
+     *
+     * @throws \InvalidArgumentException
      */
     public function __construct(string $major, string $minor = '0', string $micro = '0', ?string $patch = null, ?string $micropatch = null, string $stability = 'stable', ?string $build = null)
     {
