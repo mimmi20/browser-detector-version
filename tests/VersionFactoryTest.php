@@ -29,6 +29,9 @@ final class VersionFactoryTest extends TestCase
      * @param string|null $build
      * @param string      $complete
      *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \InvalidArgumentException
+     *
      * @return void
      */
     public function testVersionSet(
@@ -42,14 +45,14 @@ final class VersionFactoryTest extends TestCase
     ): void {
         $object = (new VersionFactory())->set($version);
 
-        self::assertInstanceOf(Version::class, $object);
+        static::assertInstanceOf(Version::class, $object);
 
-        self::assertSame($major, $object->getMajor(), 'major is wrong');
-        self::assertSame($minor, $object->getMinor(), 'minor is wrong');
-        self::assertSame($micro, $object->getMicro(), 'patch is wrong');
-        self::assertSame($stability, $object->getStability(), 'stability is wrong');
-        self::assertSame($build, $object->getBuild(), 'build is wrong');
-        self::assertSame($complete, $object->getVersion(), 'complete is wrong');
+        static::assertSame($major, $object->getMajor(), 'major is wrong');
+        static::assertSame($minor, $object->getMinor(), 'minor is wrong');
+        static::assertSame($micro, $object->getMicro(), 'patch is wrong');
+        static::assertSame($stability, $object->getStability(), 'stability is wrong');
+        static::assertSame($build, $object->getBuild(), 'build is wrong');
+        static::assertSame($complete, $object->getVersion(), 'complete is wrong');
     }
 
     /**
@@ -86,15 +89,18 @@ final class VersionFactoryTest extends TestCase
     /**
      * @group version
      *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \InvalidArgumentException
+     *
      * @return void
      */
     public function testVersionSetXp(): void
     {
         $object = (new VersionFactory())->set('XP');
 
-        self::assertInstanceOf(Version::class, $object);
+        static::assertInstanceOf(Version::class, $object);
 
-        self::assertSame('0', $object->getMajor(), 'major is wrong');
+        static::assertSame('0', $object->getMajor(), 'major is wrong');
     }
 
     /**
@@ -110,6 +116,9 @@ final class VersionFactoryTest extends TestCase
      * @param string|null $build
      * @param string      $complete
      *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \InvalidArgumentException
+     *
      * @return void
      */
     public function testVersionDetectVersion(
@@ -124,14 +133,14 @@ final class VersionFactoryTest extends TestCase
     ): void {
         $object = (new VersionFactory())->detectVersion($uapart, $searches);
 
-        self::assertInstanceOf(Version::class, $object);
+        static::assertInstanceOf(Version::class, $object);
 
-        self::assertSame($major, $object->getMajor(), 'major is wrong');
-        self::assertSame($minor, $object->getMinor(), 'minor is wrong');
-        self::assertSame($micro, $object->getMicro(), 'patch is wrong');
-        self::assertSame($preRelease, $object->getStability(), 'stability is wrong');
-        self::assertSame($build, $object->getBuild(), 'build is wrong');
-        self::assertSame($complete, $object->getVersion(), 'complete is wrong');
+        static::assertSame($major, $object->getMajor(), 'major is wrong');
+        static::assertSame($minor, $object->getMinor(), 'minor is wrong');
+        static::assertSame($micro, $object->getMicro(), 'patch is wrong');
+        static::assertSame($preRelease, $object->getStability(), 'stability is wrong');
+        static::assertSame($build, $object->getBuild(), 'build is wrong');
+        static::assertSame($complete, $object->getVersion(), 'complete is wrong');
     }
 
     /**
@@ -152,6 +161,9 @@ final class VersionFactoryTest extends TestCase
     }
 
     /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \InvalidArgumentException
+     *
      * @return void
      */
     public function testFromArray(): void
@@ -171,18 +183,21 @@ final class VersionFactoryTest extends TestCase
         ];
         $object = VersionFactory::fromArray($data);
 
-        self::assertInstanceOf(Version::class, $object);
+        static::assertInstanceOf(Version::class, $object);
 
-        self::assertSame($major, $object->getMajor(), 'major is wrong');
-        self::assertSame($minor, $object->getMinor(), 'minor is wrong');
-        self::assertSame($patch, $object->getMicro(), 'patch is wrong');
-        self::assertSame($stability, $object->getStability(), 'stability is wrong');
-        self::assertSame($build, $object->getBuild(), 'build is wrong');
-        self::assertTrue($object->isBeta());
-        self::assertFalse($object->isAlpha());
+        static::assertSame($major, $object->getMajor(), 'major is wrong');
+        static::assertSame($minor, $object->getMinor(), 'minor is wrong');
+        static::assertSame($patch, $object->getMicro(), 'patch is wrong');
+        static::assertSame($stability, $object->getStability(), 'stability is wrong');
+        static::assertSame($build, $object->getBuild(), 'build is wrong');
+        static::assertTrue($object->isBeta());
+        static::assertFalse($object->isAlpha());
     }
 
     /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \InvalidArgumentException
+     *
      * @return void
      */
     public function testWithParameter(): void
@@ -191,7 +206,7 @@ final class VersionFactoryTest extends TestCase
         $object    = new VersionFactory($regex);
         $useragent = 'Mozilla/4.0 (compatible; MSIE 10.0; Trident/6.0; Windows 98; MyIE2)';
         $result    = $object->detectVersion($useragent, ['MyIE']);
-        self::assertInstanceOf(Version::class, $result);
-        self::assertSame('2', $result->getMajor(), 'major is wrong');
+        static::assertInstanceOf(Version::class, $result);
+        static::assertSame('2', $result->getMajor(), 'major is wrong');
     }
 }

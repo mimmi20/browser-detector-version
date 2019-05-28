@@ -23,7 +23,7 @@ interface VersionFactoryInterface
      *
      * @param string $version
      *
-     * @throws \UnexpectedValueException
+     * @throws \InvalidArgumentException
      *
      * @return \BrowserDetector\Version\VersionInterface
      */
@@ -36,12 +36,16 @@ interface VersionFactoryInterface
      * @param array  $searches
      * @param string $default
      *
-     * @return \BrowserDetector\Version\Version
+     * @throws \InvalidArgumentException
+     *
+     * @return \BrowserDetector\Version\VersionInterface
      */
     public function detectVersion(string $useragent, array $searches = [], string $default = '0'): VersionInterface;
 
     /**
      * @param array $data
+     *
+     * @throws \InvalidArgumentException
      *
      * @return \BrowserDetector\Version\VersionInterface
      */
