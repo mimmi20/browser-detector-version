@@ -62,6 +62,7 @@ return PhpCsFixer\Config::create()
             'array_syntax' => ['syntax' => 'short'],
             'binary_operator_spaces' => ['default' => 'single_space', 'operators' => ['=' => 'align_single_space_minimal']],
             'php_unit_internal_class' => false,
+            'php_unit_strict' => ['assertions' => ['assertAttributeEquals', 'assertAttributeNotEquals', 'assertNotEquals']],
 
             // @Symfony rules configured different from default
             'binary_operator_spaces' => ['default' => 'single_space', 'operators' => ['=' => 'align_single_space_minimal']],
