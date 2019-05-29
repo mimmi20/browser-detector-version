@@ -139,7 +139,7 @@ final class VersionTest extends TestCase
 
         $object = VersionFactory::fromArray($array);
 
-        static::assertSame($version, $object);
+        static::assertEquals($version, $object);
     }
 
     /**
