@@ -104,6 +104,8 @@ final class VersionFactoryTest extends TestCase
         static::assertNull($object->getStability(), 'stability is wrong');
         static::assertNull($object->getBuild(), 'build is wrong');
         static::assertNull($object->getVersion(), 'complete is wrong');
+        static::assertNull($object->isBeta(), 'beta is wrong');
+        static::assertNull($object->isAlpha(), 'alpha is wrong');
     }
 
     /**
