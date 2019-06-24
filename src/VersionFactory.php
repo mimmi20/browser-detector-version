@@ -33,7 +33,7 @@ final class VersionFactory implements VersionFactoryInterface
      *
      * @param string $version
      *
-     * @throws \InvalidArgumentException
+     * @throws NotNumericException
      *
      * @return \BrowserDetector\Version\VersionInterface
      */
@@ -42,12 +42,12 @@ final class VersionFactory implements VersionFactoryInterface
         $matches = [];
         $numbers = [];
 
-        if (preg_match($this->regex, $version, $matches)) {
+        if (0 < preg_match($this->regex, $version, $matches)) {
             $numbers = $this->mapMatches($matches);
         }
 
         if ([] === $numbers) {
-            return new Version('0');
+            return new NullVersion();
         }
 
         $major = (array_key_exists('major', $numbers) ? $numbers['major'] : '0');
@@ -110,7 +110,7 @@ final class VersionFactory implements VersionFactoryInterface
      * @param array  $searches
      * @param string $default
      *
-     * @throws \InvalidArgumentException
+     * @throws NotNumericException
      *
      * @return \BrowserDetector\Version\VersionInterface
      */
@@ -141,12 +141,12 @@ final class VersionFactory implements VersionFactoryInterface
             }
 
             foreach ($modifiers as $modifier) {
-                $compareString = '/' . $search . $modifier[0] . '(\d+[\d._\-+ abcdehlprstv]*)' . $modifier[1] . '/i';
+                $compareString = '/' . $search . $modifier[0] . '(?P<version>\d+[\d._\-+~ abcdehlprstv]*)' . $modifier[1] . '/i';
                 $matches       = [];
                 $doMatch       = preg_match($compareString, $useragent, $matches);
 
-                if ($doMatch) {
-                    $version = mb_strtolower(str_replace('_', '.', $matches[1]));
+                if (0 < $doMatch) {
+                    $version = mb_strtolower(str_replace('_', '.', $matches['version']));
 
                     break 2;
                 }
@@ -193,19 +193,27 @@ final class VersionFactory implements VersionFactoryInterface
     /**
      * @param array $data
      *
-     * @throws \InvalidArgumentException
+     * @throws NotNumericException
      *
      * @return \BrowserDetector\Version\VersionInterface
      */
     public static function fromArray(array $data): VersionInterface
     {
-        $major      = array_key_exists('major', $data) ? $data['major'] : '0';
-        $minor      = array_key_exists('minor', $data) ? $data['minor'] : '0';
-        $micro      = array_key_exists('micro', $data) ? $data['micro'] : '0';
-        $patch      = array_key_exists('patch', $data) ? $data['patch'] : '0';
-        $micropatch = array_key_exists('micropatch', $data) ? $data['micropatch'] : '0';
-        $stability  = array_key_exists('stability', $data) ? $data['stability'] : 'stable';
-        $build      = array_key_exists('build', $data) ? $data['build'] : null;
+        assert(array_key_exists('major', $data), '"major" property is required');
+        assert(array_key_exists('minor', $data), '"minor" property is required');
+        assert(array_key_exists('micro', $data), '"micro" property is required');
+        assert(array_key_exists('patch', $data), '"patch" property is required');
+        assert(array_key_exists('micropatch', $data), '"micropatch" property is required');
+        assert(array_key_exists('stability', $data), '"stability" property is required');
+        assert(array_key_exists('build', $data), '"build" property is required');
+
+        $major      = $data['major'];
+        $minor      = $data['minor'];
+        $micro      = $data['micro'];
+        $patch      = $data['patch'];
+        $micropatch = $data['micropatch'];
+        $stability  = $data['stability'];
+        $build      = $data['build'];
 
         return new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
     }
