@@ -11,6 +11,7 @@
 declare(strict_types = 1);
 namespace BrowserDetectorTest\Version;
 
+use BrowserDetector\Version\NullVersion;
 use BrowserDetector\Version\Version;
 use BrowserDetector\Version\VersionFactory;
 use PHPUnit\Framework\TestCase;
@@ -19,7 +20,6 @@ final class VersionFactoryTest extends TestCase
 {
     /**
      * @dataProvider providerSet
-     * @group        version
      *
      * @param string      $version
      * @param string      $major
@@ -72,7 +72,6 @@ final class VersionFactoryTest extends TestCase
             ['4.0b8', '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
             ['4.0a1', '4', '0', '0', 'alpha', '1', '4.0.0-alpha+1'],
             ['4.0dev2', '4', '0', '0', 'dev', '2', '4.0.0-dev+2'],
-            ['abc', '0', '0', '0', 'stable', null, '0.0.0'],
             ['0.0.0', '0', '0', '0', 'stable', null, '0.0.0'],
             ['2.0p12', '2', '0', '0', 'patch', '12', '2.0.0-patch+12'],
             ['2.0.0-patch+12', '2', '0', '0', 'patch', '12', '2.0.0-patch+12'],
@@ -83,12 +82,31 @@ final class VersionFactoryTest extends TestCase
             ['1.4 build 2', '1', '4', '0', 'stable', '2', '1.4.0+2'],
             ['1.4.0+2', '1', '4', '0', 'stable', '2', '1.4.0+2'],
             ['2.3.1_r747', '2', '3', '1', 'stable', '747', '2.3.1+747'],
+            ['6~b1', '6', '0', '0', 'beta', '1', '6.0.0-beta+1'],
         ];
     }
 
     /**
-     * @group version
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \InvalidArgumentException
      *
+     * @return void
+     */
+    public function testNullVersionSet(): void
+    {
+        $object = (new VersionFactory())->set('abc');
+
+        static::assertInstanceOf(NullVersion::class, $object);
+
+        static::assertNull($object->getMajor(), 'major is wrong');
+        static::assertNull($object->getMinor(), 'minor is wrong');
+        static::assertNull($object->getMicro(), 'patch is wrong');
+        static::assertNull($object->getStability(), 'stability is wrong');
+        static::assertNull($object->getBuild(), 'build is wrong');
+        static::assertNull($object->getVersion(), 'complete is wrong');
+    }
+
+    /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \InvalidArgumentException
      *
@@ -98,14 +116,12 @@ final class VersionFactoryTest extends TestCase
     {
         $object = (new VersionFactory())->set('XP');
 
-        static::assertInstanceOf(Version::class, $object);
-
-        static::assertSame('0', $object->getMajor(), 'major is wrong');
+        static::assertInstanceOf(NullVersion::class, $object);
+        static::assertNull($object->getMajor(), 'major is wrong');
     }
 
     /**
      * @dataProvider providerDetectVersion
-     * @group        version
      *
      * @param string      $uapart
      * @param array       $searches
@@ -168,16 +184,20 @@ final class VersionFactoryTest extends TestCase
      */
     public function testFromArray(): void
     {
-        $major     = '4';
-        $minor     = '0';
-        $patch     = '0';
-        $stability = 'beta';
-        $build     = '8';
+        $major      = '4';
+        $minor      = '0';
+        $micro      = '0';
+        $patch      = '0';
+        $micropatch = null;
+        $stability  = 'beta';
+        $build      = '8';
 
         $data = [
             'major' => $major,
             'minor' => $minor,
-            'micro' => $patch,
+            'micro' => $micro,
+            'patch' => $patch,
+            'micropatch' => $micropatch,
             'stability' => $stability,
             'build' => $build,
         ];
@@ -187,7 +207,9 @@ final class VersionFactoryTest extends TestCase
 
         static::assertSame($major, $object->getMajor(), 'major is wrong');
         static::assertSame($minor, $object->getMinor(), 'minor is wrong');
-        static::assertSame($patch, $object->getMicro(), 'patch is wrong');
+        static::assertSame($micro, $object->getMicro(), 'micro is wrong');
+        static::assertSame($patch, $object->getPatch(), 'patch is wrong');
+        static::assertNull($object->getMicropatch(), 'micropatch is wrong');
         static::assertSame($stability, $object->getStability(), 'stability is wrong');
         static::assertSame($build, $object->getBuild(), 'build is wrong');
         static::assertTrue($object->isBeta());

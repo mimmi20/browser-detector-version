@@ -57,16 +57,16 @@ final class Version implements VersionInterface
      * @param string      $stability
      * @param string|null $build
      *
-     * @throws \InvalidArgumentException
+     * @throws NotNumericException
      */
     public function __construct(string $major, string $minor = '0', string $micro = '0', ?string $patch = null, ?string $micropatch = null, string $stability = 'stable', ?string $build = null)
     {
         if (!is_numeric($major) || '0' > $major) {
-            throw new \InvalidArgumentException('Major version must be a non-negative number formatted as string');
+            throw new NotNumericException('Major version must be a non-negative number formatted as string');
         }
 
         if (!is_numeric($minor) || '0' > $minor) {
-            throw new \InvalidArgumentException('Minor version must be a non-negative number formatted as string');
+            throw new NotNumericException('Minor version must be a non-negative number formatted as string');
         }
 
         if (false !== mb_strpos($micro, '.')) {
@@ -80,7 +80,7 @@ final class Version implements VersionInterface
         }
 
         if (0 > (int) $micro || !is_numeric(str_replace('.', '', $micro))) {
-            throw new \InvalidArgumentException('Patch version must be a non-negative number formatted as string');
+            throw new NotNumericException('Patch version must be a non-negative number formatted as string');
         }
 
         $this->major      = $major;

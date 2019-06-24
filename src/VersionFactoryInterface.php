@@ -16,14 +16,14 @@ interface VersionFactoryInterface
     /**
      * @var string
      */
-    public const REGEX = '/^v?(?<major>\d+)(?:[-\.](?<minor>\d+))?(?:[-\.](?<micro>\d+))?(?:[-\.](?<patch>\d+))?(?:[-\.](?<micropatch>\d+))?(?:(?:[-_+]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?| build |\+|[_\.]r)(?<build>\d*))?.*$/i';
+    public const REGEX = '/^v?(?<major>\d+)(?:[-\.](?<minor>\d+))?(?:[-\.](?<micro>\d+))?(?:[-\.](?<patch>\d+))?(?:[-\.](?<micropatch>\d+))?(?:(?:[-_+~]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?| build |\+|[_\.]r)(?<build>\d*))?.*$/i';
 
     /**
      * sets the detected version
      *
      * @param string $version
      *
-     * @throws \InvalidArgumentException
+     * @throws NotNumericException
      *
      * @return \BrowserDetector\Version\VersionInterface
      */
@@ -36,7 +36,7 @@ interface VersionFactoryInterface
      * @param array  $searches
      * @param string $default
      *
-     * @throws \InvalidArgumentException
+     * @throws NotNumericException
      *
      * @return \BrowserDetector\Version\VersionInterface
      */
@@ -45,7 +45,7 @@ interface VersionFactoryInterface
     /**
      * @param array $data
      *
-     * @throws \InvalidArgumentException
+     * @throws NotNumericException
      *
      * @return \BrowserDetector\Version\VersionInterface
      */

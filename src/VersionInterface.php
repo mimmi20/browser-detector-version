@@ -55,9 +55,9 @@ interface VersionInterface
      *
      * @throws \UnexpectedValueException
      *
-     * @return string
+     * @return string|null
      */
-    public function getVersion(int $mode = self::COMPLETE): string;
+    public function getVersion(int $mode = self::COMPLETE): ?string;
 
     /**
      * @return array
@@ -65,19 +65,19 @@ interface VersionInterface
     public function toArray(): array;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMajor(): string;
+    public function getMajor(): ?string;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMinor(): string;
+    public function getMinor(): ?string;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMicro(): string;
+    public function getMicro(): ?string;
 
     /**
      * @return string|null
@@ -95,17 +95,17 @@ interface VersionInterface
     public function getBuild(): ?string;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getStability(): string;
+    public function getStability(): ?string;
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isAlpha(): bool;
+    public function isAlpha(): ?bool;
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isBeta(): bool;
+    public function isBeta(): ?bool;
 }

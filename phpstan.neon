@@ -24,6 +24,7 @@ parameters:
     uncheckedExceptions: []
   classesAllowedToBeExtended:
   	- UnexpectedValueException
+  	- InvalidArgumentException
 
 includes:
   - vendor/phpstan/phpstan-strict-rules/rules.neon
