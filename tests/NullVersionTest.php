@@ -18,6 +18,7 @@ final class NullVersionTest extends TestCase
 {
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\Exception
      * @throws \InvalidArgumentException
      *
      * @return void
@@ -26,13 +27,16 @@ final class NullVersionTest extends TestCase
     {
         $version = new NullVersion();
 
-        static::assertNull($version->getMajor());
-        static::assertNull($version->getMinor());
-        static::assertNull($version->getMicro());
-        static::assertNull($version->getPatch());
-        static::assertNull($version->getMicropatch());
-        static::assertNull($version->getStability());
-        static::assertNull($version->getBuild());
+        static::assertNull($version->getMajor(), 'major is wrong');
+        static::assertNull($version->getMinor(), 'minor is wrong');
+        static::assertNull($version->getMicro(), 'micro is wrong');
+        static::assertNull($version->getPatch(), 'patch is wrong');
+        static::assertNull($version->getMicropatch(), 'micropatch is wrong');
+        static::assertNull($version->getStability(), 'stability is wrong');
+        static::assertNull($version->getBuild(), 'build is wrong');
+        static::assertNull($version->isBeta(), 'beta is wrong');
+        static::assertNull($version->isAlpha(), 'alpha is wrong');
+        static::assertNull($version->getVersion(), 'complete is wrong');
 
         $array = $version->toArray();
 

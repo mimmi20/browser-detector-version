@@ -8,5 +8,6 @@ composer.phar
 composer.lock
 error.log
 .php_cs.cache
+.phpunit.result.cache
 infection-*.log
 clover.xml

@@ -148,12 +148,12 @@ final class VersionFactory implements VersionFactoryInterface
                 if (0 < $doMatch) {
                     $version = mb_strtolower(str_replace('_', '.', $matches['version']));
 
-                    break 2;
+                    return $this->set($version);
                 }
             }
         }
 
-        return $this->set($version);
+        return new NullVersion();
     }
 
     /**
