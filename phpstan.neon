@@ -19,6 +19,7 @@ parameters:
     - '~Only booleans are allowed in \&\&~'
     - '~Construct empty\(\) is not allowed\. Use more strict comparison~'
     - '~Language construct isset\(\) should not be used~'
+    - '~Useless \@throws~'
   exceptionRules:
     reportUnusedCatchesOfUncheckedExceptions: false
     uncheckedExceptions: []

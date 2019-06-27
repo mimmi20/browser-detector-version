@@ -30,6 +30,7 @@ final class VersionFactoryTest extends TestCase
      * @param string      $complete
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\Exception
      * @throws \InvalidArgumentException
      *
      * @return void
@@ -88,6 +89,7 @@ final class VersionFactoryTest extends TestCase
 
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\Exception
      * @throws \InvalidArgumentException
      *
      * @return void
@@ -100,7 +102,9 @@ final class VersionFactoryTest extends TestCase
 
         static::assertNull($object->getMajor(), 'major is wrong');
         static::assertNull($object->getMinor(), 'minor is wrong');
-        static::assertNull($object->getMicro(), 'patch is wrong');
+        static::assertNull($object->getMicro(), 'micro is wrong');
+        static::assertNull($object->getPatch(), 'patch is wrong');
+        static::assertNull($object->getMicropatch(), 'micropatch is wrong');
         static::assertNull($object->getStability(), 'stability is wrong');
         static::assertNull($object->getBuild(), 'build is wrong');
         static::assertNull($object->getVersion(), 'complete is wrong');
@@ -110,6 +114,7 @@ final class VersionFactoryTest extends TestCase
 
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\Exception
      * @throws \InvalidArgumentException
      *
      * @return void
@@ -135,6 +140,7 @@ final class VersionFactoryTest extends TestCase
      * @param string      $complete
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\Exception
      * @throws \InvalidArgumentException
      *
      * @return void
@@ -180,6 +186,32 @@ final class VersionFactoryTest extends TestCase
 
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\Exception
+     * @throws \InvalidArgumentException
+     *
+     * @return void
+     */
+    public function testVersionDetectNullVersion(): void
+    {
+        $object = (new VersionFactory())->detectVersion('Firefox/4.0b8', ['Chrome']);
+
+        static::assertInstanceOf(NullVersion::class, $object);
+
+        static::assertNull($object->getMajor(), 'major is wrong');
+        static::assertNull($object->getMinor(), 'minor is wrong');
+        static::assertNull($object->getMicro(), 'micro is wrong');
+        static::assertNull($object->getPatch(), 'patch is wrong');
+        static::assertNull($object->getMicropatch(), 'micropatch is wrong');
+        static::assertNull($object->getStability(), 'stability is wrong');
+        static::assertNull($object->getBuild(), 'build is wrong');
+        static::assertNull($object->getVersion(), 'complete is wrong');
+        static::assertNull($object->isBeta(), 'beta is wrong');
+        static::assertNull($object->isAlpha(), 'alpha is wrong');
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\Exception
      * @throws \InvalidArgumentException
      *
      * @return void
@@ -220,6 +252,7 @@ final class VersionFactoryTest extends TestCase
 
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\Exception
      * @throws \InvalidArgumentException
      *
      * @return void
@@ -229,7 +262,9 @@ final class VersionFactoryTest extends TestCase
         $regex     = '/^v?(?<major>\d+)(?:[-|\.](?<minor>\d+))?(?:[-|\.](?<micro>\d+))?(?:[-|\.](?<patch>\d+))?(?:[-|\.](?<micropatch>\d+))?(?:[-_.+ ]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*))?.*$/i';
         $object    = new VersionFactory($regex);
         $useragent = 'Mozilla/4.0 (compatible; MSIE 10.0; Trident/6.0; Windows 98; MyIE2)';
-        $result    = $object->detectVersion($useragent, ['MyIE']);
+
+        $result = $object->detectVersion($useragent, ['MyIE']);
+
         static::assertInstanceOf(Version::class, $result);
         static::assertSame('2', $result->getMajor(), 'major is wrong');
     }
