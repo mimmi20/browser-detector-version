@@ -24,8 +24,18 @@ final class VersionFactory implements VersionFactoryInterface
     public function __construct(?string $regex = null)
     {
         if (null !== $regex) {
-            $this->regex = $regex;
+            $this->setRegex($regex);
         }
+    }
+
+    /**
+     * @param string $regex
+     *
+     * @return void
+     */
+    public function setRegex(string $regex): void
+    {
+        $this->regex = $regex;
     }
 
     /**

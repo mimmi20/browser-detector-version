@@ -268,4 +268,21 @@ final class VersionFactoryTest extends TestCase
         static::assertInstanceOf(Version::class, $result);
         static::assertSame('2', $result->getMajor(), 'major is wrong');
     }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \InvalidArgumentException
+     *
+     * @return void
+     */
+    public function testSetRegex(): void
+    {
+        $regex  = '/^v?(?<major>\d+)(?:[-|\.](?<minor>\d+))?(?:[-|\.](?<micro>\d+))?(?:[-|\.](?<patch>\d+))?(?:[-|\.](?<micropatch>\d+))?(?:[-_.+ ]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*))?.*$/i';
+        $object = new VersionFactory();
+        $object->setRegex($regex);
+        $useragent = 'Mozilla/4.0 (compatible; MSIE 10.0; Trident/6.0; Windows 98; MyIE2)';
+        $result    = $object->detectVersion($useragent, ['MyIE']);
+        static::assertInstanceOf(Version::class, $result);
+        static::assertSame('2', $result->getMajor(), 'major is wrong');
+    }
 }
