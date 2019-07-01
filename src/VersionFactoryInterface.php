@@ -19,6 +19,13 @@ interface VersionFactoryInterface
     public const REGEX = '/^v?(?<major>\d+)(?:[-\.](?<minor>\d+))?(?:[-\.](?<micro>\d+))?(?:[-\.](?<patch>\d+))?(?:[-\.](?<micropatch>\d+))?(?:(?:[-_+~]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?| build |\+|[_\.]r)(?<build>\d*))?.*$/i';
 
     /**
+     * @param string $regex
+     *
+     * @return void
+     */
+    public function setRegex(string $regex): void;
+
+    /**
      * sets the detected version
      *
      * @param string $version
