@@ -271,6 +271,7 @@ final class VersionFactoryTest extends TestCase
 
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\Exception
      * @throws \InvalidArgumentException
      *
      * @return void
