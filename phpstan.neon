@@ -20,6 +20,8 @@ parameters:
     - '~Construct empty\(\) is not allowed\. Use more strict comparison~'
     - '~Language construct isset\(\) should not be used~'
     - '~Useless \@throws~'
+    - '~Control structures using switch should not be used~'
+    - '~Language construct empty\(\) should not be used~'
   exceptionRules:
     reportUnusedCatchesOfUncheckedExceptions: false
     uncheckedExceptions: []
