@@ -27,32 +27,32 @@ final class NullVersionTest extends TestCase
     {
         $version = new NullVersion();
 
-        static::assertNull($version->getMajor(), 'major is wrong');
-        static::assertNull($version->getMinor(), 'minor is wrong');
-        static::assertNull($version->getMicro(), 'micro is wrong');
-        static::assertNull($version->getPatch(), 'patch is wrong');
-        static::assertNull($version->getMicropatch(), 'micropatch is wrong');
-        static::assertNull($version->getStability(), 'stability is wrong');
-        static::assertNull($version->getBuild(), 'build is wrong');
-        static::assertNull($version->isBeta(), 'beta is wrong');
-        static::assertNull($version->isAlpha(), 'alpha is wrong');
-        static::assertNull($version->getVersion(), 'complete is wrong');
+        self::assertNull($version->getMajor(), 'major is wrong');
+        self::assertNull($version->getMinor(), 'minor is wrong');
+        self::assertNull($version->getMicro(), 'micro is wrong');
+        self::assertNull($version->getPatch(), 'patch is wrong');
+        self::assertNull($version->getMicropatch(), 'micropatch is wrong');
+        self::assertNull($version->getStability(), 'stability is wrong');
+        self::assertNull($version->getBuild(), 'build is wrong');
+        self::assertNull($version->isBeta(), 'beta is wrong');
+        self::assertNull($version->isAlpha(), 'alpha is wrong');
+        self::assertNull($version->getVersion(), 'complete is wrong');
 
         $array = $version->toArray();
 
-        static::assertArrayHasKey('major', $array);
-        static::assertNull($array['major']);
-        static::assertArrayHasKey('minor', $array);
-        static::assertNull($array['minor']);
-        static::assertArrayHasKey('micro', $array);
-        static::assertNull($array['micro']);
-        static::assertArrayHasKey('patch', $array);
-        static::assertNull($array['patch']);
-        static::assertArrayHasKey('micropatch', $array);
-        static::assertNull($array['micropatch']);
-        static::assertArrayHasKey('stability', $array);
-        static::assertNull($array['stability']);
-        static::assertArrayHasKey('build', $array);
-        static::assertNull($array['build']);
+        self::assertArrayHasKey('major', $array);
+        self::assertNull($array['major']);
+        self::assertArrayHasKey('minor', $array);
+        self::assertNull($array['minor']);
+        self::assertArrayHasKey('micro', $array);
+        self::assertNull($array['micro']);
+        self::assertArrayHasKey('patch', $array);
+        self::assertNull($array['patch']);
+        self::assertArrayHasKey('micropatch', $array);
+        self::assertNull($array['micropatch']);
+        self::assertArrayHasKey('stability', $array);
+        self::assertNull($array['stability']);
+        self::assertArrayHasKey('build', $array);
+        self::assertNull($array['build']);
     }
 }
