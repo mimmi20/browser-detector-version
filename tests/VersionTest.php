@@ -115,32 +115,32 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame($major, $version->getMajor());
-        static::assertSame($minor, $version->getMinor());
-        static::assertSame($micro, $version->getMicro());
-        static::assertSame($patch, $version->getPatch());
-        static::assertNull($version->getMicropatch());
-        static::assertSame($stability, $version->getStability());
-        static::assertSame($build, $version->getBuild());
+        self::assertSame($major, $version->getMajor());
+        self::assertSame($minor, $version->getMinor());
+        self::assertSame($micro, $version->getMicro());
+        self::assertSame($patch, $version->getPatch());
+        self::assertNull($version->getMicropatch());
+        self::assertSame($stability, $version->getStability());
+        self::assertSame($build, $version->getBuild());
 
         $array = $version->toArray();
 
-        static::assertArrayHasKey('major', $array);
-        static::assertIsString($array['major']);
-        static::assertArrayHasKey('minor', $array);
-        static::assertIsString($array['minor']);
-        static::assertArrayHasKey('micro', $array);
-        static::assertIsString($array['micro']);
-        static::assertArrayHasKey('patch', $array);
-        static::assertIsString($array['patch']);
-        static::assertArrayHasKey('micropatch', $array);
-        static::assertArrayHasKey('stability', $array);
-        static::assertIsString($array['stability']);
-        static::assertArrayHasKey('build', $array);
+        self::assertArrayHasKey('major', $array);
+        self::assertIsString($array['major']);
+        self::assertArrayHasKey('minor', $array);
+        self::assertIsString($array['minor']);
+        self::assertArrayHasKey('micro', $array);
+        self::assertIsString($array['micro']);
+        self::assertArrayHasKey('patch', $array);
+        self::assertIsString($array['patch']);
+        self::assertArrayHasKey('micropatch', $array);
+        self::assertArrayHasKey('stability', $array);
+        self::assertIsString($array['stability']);
+        self::assertArrayHasKey('build', $array);
 
         $object = VersionFactory::fromArray($array);
 
-        static::assertEquals($version, $object);
+        self::assertEquals($version, $object);
     }
 
     /**
@@ -161,7 +161,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::IGNORE_MICRO));
+        self::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::IGNORE_MICRO));
 
         $major      = '4';
         $minor      = '0';
@@ -173,7 +173,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MICRO));
+        self::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MICRO));
     }
 
     /**
@@ -194,7 +194,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR));
+        self::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR));
 
         $major      = '4';
         $minor      = '1';
@@ -206,7 +206,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR));
+        self::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR));
     }
 
     /**
@@ -227,7 +227,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('4.0.1.2-beta+8', $version->getVersion(VersionInterface::IGNORE_MICRO_IF_EMPTY));
+        self::assertSame('4.0.1.2-beta+8', $version->getVersion(VersionInterface::IGNORE_MICRO_IF_EMPTY));
 
         $major      = '4';
         $minor      = '0';
@@ -239,7 +239,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MICRO_IF_EMPTY));
+        self::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MICRO_IF_EMPTY));
 
         $major      = '4';
         $minor      = '0';
@@ -251,7 +251,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MICRO_IF_EMPTY));
+        self::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MICRO_IF_EMPTY));
     }
 
     /**
@@ -272,7 +272,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('4.0.1.1-beta+8', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
+        self::assertSame('4.0.1.1-beta+8', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
 
         $major      = '4';
         $minor      = '0';
@@ -284,7 +284,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
+        self::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
 
         $major      = '4';
         $minor      = '0';
@@ -296,7 +296,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
+        self::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
 
         $major      = '4';
         $minor      = '0';
@@ -308,7 +308,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY | VersionInterface::IGNORE_MICRO));
+        self::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY | VersionInterface::IGNORE_MICRO));
 
         $major      = '4';
         $minor      = '1';
@@ -320,7 +320,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('4.1.0.3-beta+8', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
+        self::assertSame('4.1.0.3-beta+8', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
     }
 
     /**
@@ -341,7 +341,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('0.0.1.1-beta+8', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
+        self::assertSame('0.0.1.1-beta+8', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
 
         $major      = '0';
         $minor      = '0';
@@ -353,7 +353,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
+        self::assertSame('', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
 
         $major      = '00';
         $minor      = '0';
@@ -365,7 +365,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
+        self::assertSame('', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
 
         $major      = '0';
         $minor      = '1';
@@ -377,7 +377,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::IGNORE_MINOR));
+        self::assertSame('', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::IGNORE_MINOR));
 
         $major      = '0';
         $minor      = '0';
@@ -389,7 +389,7 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        static::assertSame('0', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::GET_ZERO_IF_EMPTY));
+        self::assertSame('0', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::GET_ZERO_IF_EMPTY));
     }
 
     /**
@@ -407,11 +407,11 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, "{$micro}.{$patch}");
 
-        static::assertSame($major, $version->getMajor());
-        static::assertSame($minor, $version->getMinor());
-        static::assertSame($micro, $version->getMicro());
-        static::assertSame($patch, $version->getPatch());
-        static::assertNull($version->getMicropatch());
+        self::assertSame($major, $version->getMajor());
+        self::assertSame($minor, $version->getMinor());
+        self::assertSame($micro, $version->getMicro());
+        self::assertSame($patch, $version->getPatch());
+        self::assertNull($version->getMicropatch());
 
         $major = '0';
         $minor = '1';
@@ -420,11 +420,11 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, "{$micro}.1", $patch);
 
-        static::assertSame($major, $version->getMajor());
-        static::assertSame($minor, $version->getMinor());
-        static::assertSame($micro, $version->getMicro());
-        static::assertSame($patch, $version->getPatch());
-        static::assertNull($version->getMicropatch());
+        self::assertSame($major, $version->getMajor());
+        self::assertSame($minor, $version->getMinor());
+        self::assertSame($micro, $version->getMicro());
+        self::assertSame($patch, $version->getPatch());
+        self::assertNull($version->getMicropatch());
 
         $major      = '0';
         $minor      = '1';
@@ -434,11 +434,11 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, "{$micro}.{$patch}.{$micropatch}");
 
-        static::assertSame($major, $version->getMajor());
-        static::assertSame($minor, $version->getMinor());
-        static::assertSame($micro, $version->getMicro());
-        static::assertSame($patch, $version->getPatch());
-        static::assertSame($micropatch, $version->getMicropatch());
+        self::assertSame($major, $version->getMajor());
+        self::assertSame($minor, $version->getMinor());
+        self::assertSame($micro, $version->getMicro());
+        self::assertSame($patch, $version->getPatch());
+        self::assertSame($micropatch, $version->getMicropatch());
 
         $major = '0';
         $minor = '1';
@@ -447,11 +447,11 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, "{$micro}.1.4", $patch);
 
-        static::assertSame($major, $version->getMajor());
-        static::assertSame($minor, $version->getMinor());
-        static::assertSame($micro, $version->getMicro());
-        static::assertSame($patch, $version->getPatch());
-        static::assertNull($version->getMicropatch());
+        self::assertSame($major, $version->getMajor());
+        self::assertSame($minor, $version->getMinor());
+        self::assertSame($micro, $version->getMicro());
+        self::assertSame($patch, $version->getPatch());
+        self::assertNull($version->getMicropatch());
 
         $major      = '0';
         $minor      = '1';
@@ -461,11 +461,11 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, "{$micro}.1.1", $patch, $micropatch);
 
-        static::assertSame($major, $version->getMajor());
-        static::assertSame($minor, $version->getMinor());
-        static::assertSame($micro, $version->getMicro());
-        static::assertSame($patch, $version->getPatch());
-        static::assertSame($micropatch, $version->getMicropatch());
+        self::assertSame($major, $version->getMajor());
+        self::assertSame($minor, $version->getMinor());
+        self::assertSame($micro, $version->getMicro());
+        self::assertSame($patch, $version->getPatch());
+        self::assertSame($micropatch, $version->getMicropatch());
     }
 
     /**
@@ -483,11 +483,11 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch);
 
-        static::assertSame($major, $version->getMajor());
-        static::assertSame($minor, $version->getMinor());
-        static::assertSame($micro, $version->getMicro());
-        static::assertSame($patch, $version->getPatch());
-        static::assertNull($version->getMicropatch());
+        self::assertSame($major, $version->getMajor());
+        self::assertSame($minor, $version->getMinor());
+        self::assertSame($micro, $version->getMicro());
+        self::assertSame($patch, $version->getPatch());
+        self::assertNull($version->getMicropatch());
 
         $major      = '0';
         $minor      = '1';
@@ -497,10 +497,10 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch);
 
-        static::assertSame($major, $version->getMajor());
-        static::assertSame($minor, $version->getMinor());
-        static::assertSame($micro, $version->getMicro());
-        static::assertSame($patch, $version->getPatch());
-        static::assertSame($micropatch, $version->getMicropatch());
+        self::assertSame($major, $version->getMajor());
+        self::assertSame($minor, $version->getMinor());
+        self::assertSame($micro, $version->getMicro());
+        self::assertSame($patch, $version->getPatch());
+        self::assertSame($micropatch, $version->getMicropatch());
     }
 }

@@ -46,14 +46,14 @@ final class VersionFactoryTest extends TestCase
     ): void {
         $object = (new VersionFactory())->set($version);
 
-        static::assertInstanceOf(Version::class, $object);
+        self::assertInstanceOf(Version::class, $object);
 
-        static::assertSame($major, $object->getMajor(), 'major is wrong');
-        static::assertSame($minor, $object->getMinor(), 'minor is wrong');
-        static::assertSame($micro, $object->getMicro(), 'patch is wrong');
-        static::assertSame($stability, $object->getStability(), 'stability is wrong');
-        static::assertSame($build, $object->getBuild(), 'build is wrong');
-        static::assertSame($complete, $object->getVersion(), 'complete is wrong');
+        self::assertSame($major, $object->getMajor(), 'major is wrong');
+        self::assertSame($minor, $object->getMinor(), 'minor is wrong');
+        self::assertSame($micro, $object->getMicro(), 'patch is wrong');
+        self::assertSame($stability, $object->getStability(), 'stability is wrong');
+        self::assertSame($build, $object->getBuild(), 'build is wrong');
+        self::assertSame($complete, $object->getVersion(), 'complete is wrong');
     }
 
     /**
@@ -98,18 +98,18 @@ final class VersionFactoryTest extends TestCase
     {
         $object = (new VersionFactory())->set('abc');
 
-        static::assertInstanceOf(NullVersion::class, $object);
+        self::assertInstanceOf(NullVersion::class, $object);
 
-        static::assertNull($object->getMajor(), 'major is wrong');
-        static::assertNull($object->getMinor(), 'minor is wrong');
-        static::assertNull($object->getMicro(), 'micro is wrong');
-        static::assertNull($object->getPatch(), 'patch is wrong');
-        static::assertNull($object->getMicropatch(), 'micropatch is wrong');
-        static::assertNull($object->getStability(), 'stability is wrong');
-        static::assertNull($object->getBuild(), 'build is wrong');
-        static::assertNull($object->getVersion(), 'complete is wrong');
-        static::assertNull($object->isBeta(), 'beta is wrong');
-        static::assertNull($object->isAlpha(), 'alpha is wrong');
+        self::assertNull($object->getMajor(), 'major is wrong');
+        self::assertNull($object->getMinor(), 'minor is wrong');
+        self::assertNull($object->getMicro(), 'micro is wrong');
+        self::assertNull($object->getPatch(), 'patch is wrong');
+        self::assertNull($object->getMicropatch(), 'micropatch is wrong');
+        self::assertNull($object->getStability(), 'stability is wrong');
+        self::assertNull($object->getBuild(), 'build is wrong');
+        self::assertNull($object->getVersion(), 'complete is wrong');
+        self::assertNull($object->isBeta(), 'beta is wrong');
+        self::assertNull($object->isAlpha(), 'alpha is wrong');
     }
 
     /**
@@ -123,8 +123,8 @@ final class VersionFactoryTest extends TestCase
     {
         $object = (new VersionFactory())->set('XP');
 
-        static::assertInstanceOf(NullVersion::class, $object);
-        static::assertNull($object->getMajor(), 'major is wrong');
+        self::assertInstanceOf(NullVersion::class, $object);
+        self::assertNull($object->getMajor(), 'major is wrong');
     }
 
     /**
@@ -157,14 +157,14 @@ final class VersionFactoryTest extends TestCase
     ): void {
         $object = (new VersionFactory())->detectVersion($uapart, $searches);
 
-        static::assertInstanceOf(Version::class, $object);
+        self::assertInstanceOf(Version::class, $object);
 
-        static::assertSame($major, $object->getMajor(), 'major is wrong');
-        static::assertSame($minor, $object->getMinor(), 'minor is wrong');
-        static::assertSame($micro, $object->getMicro(), 'patch is wrong');
-        static::assertSame($preRelease, $object->getStability(), 'stability is wrong');
-        static::assertSame($build, $object->getBuild(), 'build is wrong');
-        static::assertSame($complete, $object->getVersion(), 'complete is wrong');
+        self::assertSame($major, $object->getMajor(), 'major is wrong');
+        self::assertSame($minor, $object->getMinor(), 'minor is wrong');
+        self::assertSame($micro, $object->getMicro(), 'patch is wrong');
+        self::assertSame($preRelease, $object->getStability(), 'stability is wrong');
+        self::assertSame($build, $object->getBuild(), 'build is wrong');
+        self::assertSame($complete, $object->getVersion(), 'complete is wrong');
     }
 
     /**
@@ -195,18 +195,18 @@ final class VersionFactoryTest extends TestCase
     {
         $object = (new VersionFactory())->detectVersion('Firefox/4.0b8', ['Chrome']);
 
-        static::assertInstanceOf(NullVersion::class, $object);
+        self::assertInstanceOf(NullVersion::class, $object);
 
-        static::assertNull($object->getMajor(), 'major is wrong');
-        static::assertNull($object->getMinor(), 'minor is wrong');
-        static::assertNull($object->getMicro(), 'micro is wrong');
-        static::assertNull($object->getPatch(), 'patch is wrong');
-        static::assertNull($object->getMicropatch(), 'micropatch is wrong');
-        static::assertNull($object->getStability(), 'stability is wrong');
-        static::assertNull($object->getBuild(), 'build is wrong');
-        static::assertNull($object->getVersion(), 'complete is wrong');
-        static::assertNull($object->isBeta(), 'beta is wrong');
-        static::assertNull($object->isAlpha(), 'alpha is wrong');
+        self::assertNull($object->getMajor(), 'major is wrong');
+        self::assertNull($object->getMinor(), 'minor is wrong');
+        self::assertNull($object->getMicro(), 'micro is wrong');
+        self::assertNull($object->getPatch(), 'patch is wrong');
+        self::assertNull($object->getMicropatch(), 'micropatch is wrong');
+        self::assertNull($object->getStability(), 'stability is wrong');
+        self::assertNull($object->getBuild(), 'build is wrong');
+        self::assertNull($object->getVersion(), 'complete is wrong');
+        self::assertNull($object->isBeta(), 'beta is wrong');
+        self::assertNull($object->isAlpha(), 'alpha is wrong');
     }
 
     /**
@@ -237,17 +237,17 @@ final class VersionFactoryTest extends TestCase
         ];
         $object = VersionFactory::fromArray($data);
 
-        static::assertInstanceOf(Version::class, $object);
+        self::assertInstanceOf(Version::class, $object);
 
-        static::assertSame($major, $object->getMajor(), 'major is wrong');
-        static::assertSame($minor, $object->getMinor(), 'minor is wrong');
-        static::assertSame($micro, $object->getMicro(), 'micro is wrong');
-        static::assertSame($patch, $object->getPatch(), 'patch is wrong');
-        static::assertNull($object->getMicropatch(), 'micropatch is wrong');
-        static::assertSame($stability, $object->getStability(), 'stability is wrong');
-        static::assertSame($build, $object->getBuild(), 'build is wrong');
-        static::assertTrue($object->isBeta());
-        static::assertFalse($object->isAlpha());
+        self::assertSame($major, $object->getMajor(), 'major is wrong');
+        self::assertSame($minor, $object->getMinor(), 'minor is wrong');
+        self::assertSame($micro, $object->getMicro(), 'micro is wrong');
+        self::assertSame($patch, $object->getPatch(), 'patch is wrong');
+        self::assertNull($object->getMicropatch(), 'micropatch is wrong');
+        self::assertSame($stability, $object->getStability(), 'stability is wrong');
+        self::assertSame($build, $object->getBuild(), 'build is wrong');
+        self::assertTrue($object->isBeta());
+        self::assertFalse($object->isAlpha());
     }
 
     /**
@@ -265,8 +265,8 @@ final class VersionFactoryTest extends TestCase
 
         $result = $object->detectVersion($useragent, ['MyIE']);
 
-        static::assertInstanceOf(Version::class, $result);
-        static::assertSame('2', $result->getMajor(), 'major is wrong');
+        self::assertInstanceOf(Version::class, $result);
+        self::assertSame('2', $result->getMajor(), 'major is wrong');
     }
 
     /**
@@ -283,7 +283,7 @@ final class VersionFactoryTest extends TestCase
         $object->setRegex($regex);
         $useragent = 'Mozilla/4.0 (compatible; MSIE 10.0; Trident/6.0; Windows 98; MyIE2)';
         $result    = $object->detectVersion($useragent, ['MyIE']);
-        static::assertInstanceOf(Version::class, $result);
-        static::assertSame('2', $result->getMajor(), 'major is wrong');
+        self::assertInstanceOf(Version::class, $result);
+        self::assertSame('2', $result->getMajor(), 'major is wrong');
     }
 }
