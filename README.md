@@ -8,7 +8,5 @@
 
 [![Build Status](https://travis-ci.org/mimmi20/version.svg?branch=master)](https://travis-ci.org/mimmi20/version)
 [![codecov](https://codecov.io/gh/mimmi20/version/branch/master/graph/badge.svg)](https://codecov.io/gh/mimmi20/version)
-[![Maintainability](https://api.codeclimate.com/v1/badges/5575d7771677b0904dbd/maintainability)](https://codeclimate.com/github/mimmi20/version/maintainability)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/mimmi20/version.svg)](http://isitmaintained.com/project/mimmi20/version "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/mimmi20/version.svg)](http://isitmaintained.com/project/mimmi20/version "Percentage of issues still open")
-[![Dependency Status](https://gemnasium.com/badges/github.com/mimmi20/version.svg)](https://gemnasium.com/github.com/mimmi20/version)
