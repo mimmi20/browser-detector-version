@@ -283,48 +283,6 @@ jobs:
           file: "clover.xml"
           flags: "phpunit"
 
-  integration-tests:
-    name: "Integration Tests"
-
-    needs: "tests"
-
-    runs-on: "ubuntu-latest"
-
-    strategy:
-      fail-fast: false
-      matrix:
-        php-versions:
-          - "7.1"
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v2"
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
-        with:
-          php-version: "${{ matrix.php-versions }}"
-          extension-csv: "mbstring, dom, xmlwriter" #optional
-          ini-values-csv: "opcache.enable=1, opcache.enable_cli=1, zend.assertions=1, assert.exception=On" #optional
-          coverage: "none" #optional
-
-      - name: "Determine composer cache directory"
-        id: "determine-composer-cache-directory"
-        run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
-
-      - name: "Cache dependencies installed with composer"
-        uses: "actions/cache@v1"
-        with:
-          path: "${{ steps.determine-composer-cache-directory.outputs.directory }}"
-          key: "php-${{ matrix.php-versions }}-composer--${{ hashFiles('composer.lock') }}"
-          restore-keys: "php-${{ matrix.php-versions }}-composer--"
-
-      - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction --no-suggest -vv "
-
-      - name: "Run integration tests with phpunit/phpunit"
-        run: "vendor/bin/phpunit -c tests/phpunit-integration.xml --no-coverage --colors --verbose"
-
   mutation-tests:
     name: "Mutation Tests"
 
