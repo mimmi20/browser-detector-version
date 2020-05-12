@@ -146,6 +146,7 @@ final class VersionTest extends TestCase
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
      *
      * @return void
      */
@@ -179,6 +180,7 @@ final class VersionTest extends TestCase
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
      *
      * @return void
      */
@@ -212,6 +214,7 @@ final class VersionTest extends TestCase
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
      *
      * @return void
      */
@@ -257,6 +260,7 @@ final class VersionTest extends TestCase
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
      *
      * @return void
      */
@@ -326,6 +330,7 @@ final class VersionTest extends TestCase
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
      *
      * @return void
      */
