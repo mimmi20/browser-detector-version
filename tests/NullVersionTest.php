@@ -20,6 +20,7 @@ final class NullVersionTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \PHPUnit\Framework\Exception
      * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
      *
      * @return void
      */
