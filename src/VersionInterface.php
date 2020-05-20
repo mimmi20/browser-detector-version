@@ -13,39 +13,18 @@ namespace BrowserDetector\Version;
 
 interface VersionInterface
 {
-    /**
-     * @var int
-     */
     public const COMPLETE = 0;
 
-    /**
-     * @var int
-     */
     public const IGNORE_MINOR = 1;
 
-    /**
-     * @var int
-     */
     public const IGNORE_MICRO = 2;
 
-    /**
-     * @var int
-     */
     public const IGNORE_MINOR_IF_EMPTY = 4;
 
-    /**
-     * @var int
-     */
     public const IGNORE_MICRO_IF_EMPTY = 8;
 
-    /**
-     * @var int
-     */
     public const IGNORE_MAJOR_IF_EMPTY = 16;
 
-    /**
-     * @var int
-     */
     public const GET_ZERO_IF_EMPTY = 32;
 
     /**
