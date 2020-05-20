@@ -13,9 +13,7 @@ namespace BrowserDetector\Version;
 
 final class VersionFactory implements VersionFactoryInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $regex = VersionFactoryInterface::REGEX;
 
     /**
@@ -23,9 +21,11 @@ final class VersionFactory implements VersionFactoryInterface
      */
     public function __construct(?string $regex = null)
     {
-        if (null !== $regex) {
-            $this->setRegex($regex);
+        if (null === $regex) {
+            return;
         }
+
+        $this->setRegex($regex);
     }
 
     /**
@@ -73,7 +73,7 @@ final class VersionFactory implements VersionFactoryInterface
             $micropatch = null;
         }
 
-        $stability = (array_key_exists('stability', $numbers)) ? $numbers['stability'] : null;
+        $stability = array_key_exists('stability', $numbers) ? $numbers['stability'] : null;
 
         if (null === $stability || 0 === mb_strlen($stability)) {
             $stability = 'stable';
@@ -108,7 +108,7 @@ final class VersionFactory implements VersionFactoryInterface
                 break;
         }
 
-        $build = (array_key_exists('build', $numbers)) ? $numbers['build'] : null;
+        $build = array_key_exists('build', $numbers) ? $numbers['build'] : null;
 
         return new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
     }
@@ -178,21 +178,27 @@ final class VersionFactory implements VersionFactoryInterface
         if (array_key_exists('major', $matches) && mb_strlen($matches['major'])) {
             $numbers['major'] = $matches['major'];
         }
+
         if (array_key_exists('minor', $matches) && mb_strlen($matches['minor'])) {
             $numbers['minor'] = $matches['minor'];
         }
+
         if (array_key_exists('micro', $matches) && mb_strlen($matches['micro'])) {
             $numbers['micro'] = $matches['micro'];
         }
+
         if (array_key_exists('patch', $matches) && mb_strlen($matches['patch'])) {
             $numbers['patch'] = $matches['patch'];
         }
+
         if (array_key_exists('micropatch', $matches) && mb_strlen($matches['micropatch'])) {
             $numbers['micropatch'] = $matches['micropatch'];
         }
+
         if (array_key_exists('stability', $matches) && mb_strlen($matches['stability'])) {
             $numbers['stability'] = $matches['stability'];
         }
+
         if (array_key_exists('build', $matches) && mb_strlen($matches['build'])) {
             $numbers['build'] = $matches['build'];
         }

@@ -410,7 +410,7 @@ final class VersionTest extends TestCase
         $micro = '2';
         $patch = '3';
 
-        $version = new Version($major, $minor, "{$micro}.{$patch}");
+        $version = new Version($major, $minor, sprintf('%s.%s', $micro, $patch));
 
         self::assertSame($major, $version->getMajor());
         self::assertSame($minor, $version->getMinor());
@@ -423,7 +423,7 @@ final class VersionTest extends TestCase
         $micro = '2';
         $patch = '3';
 
-        $version = new Version($major, $minor, "{$micro}.1", $patch);
+        $version = new Version($major, $minor, sprintf('%s.1', $micro), $patch);
 
         self::assertSame($major, $version->getMajor());
         self::assertSame($minor, $version->getMinor());
@@ -437,7 +437,7 @@ final class VersionTest extends TestCase
         $patch      = '3';
         $micropatch = '4';
 
-        $version = new Version($major, $minor, "{$micro}.{$patch}.{$micropatch}");
+        $version = new Version($major, $minor, sprintf('%s.%s.%s', $micro, $patch, $micropatch));
 
         self::assertSame($major, $version->getMajor());
         self::assertSame($minor, $version->getMinor());
@@ -450,7 +450,7 @@ final class VersionTest extends TestCase
         $micro = '2';
         $patch = '3';
 
-        $version = new Version($major, $minor, "{$micro}.1.4", $patch);
+        $version = new Version($major, $minor, sprintf('%s.1.4', $micro), $patch);
 
         self::assertSame($major, $version->getMajor());
         self::assertSame($minor, $version->getMinor());
@@ -464,7 +464,7 @@ final class VersionTest extends TestCase
         $patch      = '3';
         $micropatch = '4';
 
-        $version = new Version($major, $minor, "{$micro}.1.1", $patch, $micropatch);
+        $version = new Version($major, $minor, sprintf('%s.1.1', $micro), $patch, $micropatch);
 
         self::assertSame($major, $version->getMajor());
         self::assertSame($minor, $version->getMinor());

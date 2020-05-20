@@ -13,39 +13,25 @@ namespace BrowserDetector\Version;
 
 final class Version implements VersionInterface
 {
-    /**
-     * @var string the detected major version
-     */
+    /** @var string the detected major version */
     private $major;
 
-    /**
-     * @var string the detected minor version
-     */
+    /** @var string the detected minor version */
     private $minor;
 
-    /**
-     * @var string the detected micro version
-     */
+    /** @var string the detected micro version */
     private $micro;
 
-    /**
-     * @var string|null the detected patch version
-     */
+    /** @var string|null the detected patch version */
     private $patch;
 
-    /**
-     * @var string|null the detected micropatch version
-     */
+    /** @var string|null the detected micropatch version */
     private $micropatch;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $stability = 'stable';
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $build;
 
     /**
@@ -195,7 +181,8 @@ final class Version implements VersionInterface
         if (VersionInterface::IGNORE_MICRO & $mode) {
             unset($versions['micro'], $versions['patch'], $versions['micropatch'], $versions['stability'], $versions['build']);
             $microIsEmpty = true;
-        } elseif ((VersionInterface::IGNORE_MICRO_IF_EMPTY & $mode)
+        } elseif (
+            (VersionInterface::IGNORE_MICRO_IF_EMPTY & $mode)
             || (VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
             || (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode)
         ) {
@@ -213,7 +200,8 @@ final class Version implements VersionInterface
         if (VersionInterface::IGNORE_MINOR & $mode) {
             unset($versions['minor'], $versions['micro'], $versions['patch'], $versions['micropatch'], $versions['stability'], $versions['build']);
             $minorIsEmpty = true;
-        } elseif ((VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
+        } elseif (
+            (VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
             || (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode)
         ) {
             if ($microIsEmpty && (empty($versions['minor']) || '00' === $versions['minor'])) {
@@ -248,7 +236,7 @@ final class Version implements VersionInterface
         return $versions['major']
             . (isset($versions['minor']) ? '.' . $versions['minor'] : '')
             . (isset($versions['micro']) ? '.' . $versions['micro'] . (isset($versions['patch']) ? '.' . $versions['patch'] . (isset($versions['micropatch']) ? '.' . $versions['micropatch'] : '') : '') : '')
-            . ((isset($versions['stability']) && 'stable' !== $versions['stability']) ? '-' . $versions['stability'] : '')
+            . (isset($versions['stability']) && 'stable' !== $versions['stability'] ? '-' . $versions['stability'] : '')
             . (isset($versions['build']) ? '+' . $versions['build'] : '');
     }
 }
