@@ -10,12 +10,9 @@
     <arg name="encoding" value="utf-8"/>
 
     <!-- inherit rules from: -->
-    <rule ref="mimmi20-cs">
-    </rule>
+    <rule ref="mimmi20-cs"/>
 
     <!-- Paths to check -->
     <file>src</file>
     <file>tests</file>
-
-    <exclude-pattern>*/temp/*</exclude-pattern>
 </ruleset>
