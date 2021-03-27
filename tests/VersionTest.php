@@ -9,99 +9,92 @@
  */
 
 declare(strict_types = 1);
+
 namespace BrowserDetectorTest\Version;
 
 use BrowserDetector\Version\Version;
 use BrowserDetector\Version\VersionFactory;
 use BrowserDetector\Version\VersionInterface;
+use InvalidArgumentException;
+use PHPUnit\Framework\Exception;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use UnexpectedValueException;
+
+use function sprintf;
 
 final class VersionTest extends TestCase
 {
     /**
-     * @throws \InvalidArgumentException
-     *
-     * @return void
+     * @throws InvalidArgumentException
      */
     public function testNegativeMajor(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Major version must be a non-negative number formatted as string');
 
         new Version('-1');
     }
 
     /**
-     * @throws \InvalidArgumentException
-     *
-     * @return void
+     * @throws InvalidArgumentException
      */
     public function testNotNumericMajor(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Major version must be a non-negative number formatted as string');
 
         new Version('a');
     }
 
     /**
-     * @throws \InvalidArgumentException
-     *
-     * @return void
+     * @throws InvalidArgumentException
      */
     public function testNegativeMinor(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Minor version must be a non-negative number formatted as string');
 
         new Version('0', '-1');
     }
 
     /**
-     * @throws \InvalidArgumentException
-     *
-     * @return void
+     * @throws InvalidArgumentException
      */
     public function testNotNumericMinor(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Minor version must be a non-negative number formatted as string');
 
         new Version('0', 'b');
     }
 
     /**
-     * @throws \InvalidArgumentException
-     *
-     * @return void
+     * @throws InvalidArgumentException
      */
     public function testNegativeMicro(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Patch version must be a non-negative number formatted as string');
 
         new Version('0', '0', '-1');
     }
 
     /**
-     * @throws \InvalidArgumentException
-     *
-     * @return void
+     * @throws InvalidArgumentException
      */
     public function testNotNumericMicro(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Patch version must be a non-negative number formatted as string');
 
         new Version('0', '0', 'c');
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \PHPUnit\Framework\Exception
-     * @throws \InvalidArgumentException
-     *
-     * @return void
+     * @throws ExpectationFailedException
+     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function testToarray(): void
     {
@@ -144,11 +137,9 @@ final class VersionTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \InvalidArgumentException
-     * @throws \UnexpectedValueException
-     *
-     * @return void
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
      */
     public function testGetversionWithoutMicro(): void
     {
@@ -178,11 +169,9 @@ final class VersionTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \InvalidArgumentException
-     * @throws \UnexpectedValueException
-     *
-     * @return void
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
      */
     public function testGetversionWithoutMinor(): void
     {
@@ -212,11 +201,9 @@ final class VersionTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \InvalidArgumentException
-     * @throws \UnexpectedValueException
-     *
-     * @return void
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
      */
     public function testGetversionWithoutEmptyMicro(): void
     {
@@ -258,11 +245,9 @@ final class VersionTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \InvalidArgumentException
-     * @throws \UnexpectedValueException
-     *
-     * @return void
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
      */
     public function testGetversionWithoutEmptyMinor(): void
     {
@@ -328,11 +313,9 @@ final class VersionTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \InvalidArgumentException
-     * @throws \UnexpectedValueException
-     *
-     * @return void
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
      */
     public function testGetversionWithoutEmptyMajor(): void
     {
@@ -398,10 +381,8 @@ final class VersionTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \InvalidArgumentException
-     *
-     * @return void
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testMicrowithDot(): void
     {
@@ -474,10 +455,8 @@ final class VersionTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \InvalidArgumentException
-     *
-     * @return void
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testMicrowithoutDot(): void
     {

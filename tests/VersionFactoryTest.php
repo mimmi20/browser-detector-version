@@ -9,32 +9,27 @@
  */
 
 declare(strict_types = 1);
+
 namespace BrowserDetectorTest\Version;
 
 use BrowserDetector\Version\NullVersion;
 use BrowserDetector\Version\Version;
 use BrowserDetector\Version\VersionFactory;
+use InvalidArgumentException;
+use PHPUnit\Framework\Exception;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use UnexpectedValueException;
 
 final class VersionFactoryTest extends TestCase
 {
     /**
+     * @throws ExpectationFailedException
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
+     *
      * @dataProvider providerSet
-     *
-     * @param string      $version
-     * @param string      $major
-     * @param string      $minor
-     * @param string      $micro
-     * @param string      $stability
-     * @param string|null $build
-     * @param string      $complete
-     *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \PHPUnit\Framework\Exception
-     * @throws \InvalidArgumentException
-     * @throws \UnexpectedValueException
-     *
-     * @return void
      */
     public function testVersionSet(
         string $version,
@@ -58,7 +53,7 @@ final class VersionFactoryTest extends TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<int, array<int, string|null>>
      */
     public function providerSet(): array
     {
@@ -89,12 +84,10 @@ final class VersionFactoryTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \PHPUnit\Framework\Exception
-     * @throws \InvalidArgumentException
-     * @throws \UnexpectedValueException
-     *
-     * @return void
+     * @throws ExpectationFailedException
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
      */
     public function testNullVersionSet(): void
     {
@@ -115,11 +108,9 @@ final class VersionFactoryTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \PHPUnit\Framework\Exception
-     * @throws \InvalidArgumentException
-     *
-     * @return void
+     * @throws ExpectationFailedException
+     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function testVersionSetXp(): void
     {
@@ -130,23 +121,14 @@ final class VersionFactoryTest extends TestCase
     }
 
     /**
+     * @param array<int, (bool|string|null)> $searches
+     *
+     * @throws ExpectationFailedException
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
+     *
      * @dataProvider providerDetectVersion
-     *
-     * @param string      $uapart
-     * @param array       $searches
-     * @param string      $major
-     * @param string      $minor
-     * @param string      $micro
-     * @param string      $preRelease
-     * @param string|null $build
-     * @param string      $complete
-     *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \PHPUnit\Framework\Exception
-     * @throws \InvalidArgumentException
-     * @throws \UnexpectedValueException
-     *
-     * @return void
      */
     public function testVersionDetectVersion(
         string $uapart,
@@ -171,7 +153,7 @@ final class VersionFactoryTest extends TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<int, array<int, (string|array<int, (null|bool|string)>|null)>>
      */
     public function providerDetectVersion(): array
     {
@@ -188,12 +170,10 @@ final class VersionFactoryTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \PHPUnit\Framework\Exception
-     * @throws \InvalidArgumentException
-     * @throws \UnexpectedValueException
-     *
-     * @return void
+     * @throws ExpectationFailedException
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
      */
     public function testVersionDetectNullVersion(): void
     {
@@ -214,11 +194,9 @@ final class VersionFactoryTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \PHPUnit\Framework\Exception
-     * @throws \InvalidArgumentException
-     *
-     * @return void
+     * @throws ExpectationFailedException
+     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function testFromArray(): void
     {
@@ -230,7 +208,7 @@ final class VersionFactoryTest extends TestCase
         $stability  = 'beta';
         $build      = '8';
 
-        $data = [
+        $data   = [
             'major' => $major,
             'minor' => $minor,
             'micro' => $micro,
@@ -255,11 +233,9 @@ final class VersionFactoryTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \PHPUnit\Framework\Exception
-     * @throws \InvalidArgumentException
-     *
-     * @return void
+     * @throws ExpectationFailedException
+     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function testWithParameter(): void
     {
@@ -274,11 +250,9 @@ final class VersionFactoryTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \PHPUnit\Framework\Exception
-     * @throws \InvalidArgumentException
-     *
-     * @return void
+     * @throws ExpectationFailedException
+     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function testSetRegex(): void
     {

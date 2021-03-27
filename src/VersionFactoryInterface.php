@@ -9,49 +9,35 @@
  */
 
 declare(strict_types = 1);
+
 namespace BrowserDetector\Version;
 
 interface VersionFactoryInterface
 {
     public const REGEX = '/^v?(?<major>\d+)(?:[-\.](?<minor>\d+))?(?:[-\.](?<micro>\d+))?(?:[-\.](?<patch>\d+))?(?:[-\.](?<micropatch>\d+))?(?:(?:[-_+~]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?| build |\+|[_\.]r)(?<build>\d*))?.*$/i';
 
-    /**
-     * @param string $regex
-     *
-     * @return void
-     */
     public function setRegex(string $regex): void;
 
     /**
      * sets the detected version
      *
-     * @param string $version
-     *
      * @throws NotNumericException
-     *
-     * @return \BrowserDetector\Version\VersionInterface
      */
     public function set(string $version): VersionInterface;
 
     /**
      * detects the bit count by this browser from the given user agent
      *
-     * @param string $useragent
-     * @param array  $searches
-     * @param string $default
+     * @param array<int, bool|string|null> $searches
      *
      * @throws NotNumericException
-     *
-     * @return \BrowserDetector\Version\VersionInterface
      */
     public function detectVersion(string $useragent, array $searches = [], string $default = '0'): VersionInterface;
 
     /**
-     * @param array $data
+     * @param array<string, string|null> $data
      *
      * @throws NotNumericException
-     *
-     * @return \BrowserDetector\Version\VersionInterface
      */
     public static function fromArray(array $data): VersionInterface;
 }

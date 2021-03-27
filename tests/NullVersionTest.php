@@ -9,20 +9,23 @@
  */
 
 declare(strict_types = 1);
+
 namespace BrowserDetectorTest\Version;
 
 use BrowserDetector\Version\NullVersion;
+use InvalidArgumentException;
+use PHPUnit\Framework\Exception;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use UnexpectedValueException;
 
 final class NullVersionTest extends TestCase
 {
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \PHPUnit\Framework\Exception
-     * @throws \InvalidArgumentException
-     * @throws \UnexpectedValueException
-     *
-     * @return void
+     * @throws ExpectationFailedException
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
      */
     public function testToarray(): void
     {

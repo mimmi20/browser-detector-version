@@ -9,12 +9,13 @@
  */
 
 declare(strict_types = 1);
+
 namespace BrowserDetector\Version;
 
 final class NullVersion implements VersionInterface
 {
     /**
-     * @return array
+     * @return array<string, int|string|null>
      */
     public function toArray(): array
     {
@@ -29,73 +30,46 @@ final class NullVersion implements VersionInterface
         ];
     }
 
-    /**
-     * @return string|null
-     */
     public function getMajor(): ?string
     {
         return null;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMinor(): ?string
     {
         return null;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMicro(): ?string
     {
         return null;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPatch(): ?string
     {
         return null;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMicropatch(): ?string
     {
         return null;
     }
 
-    /**
-     * @return string|null
-     */
     public function getBuild(): ?string
     {
         return null;
     }
 
-    /**
-     * @return string|null
-     */
     public function getStability(): ?string
     {
         return null;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isAlpha(): ?bool
     {
         return null;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isBeta(): ?bool
     {
         return null;
@@ -104,9 +78,7 @@ final class NullVersion implements VersionInterface
     /**
      * returns the detected version
      *
-     * @param int $mode
-     *
-     * @return string|null
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
      */
     public function getVersion(int $mode = VersionInterface::COMPLETE): ?string
     {
