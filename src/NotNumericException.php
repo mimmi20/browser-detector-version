@@ -9,9 +9,12 @@
  */
 
 declare(strict_types = 1);
+
 namespace BrowserDetector\Version;
 
-final class NotNumericException extends \InvalidArgumentException
+use InvalidArgumentException;
+
+final class NotNumericException extends InvalidArgumentException
 {
     // nothing to do here
 }

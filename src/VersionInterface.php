@@ -9,7 +9,10 @@
  */
 
 declare(strict_types = 1);
+
 namespace BrowserDetector\Version;
+
+use UnexpectedValueException;
 
 interface VersionInterface
 {
@@ -30,61 +33,30 @@ interface VersionInterface
     /**
      * returns the detected version
      *
-     * @param int $mode
-     *
-     * @throws \UnexpectedValueException
-     *
-     * @return string|null
+     * @throws UnexpectedValueException
      */
     public function getVersion(int $mode = self::COMPLETE): ?string;
 
     /**
-     * @return array
+     * @return array<string, string|null>
      */
     public function toArray(): array;
 
-    /**
-     * @return string|null
-     */
     public function getMajor(): ?string;
 
-    /**
-     * @return string|null
-     */
     public function getMinor(): ?string;
 
-    /**
-     * @return string|null
-     */
     public function getMicro(): ?string;
 
-    /**
-     * @return string|null
-     */
     public function getPatch(): ?string;
 
-    /**
-     * @return string|null
-     */
     public function getMicropatch(): ?string;
 
-    /**
-     * @return string|null
-     */
     public function getBuild(): ?string;
 
-    /**
-     * @return string|null
-     */
     public function getStability(): ?string;
 
-    /**
-     * @return bool|null
-     */
     public function isAlpha(): ?bool;
 
-    /**
-     * @return bool|null
-     */
     public function isBeta(): ?bool;
 }

@@ -9,40 +9,37 @@
  */
 
 declare(strict_types = 1);
+
 namespace BrowserDetector\Version;
+
+use function array_key_exists;
+use function explode;
+use function is_numeric;
+use function mb_strpos;
+use function str_replace;
 
 final class Version implements VersionInterface
 {
     /** @var string the detected major version */
-    private $major;
+    private string $major;
 
     /** @var string the detected minor version */
-    private $minor;
+    private string $minor;
 
     /** @var string the detected micro version */
-    private $micro;
+    private string $micro;
 
     /** @var string|null the detected patch version */
-    private $patch;
+    private ?string $patch = null;
 
     /** @var string|null the detected micropatch version */
-    private $micropatch;
+    private ?string $micropatch = null;
 
-    /** @var string */
-    private $stability = 'stable';
+    private string $stability = 'stable';
 
-    /** @var string|null */
-    private $build;
+    private ?string $build = null;
 
     /**
-     * @param string      $major
-     * @param string      $minor
-     * @param string      $micro
-     * @param string|null $patch
-     * @param string|null $micropatch
-     * @param string      $stability
-     * @param string|null $build
-     *
      * @throws NotNumericException
      */
     public function __construct(string $major, string $minor = '0', string $micro = '0', ?string $patch = null, ?string $micropatch = null, string $stability = 'stable', ?string $build = null)
@@ -79,7 +76,7 @@ final class Version implements VersionInterface
     }
 
     /**
-     * @return array
+     * @return array<string, string|null>
      */
     public function toArray(): array
     {
@@ -94,73 +91,46 @@ final class Version implements VersionInterface
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getMajor(): string
     {
         return $this->major;
     }
 
-    /**
-     * @return string
-     */
     public function getMinor(): string
     {
         return $this->minor;
     }
 
-    /**
-     * @return string
-     */
     public function getMicro(): string
     {
         return $this->micro;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPatch(): ?string
     {
         return $this->patch;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMicropatch(): ?string
     {
         return $this->micropatch;
     }
 
-    /**
-     * @return string|null
-     */
     public function getBuild(): ?string
     {
         return $this->build;
     }
 
-    /**
-     * @return string
-     */
     public function getStability(): string
     {
         return $this->stability;
     }
 
-    /**
-     * @return bool
-     */
     public function isAlpha(): bool
     {
         return 'alpha' === $this->stability;
     }
 
-    /**
-     * @return bool
-     */
     public function isBeta(): bool
     {
         return 'beta' === $this->stability;
@@ -168,10 +138,6 @@ final class Version implements VersionInterface
 
     /**
      * returns the detected version
-     *
-     * @param int $mode
-     *
-     * @return string
      */
     public function getVersion(int $mode = VersionInterface::COMPLETE): string
     {

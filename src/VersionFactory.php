@@ -9,16 +9,23 @@
  */
 
 declare(strict_types = 1);
+
 namespace BrowserDetector\Version;
+
+use function array_key_exists;
+use function assert;
+use function is_string;
+use function mb_strlen;
+use function mb_strpos;
+use function mb_strtolower;
+use function preg_match;
+use function str_replace;
+use function urldecode;
 
 final class VersionFactory implements VersionFactoryInterface
 {
-    /** @var string */
-    private $regex = VersionFactoryInterface::REGEX;
+    private string $regex = VersionFactoryInterface::REGEX;
 
-    /**
-     * @param string|null $regex
-     */
     public function __construct(?string $regex = null)
     {
         if (null === $regex) {
@@ -28,11 +35,6 @@ final class VersionFactory implements VersionFactoryInterface
         $this->setRegex($regex);
     }
 
-    /**
-     * @param string $regex
-     *
-     * @return void
-     */
     public function setRegex(string $regex): void
     {
         $this->regex = $regex;
@@ -41,11 +43,7 @@ final class VersionFactory implements VersionFactoryInterface
     /**
      * sets the detected version
      *
-     * @param string $version
-     *
      * @throws NotNumericException
-     *
-     * @return \BrowserDetector\Version\VersionInterface
      */
     public function set(string $version): VersionInterface
     {
@@ -116,13 +114,9 @@ final class VersionFactory implements VersionFactoryInterface
     /**
      * detects the bit count by this browser from the given user agent
      *
-     * @param string $useragent
-     * @param array  $searches
-     * @param string $default
+     * @param array<int, bool|string|null> $searches
      *
      * @throws NotNumericException
-     *
-     * @return \BrowserDetector\Version\VersionInterface
      */
     public function detectVersion(string $useragent, array $searches = [], string $default = '0'): VersionInterface
     {
@@ -167,9 +161,40 @@ final class VersionFactory implements VersionFactoryInterface
     }
 
     /**
-     * @param array $matches
+     * @param array<string, string|null> $data
      *
-     * @return array
+     * @throws NotNumericException
+     */
+    public static function fromArray(array $data): VersionInterface
+    {
+        assert(array_key_exists('major', $data), '"major" property is required');
+        assert(array_key_exists('minor', $data), '"minor" property is required');
+        assert(array_key_exists('micro', $data), '"micro" property is required');
+        assert(array_key_exists('patch', $data), '"patch" property is required');
+        assert(array_key_exists('micropatch', $data), '"micropatch" property is required');
+        assert(array_key_exists('stability', $data), '"stability" property is required');
+        assert(array_key_exists('build', $data), '"build" property is required');
+
+        assert(is_string($data['major']));
+        assert(is_string($data['minor']));
+        assert(is_string($data['micro']));
+        assert(is_string($data['stability']));
+
+        $major      = $data['major'];
+        $minor      = $data['minor'];
+        $micro      = $data['micro'];
+        $patch      = $data['patch'];
+        $micropatch = $data['micropatch'];
+        $stability  = $data['stability'];
+        $build      = $data['build'];
+
+        return new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
+    }
+
+    /**
+     * @param array<string, string> $matches
+     *
+     * @return array<string, string>
      */
     private function mapMatches(array $matches): array
     {
@@ -204,33 +229,5 @@ final class VersionFactory implements VersionFactoryInterface
         }
 
         return $numbers;
-    }
-
-    /**
-     * @param array $data
-     *
-     * @throws NotNumericException
-     *
-     * @return \BrowserDetector\Version\VersionInterface
-     */
-    public static function fromArray(array $data): VersionInterface
-    {
-        assert(array_key_exists('major', $data), '"major" property is required');
-        assert(array_key_exists('minor', $data), '"minor" property is required');
-        assert(array_key_exists('micro', $data), '"micro" property is required');
-        assert(array_key_exists('patch', $data), '"patch" property is required');
-        assert(array_key_exists('micropatch', $data), '"micropatch" property is required');
-        assert(array_key_exists('stability', $data), '"stability" property is required');
-        assert(array_key_exists('build', $data), '"build" property is required');
-
-        $major      = $data['major'];
-        $minor      = $data['minor'];
-        $micro      = $data['micro'];
-        $patch      = $data['patch'];
-        $micropatch = $data['micropatch'];
-        $stability  = $data['stability'];
-        $build      = $data['build'];
-
-        return new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
     }
 }
