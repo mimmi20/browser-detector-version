@@ -122,12 +122,16 @@ final class VersionFactory implements VersionFactoryInterface
      */
     public function detectVersion(string $useragent, array $searches = []): VersionInterface
     {
+        $versionModifier    = '(?P<version>\d+[\d._\-+~ abcdehlprstv]*)';
+        $versionModifierMod = '(?P<version>\d+[\d.]+\(\d+)';
+
         $modifiers = [
-            ['\/[\d.]+ ?\(', ';'],
-            ['\/', ' ?'],
-            ['\(', '\)'],
-            [' \(', ';'],
-            [' ?', ';?'],
+            '\/' . $versionModifierMod . '[;\)]',
+            '\/[\d.]+ ?\(' . $versionModifier . '[;\)]',
+            '\/' . $versionModifier . ' ?',
+            '\(' . $versionModifier . '\)',
+            ' \(' . $versionModifier . ';',
+            ' ?' . $versionModifier . ';?',
         ];
 
         if (false !== mb_strpos($useragent, '%')) {
@@ -144,7 +148,7 @@ final class VersionFactory implements VersionFactoryInterface
             }
 
             foreach ($modifiers as $modifier) {
-                $compareString = '/' . $search . $modifier[0] . '(?P<version>\d+[\d._\-+~ abcdehlprstv]*)' . $modifier[1] . '/i';
+                $compareString = '/' . $search . $modifier . '/i';
                 $matches       = [];
                 $doMatch       = preg_match($compareString, $useragent, $matches);
 
@@ -199,7 +203,7 @@ final class VersionFactory implements VersionFactoryInterface
     {
         $numbers = [];
 
-        if (array_key_exists('major', $matches) && mb_strlen($matches['major'])) {
+        if (array_key_exists('major', $matches)) {
             $numbers['major'] = $matches['major'];
         }
 

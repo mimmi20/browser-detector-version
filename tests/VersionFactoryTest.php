@@ -195,6 +195,9 @@ final class VersionFactoryTest extends TestCase
             ['Firefox/4.0patch8', [null, false, 'Firefox'], '4', '0', '0', 'patch', '8', '4.0.0-patch+8'],
             ['Links (2.1pre23; Linux 3.5.0 i686; 237x63)', ['Links'], '2', '1', '0', 'dev', '23', '2.1.0-dev+23'],
             ['Outlook/15.0 (15.0.4691.1000; MSI; x86)', ['Outlook'], '15', '0', '4691', 'stable', null, '15.0.4691.1000'],
+            ['Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.20) Gecko/20081217 Firefox(2.0.0.20)', ['Firefox'], '2', '0', '0', 'stable', null, '2.0.0.20'],
+            ['Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/1.1.1.0(29.0.1547.62) Safari/537.36', ['Chrome'], '29', '0', '1547', 'stable', null, '29.0.1547.62'],
+            ['Dolphin http client/11.3.2(396) (Android)', ['Dolphin http client'], '11', '3', '2', 'stable', null, '11.3.2.396'],
         ];
     }
 
