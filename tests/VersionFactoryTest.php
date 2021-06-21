@@ -72,9 +72,14 @@ final class VersionFactoryTest extends TestCase
             ['0.0.0', '0', '0', '0', 'stable', null, '0.0.0'],
             ['2.0p12', '2', '0', '0', 'patch', '12', '2.0.0-patch+12'],
             ['2.0.0-patch+12', '2', '0', '0', 'patch', '12', '2.0.0-patch+12'],
+            ['2.0.0-pl+12', '2', '0', '0', 'patch', '12', '2.0.0-patch+12'],
+            ['2.0.0-p+12', '2', '0', '0', 'patch', '12', '2.0.0-patch+12'],
             ['4.0.0-beta+8', '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
+            ['4.0.0-b+8', '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
             ['4.0.0-alpha+1', '4', '0', '0', 'alpha', '1', '4.0.0-alpha+1'],
+            ['4.0.0-a+1', '4', '0', '0', 'alpha', '1', '4.0.0-alpha+1'],
             ['3.4.3-dev-1191', '3', '4', '3', 'dev', '1191', '3.4.3-dev+1191'],
+            ['3.4.3-d-1191', '3', '4', '3', 'dev', '1191', '3.4.3-dev+1191'],
             ['3.4.3-dev+1191', '3', '4', '3', 'dev', '1191', '3.4.3-dev+1191'],
             ['1.4 build 2', '1', '4', '0', 'stable', '2', '1.4.0+2'],
             ['1.4.0+2', '1', '4', '0', 'stable', '2', '1.4.0+2'],
@@ -88,10 +93,12 @@ final class VersionFactoryTest extends TestCase
      * @throws Exception
      * @throws InvalidArgumentException
      * @throws UnexpectedValueException
+     *
+     * @dataProvider providerSetNull
      */
-    public function testNullVersionSet(): void
+    public function testNullVersionSet(string $version): void
     {
-        $object = (new VersionFactory())->set('abc');
+        $object = (new VersionFactory())->set($version);
 
         self::assertInstanceOf(NullVersion::class, $object);
 
@@ -105,6 +112,17 @@ final class VersionFactoryTest extends TestCase
         self::assertNull($object->getVersion(), 'complete is wrong');
         self::assertNull($object->isBeta(), 'beta is wrong');
         self::assertNull($object->isAlpha(), 'alpha is wrong');
+    }
+
+    /**
+     * @return array<int, array<int, string|null>>
+     */
+    public function providerSetNull(): array
+    {
+        return [
+            ['abc'],
+            ['x6~b1'],
+        ];
     }
 
     /**
@@ -136,7 +154,7 @@ final class VersionFactoryTest extends TestCase
         string $major,
         string $minor,
         string $micro,
-        string $preRelease,
+        string $stability,
         ?string $build,
         string $complete
     ): void {
@@ -147,7 +165,7 @@ final class VersionFactoryTest extends TestCase
         self::assertSame($major, $object->getMajor(), 'major is wrong');
         self::assertSame($minor, $object->getMinor(), 'minor is wrong');
         self::assertSame($micro, $object->getMicro(), 'patch is wrong');
-        self::assertSame($preRelease, $object->getStability(), 'stability is wrong');
+        self::assertSame($stability, $object->getStability(), 'stability is wrong');
         self::assertSame($build, $object->getBuild(), 'build is wrong');
         self::assertSame($complete, $object->getVersion(), 'complete is wrong');
     }
@@ -166,6 +184,22 @@ final class VersionFactoryTest extends TestCase
             ['Mobicip/2.3.1_r747', ['Mobicip'], '2', '3', '1', 'stable', '747', '2.3.1+747'],
             ['BlackBerry9000/5.0.0.1079 Profile/MIDP-2.1 Configuration/CLDC-1.1 VendorID/114', ['BlackBerry[0-9a-z]+'], '5', '0', '0', 'stable', null, '5.0.0.1079'],
             ['Opera%20Coast/4.03.89212 CFNetwork/711.1.16 Darwin/14.0.0', ['OperaCoast', 'Opera%20Coast', 'Coast'], '4', '03', '89212', 'stable', null, '4.03.89212'],
+            ['Firefox/4.0beta8', [null, false, 'Firefox'], '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
+            ['Firefox/4.0a8', [null, false, 'Firefox'], '4', '0', '0', 'alpha', '8', '4.0.0-alpha+8'],
+            ['Firefox/4.0alpha8', [null, false, 'Firefox'], '4', '0', '0', 'alpha', '8', '4.0.0-alpha+8'],
+            ['Firefox/4.0d8', [null, false, 'Firefox'], '4', '0', '0', 'dev', '8', '4.0.0-dev+8'],
+            ['Firefox/4.0dev8', [null, false, 'Firefox'], '4', '0', '0', 'dev', '8', '4.0.0-dev+8'],
+            ['Firefox/4.0rc8', [null, false, 'Firefox'], '4', '0', '0', 'RC', '8', '4.0.0-RC+8'],
+            ['Firefox/4.0p8', [null, false, 'Firefox'], '4', '0', '0', 'patch', '8', '4.0.0-patch+8'],
+            ['Firefox/4.0pl8', [null, false, 'Firefox'], '4', '0', '0', 'patch', '8', '4.0.0-patch+8'],
+            ['Firefox/4.0patch8', [null, false, 'Firefox'], '4', '0', '0', 'patch', '8', '4.0.0-patch+8'],
+            ['Links (2.1pre23; Linux 3.5.0 i686; 237x63)', ['Links'], '2', '1', '0', 'dev', '23', '2.1.0-dev+23'],
+            ['Outlook/15.0 (15.0.4691.1000; MSI; x86)', ['Outlook'], '15', '0', '4691', 'stable', null, '15.0.4691.1000'],
+            ['Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.20) Gecko/20081217 Firefox(2.0.0.20)', ['Firefox'], '2', '0', '0', 'stable', null, '2.0.0.20'],
+            ['Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/1.1.1.0(29.0.1547.62) Safari/537.36', ['Chrome'], '29', '0', '1547', 'stable', null, '29.0.1547.62'],
+            ['Dolphin http client/11.3.2(396) (Android)', ['Dolphin http client'], '11', '3', '2', 'stable', null, '11.3.2.396'],
+            ['Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0_1 like Mac OS X; en-us) AppleWebKit/537.4 (KHTML, like Gecko; Google Page Speed Insights) Version/4.0.5 Mobile/8A306 Safari/6531.22.7', ['CPU iPhone OS'], '4', '0', '1', 'stable', null, '4.0.1'],
+            ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/600.2.5 (KHTML, like Gecko) Version/8.0.2 Safari/600.2.5 (Applebot/0.1)', ['Mac OS X'], '10', '10', '1', 'stable', null, '10.10.1'],
         ];
     }
 
@@ -247,6 +281,7 @@ final class VersionFactoryTest extends TestCase
 
         self::assertInstanceOf(Version::class, $result);
         self::assertSame('2', $result->getMajor(), 'major is wrong');
+        self::assertSame($regex, $object->getRegex());
     }
 
     /**
@@ -258,10 +293,12 @@ final class VersionFactoryTest extends TestCase
     {
         $regex  = '/^v?(?<major>\d+)(?:[-|\.](?<minor>\d+))?(?:[-|\.](?<micro>\d+))?(?:[-|\.](?<patch>\d+))?(?:[-|\.](?<micropatch>\d+))?(?:[-_.+ ]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*))?.*$/i';
         $object = new VersionFactory();
+        self::assertNotSame($regex, $object->getRegex());
         $object->setRegex($regex);
         $useragent = 'Mozilla/4.0 (compatible; MSIE 10.0; Trident/6.0; Windows 98; MyIE2)';
         $result    = $object->detectVersion($useragent, ['MyIE']);
         self::assertInstanceOf(Version::class, $result);
         self::assertSame('2', $result->getMajor(), 'major is wrong');
+        self::assertSame($regex, $object->getRegex());
     }
 }

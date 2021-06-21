@@ -14,7 +14,7 @@ namespace BrowserDetector\Version;
 
 interface VersionFactoryInterface
 {
-    public const REGEX = '/^v?(?<major>\d+)(?:[-\.](?<minor>\d+))?(?:[-\.](?<micro>\d+))?(?:[-\.](?<patch>\d+))?(?:[-\.](?<micropatch>\d+))?(?:(?:[-_+~]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?| build |\+|[_\.]r)(?<build>\d*))?.*$/i';
+    public const REGEX = '/^v?(?P<major>\d+)(?:[-\.](?P<minor>\d+))?(?:[-\.](?P<micro>\d+))?(?:[-\.\(](?P<patch>\d+))?(?:[-\.](?P<micropatch>\d+))?(?:(?:[-_+~]?(?P<stability>rc|alpha|a|beta|b|patch|pre|pl?|stable|dev|d)[-_.+ \(]?| build |\+|[_\.]r)(?P<build>\d*))?.*$/i';
 
     public function setRegex(string $regex): void;
 
@@ -32,7 +32,7 @@ interface VersionFactoryInterface
      *
      * @throws NotNumericException
      */
-    public function detectVersion(string $useragent, array $searches = [], string $default = '0'): VersionInterface;
+    public function detectVersion(string $useragent, array $searches = []): VersionInterface;
 
     /**
      * @param array<string, string|null> $data

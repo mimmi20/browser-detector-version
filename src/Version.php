@@ -16,7 +16,6 @@ use function array_key_exists;
 use function explode;
 use function is_numeric;
 use function mb_strpos;
-use function str_replace;
 
 final class Version implements VersionInterface
 {
@@ -62,7 +61,7 @@ final class Version implements VersionInterface
             }
         }
 
-        if (0 > (int) $micro || !is_numeric(str_replace('.', '', $micro))) {
+        if (!is_numeric($micro) || '0' > $micro) {
             throw new NotNumericException('Patch version must be a non-negative number formatted as string');
         }
 
