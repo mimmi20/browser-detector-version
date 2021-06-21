@@ -88,24 +88,21 @@ final class VersionFactory implements VersionFactoryInterface
                 $stability = 'RC';
 
                 break;
-            case 'patch':
             case 'pl':
             case 'p':
                 $stability = 'patch';
 
                 break;
-            case 'beta':
             case 'b':
                 $stability = 'beta';
 
                 break;
-            case 'alpha':
             case 'a':
                 $stability = 'alpha';
 
                 break;
-            case 'dev':
             case 'd':
+            case 'pre':
                 $stability = 'dev';
 
                 break;
@@ -126,12 +123,11 @@ final class VersionFactory implements VersionFactoryInterface
     public function detectVersion(string $useragent, array $searches = []): VersionInterface
     {
         $modifiers = [
-            ['\/', ''],
+            ['\/[\d.]+ ?\(', ';'],
+            ['\/', ' ?'],
             ['\(', '\)'],
-            [' ', ';'],
-            [' ', ''],
-            ['', ''],
             [' \(', ';'],
+            [' ?', ';?'],
         ];
 
         if (false !== mb_strpos($useragent, '%')) {

@@ -154,7 +154,7 @@ final class VersionFactoryTest extends TestCase
         string $major,
         string $minor,
         string $micro,
-        string $preRelease,
+        string $stability,
         ?string $build,
         string $complete
     ): void {
@@ -165,7 +165,7 @@ final class VersionFactoryTest extends TestCase
         self::assertSame($major, $object->getMajor(), 'major is wrong');
         self::assertSame($minor, $object->getMinor(), 'minor is wrong');
         self::assertSame($micro, $object->getMicro(), 'patch is wrong');
-        self::assertSame($preRelease, $object->getStability(), 'stability is wrong');
+        self::assertSame($stability, $object->getStability(), 'stability is wrong');
         self::assertSame($build, $object->getBuild(), 'build is wrong');
         self::assertSame($complete, $object->getVersion(), 'complete is wrong');
     }
@@ -193,6 +193,8 @@ final class VersionFactoryTest extends TestCase
             ['Firefox/4.0p8', [null, false, 'Firefox'], '4', '0', '0', 'patch', '8', '4.0.0-patch+8'],
             ['Firefox/4.0pl8', [null, false, 'Firefox'], '4', '0', '0', 'patch', '8', '4.0.0-patch+8'],
             ['Firefox/4.0patch8', [null, false, 'Firefox'], '4', '0', '0', 'patch', '8', '4.0.0-patch+8'],
+            ['Links (2.1pre23; Linux 3.5.0 i686; 237x63)', ['Links'], '2', '1', '0', 'dev', '23', '2.1.0-dev+23'],
+            ['Outlook/15.0 (15.0.4691.1000; MSI; x86)', ['Outlook'], '15', '0', '4691', 'stable', null, '15.0.4691.1000'],
         ];
     }
 
