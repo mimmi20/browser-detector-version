@@ -32,7 +32,7 @@ interface VersionFactoryInterface
      *
      * @throws NotNumericException
      */
-    public function detectVersion(string $useragent, array $searches = [], string $default = '0'): VersionInterface;
+    public function detectVersion(string $useragent, array $searches = []): VersionInterface;
 
     /**
      * @param array<string, string|null> $data

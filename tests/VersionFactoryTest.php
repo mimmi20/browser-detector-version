@@ -88,10 +88,12 @@ final class VersionFactoryTest extends TestCase
      * @throws Exception
      * @throws InvalidArgumentException
      * @throws UnexpectedValueException
+     *
+     * @dataProvider providerSetNull
      */
-    public function testNullVersionSet(): void
+    public function testNullVersionSet(string $version): void
     {
-        $object = (new VersionFactory())->set('abc');
+        $object = (new VersionFactory())->set($version);
 
         self::assertInstanceOf(NullVersion::class, $object);
 
@@ -105,6 +107,17 @@ final class VersionFactoryTest extends TestCase
         self::assertNull($object->getVersion(), 'complete is wrong');
         self::assertNull($object->isBeta(), 'beta is wrong');
         self::assertNull($object->isAlpha(), 'alpha is wrong');
+    }
+
+    /**
+     * @return array<int, array<int, string|null>>
+     */
+    public function providerSetNull(): array
+    {
+        return [
+            ['abc'],
+            ['x6~b1'],
+        ];
     }
 
     /**
@@ -166,6 +179,15 @@ final class VersionFactoryTest extends TestCase
             ['Mobicip/2.3.1_r747', ['Mobicip'], '2', '3', '1', 'stable', '747', '2.3.1+747'],
             ['BlackBerry9000/5.0.0.1079 Profile/MIDP-2.1 Configuration/CLDC-1.1 VendorID/114', ['BlackBerry[0-9a-z]+'], '5', '0', '0', 'stable', null, '5.0.0.1079'],
             ['Opera%20Coast/4.03.89212 CFNetwork/711.1.16 Darwin/14.0.0', ['OperaCoast', 'Opera%20Coast', 'Coast'], '4', '03', '89212', 'stable', null, '4.03.89212'],
+            ['Firefox/4.0beta8', [null, false, 'Firefox'], '4', '0', '0', 'beta', '8', '4.0.0-beta+8'],
+            ['Firefox/4.0a8', [null, false, 'Firefox'], '4', '0', '0', 'alpha', '8', '4.0.0-alpha+8'],
+            ['Firefox/4.0alpha8', [null, false, 'Firefox'], '4', '0', '0', 'alpha', '8', '4.0.0-alpha+8'],
+            ['Firefox/4.0d8', [null, false, 'Firefox'], '4', '0', '0', 'dev', '8', '4.0.0-dev+8'],
+            ['Firefox/4.0dev8', [null, false, 'Firefox'], '4', '0', '0', 'dev', '8', '4.0.0-dev+8'],
+            ['Firefox/4.0rc8', [null, false, 'Firefox'], '4', '0', '0', 'RC', '8', '4.0.0-RC+8'],
+            ['Firefox/4.0p8', [null, false, 'Firefox'], '4', '0', '0', 'patch', '8', '4.0.0-patch+8'],
+            ['Firefox/4.0pl8', [null, false, 'Firefox'], '4', '0', '0', 'patch', '8', '4.0.0-patch+8'],
+            ['Firefox/4.0patch8', [null, false, 'Firefox'], '4', '0', '0', 'patch', '8', '4.0.0-patch+8'],
         ];
     }
 
@@ -247,6 +269,7 @@ final class VersionFactoryTest extends TestCase
 
         self::assertInstanceOf(Version::class, $result);
         self::assertSame('2', $result->getMajor(), 'major is wrong');
+        self::assertSame($regex, $object->getRegex());
     }
 
     /**
@@ -258,10 +281,12 @@ final class VersionFactoryTest extends TestCase
     {
         $regex  = '/^v?(?<major>\d+)(?:[-|\.](?<minor>\d+))?(?:[-|\.](?<micro>\d+))?(?:[-|\.](?<patch>\d+))?(?:[-|\.](?<micropatch>\d+))?(?:[-_.+ ]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*))?.*$/i';
         $object = new VersionFactory();
+        self::assertNotSame($regex, $object->getRegex());
         $object->setRegex($regex);
         $useragent = 'Mozilla/4.0 (compatible; MSIE 10.0; Trident/6.0; Windows 98; MyIE2)';
         $result    = $object->detectVersion($useragent, ['MyIE']);
         self::assertInstanceOf(Version::class, $result);
         self::assertSame('2', $result->getMajor(), 'major is wrong');
+        self::assertSame($regex, $object->getRegex());
     }
 }

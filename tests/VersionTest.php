@@ -83,6 +83,28 @@ final class VersionTest extends TestCase
     /**
      * @throws InvalidArgumentException
      */
+    public function testNegativeMicro2(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Patch version must be a non-negative number formatted as string');
+
+        new Version('0', '0', '-1.dev');
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function testNegativeMicro3(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Patch version must be a non-negative number formatted as string');
+
+        new Version('0', '0', '.dev');
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
     public function testNotNumericMicro(): void
     {
         $this->expectException(InvalidArgumentException::class);

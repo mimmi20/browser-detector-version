@@ -40,6 +40,11 @@ final class VersionFactory implements VersionFactoryInterface
         $this->regex = $regex;
     }
 
+    public function getRegex(): string
+    {
+        return $this->regex;
+    }
+
     /**
      * sets the detected version
      *
@@ -50,7 +55,7 @@ final class VersionFactory implements VersionFactoryInterface
         $matches = [];
         $numbers = [];
 
-        if (0 < preg_match($this->regex, $version, $matches)) {
+        if (preg_match($this->regex, $version, $matches)) {
             $numbers = $this->mapMatches($matches);
         }
 
@@ -118,7 +123,7 @@ final class VersionFactory implements VersionFactoryInterface
      *
      * @throws NotNumericException
      */
-    public function detectVersion(string $useragent, array $searches = [], string $default = '0'): VersionInterface
+    public function detectVersion(string $useragent, array $searches = []): VersionInterface
     {
         $modifiers = [
             ['\/', ''],
@@ -128,8 +133,6 @@ final class VersionFactory implements VersionFactoryInterface
             ['', ''],
             [' \(', ';'],
         ];
-
-        $version = $default;
 
         if (false !== mb_strpos($useragent, '%')) {
             $useragent = urldecode($useragent);
@@ -149,7 +152,7 @@ final class VersionFactory implements VersionFactoryInterface
                 $matches       = [];
                 $doMatch       = preg_match($compareString, $useragent, $matches);
 
-                if (0 < $doMatch) {
+                if ($doMatch) {
                     $version = mb_strtolower(str_replace('_', '.', $matches['version']));
 
                     return $this->set($version);
