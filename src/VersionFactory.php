@@ -127,11 +127,11 @@ final class VersionFactory implements VersionFactoryInterface
 
         $modifiers = [
             '\/' . $versionModifierMod . '[;\)]',
-            '\/[\d.]+ ?\(' . $versionModifier . '[;\)]',
-            '\/' . $versionModifier . ' ?',
-            '\(' . $versionModifier . '\)',
-            ' \(' . $versionModifier . ';',
-            ' ?' . $versionModifier . ';?',
+            '\/[\d.]+ ?\(' . $versionModifier,
+            '\/' . $versionModifier,
+            '\(' . $versionModifier,
+            ' \(' . $versionModifier,
+            ' ?' . $versionModifier,
         ];
 
         if (false !== mb_strpos($useragent, '%')) {

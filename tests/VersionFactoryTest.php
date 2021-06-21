@@ -198,6 +198,8 @@ final class VersionFactoryTest extends TestCase
             ['Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.20) Gecko/20081217 Firefox(2.0.0.20)', ['Firefox'], '2', '0', '0', 'stable', null, '2.0.0.20'],
             ['Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/1.1.1.0(29.0.1547.62) Safari/537.36', ['Chrome'], '29', '0', '1547', 'stable', null, '29.0.1547.62'],
             ['Dolphin http client/11.3.2(396) (Android)', ['Dolphin http client'], '11', '3', '2', 'stable', null, '11.3.2.396'],
+            ['Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0_1 like Mac OS X; en-us) AppleWebKit/537.4 (KHTML, like Gecko; Google Page Speed Insights) Version/4.0.5 Mobile/8A306 Safari/6531.22.7', ['CPU iPhone OS'], '4', '0', '1', 'stable', null, '4.0.1'],
+            ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/600.2.5 (KHTML, like Gecko) Version/8.0.2 Safari/600.2.5 (Applebot/0.1)', ['Mac OS X'], '10', '10', '1', 'stable', null, '10.10.1'],
         ];
     }
 
