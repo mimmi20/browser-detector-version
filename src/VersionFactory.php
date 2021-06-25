@@ -122,16 +122,16 @@ final class VersionFactory implements VersionFactoryInterface
      */
     public function detectVersion(string $useragent, array $searches = []): VersionInterface
     {
-        $versionModifier    = '(?P<version>\d+[\d._\-+~ abcdehlprstv]*)';
-        $versionModifierMod = '(?P<version>\d+[\d.]+\(\d+)';
+        $regexNumbersAndStability = '(?P<version>\d+(?!:)[\d._\-+~ abcdehlprstv]*)';
+        $regexNumbersOnly         = '(?P<version>\d+[\d.]+\(\d+)';
 
         $modifiers = [
-            '\/' . $versionModifierMod . '[;\)]',
-            '\/[\d.]+ ?\(' . $versionModifier,
-            '\/' . $versionModifier,
-            '\(' . $versionModifier,
-            ' \(' . $versionModifier,
-            ' ?' . $versionModifier,
+            '\/' . $regexNumbersOnly . '[;\)]',
+            '\/[\d.]+ ?\(' . $regexNumbersAndStability,
+            '\/' . $regexNumbersAndStability,
+            '\(' . $regexNumbersAndStability,
+            ' \(' . $regexNumbersAndStability,
+            ' ?' . $regexNumbersAndStability,
         ];
 
         if (false !== mb_strpos($useragent, '%')) {
