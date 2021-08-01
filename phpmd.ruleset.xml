@@ -13,7 +13,11 @@
         <exclude name="StaticAccess"/>
     </rule>
 
-    <rule ref="rulesets/codesize.xml"/>
+    <rule ref="rulesets/codesize.xml">
+        <exclude name="CyclomaticComplexity"/>
+        <exclude name="NPathComplexity"/>
+    </rule>
+
     <rule ref="rulesets/controversial.xml"/>
     <rule ref="rulesets/design.xml"/>
 
