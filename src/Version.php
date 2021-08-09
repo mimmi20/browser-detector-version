@@ -17,9 +17,6 @@ use function explode;
 use function is_numeric;
 use function mb_strpos;
 
-/**
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
- */
 final class Version implements VersionInterface
 {
     /** @var string the detected major version */
