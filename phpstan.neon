@@ -10,11 +10,16 @@ parameters:
     - %currentWorkingDirectory%/vendor/autoload.php
     - %currentWorkingDirectory%/vendor/squizlabs/php_codesniffer/autoload.php
     - %currentWorkingDirectory%/vendor/squizlabs/php_codesniffer/src/Util/Tokens.php
-  excludes_analyse:
-    - */tests/*/data/*
+  checkGenericClassInNonGenericObjectType: false
   checkMissingIterableValueType: false
-  ignoreErrors:
-    - '~Useless \@throws~'
-  exceptionRules:
-    reportUnusedCatchesOfUncheckedExceptions: false
-    uncheckedExceptions: []
+  treatPhpDocTypesAsCertain: false
+  implicitThrows: false
+  exceptions:
+    checkedExceptionRegexes:
+      - '#Exception#'
+      - '#Throwable#'
+    check:
+      missingCheckedExceptionInThrows: true
+      tooWideThrowType: true
+#  ignoreErrors:
+#    - '~Useless \@throws~'
