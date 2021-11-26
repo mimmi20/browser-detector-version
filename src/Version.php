@@ -19,6 +19,15 @@ use function mb_strpos;
 
 final class Version implements VersionInterface
 {
+    private const STABLE     = 'stable';
+    private const MAJOR      = 'major';
+    private const MINOR      = 'minor';
+    private const MICRO      = 'micro';
+    private const PATCH      = 'patch';
+    private const MICROPATCH = 'micropatch';
+    private const STABILITY  = 'stability';
+    private const BUILD      = 'build';
+    private const CONST_00_  = '00';
     /** @var string the detected major version */
     private string $major;
 
@@ -41,7 +50,7 @@ final class Version implements VersionInterface
     /**
      * @throws NotNumericException
      */
-    public function __construct(string $major, string $minor = '0', string $micro = '0', ?string $patch = null, ?string $micropatch = null, string $stability = 'stable', ?string $build = null)
+    public function __construct(string $major, string $minor = '0', string $micro = '0', ?string $patch = null, ?string $micropatch = null, string $stability = self::STABLE, ?string $build = null)
     {
         if (!is_numeric($major) || '0' > $major) {
             throw new NotNumericException('Major version must be a non-negative number formatted as string');
@@ -57,7 +66,7 @@ final class Version implements VersionInterface
 
             if (null === $patch && array_key_exists(1, $parts)) {
                 $patch      = $parts[1];
-                $micropatch = array_key_exists(2, $parts) ? $parts[2] : null;
+                $micropatch = $parts[2] ?? null;
             }
         }
 
@@ -80,13 +89,13 @@ final class Version implements VersionInterface
     public function toArray(): array
     {
         return [
-            'major' => $this->major,
-            'minor' => $this->minor,
-            'micro' => $this->micro,
-            'patch' => $this->patch,
-            'micropatch' => $this->micropatch,
-            'stability' => $this->stability,
-            'build' => $this->build,
+            self::MAJOR => $this->major,
+            self::MINOR => $this->minor,
+            self::MICRO => $this->micro,
+            self::PATCH => $this->patch,
+            self::MICROPATCH => $this->micropatch,
+            self::STABILITY => $this->stability,
+            self::BUILD => $this->build,
         ];
     }
 
@@ -143,65 +152,65 @@ final class Version implements VersionInterface
         $versions     = $this->toArray();
         $microIsEmpty = false;
 
-        if (VersionInterface::IGNORE_MICRO & $mode) {
-            unset($versions['micro'], $versions['patch'], $versions['micropatch'], $versions['stability'], $versions['build']);
+        if (0 !== (VersionInterface::IGNORE_MICRO & $mode)) {
+            unset($versions[self::MICRO], $versions[self::PATCH], $versions[self::MICROPATCH], $versions[self::STABILITY], $versions[self::BUILD]);
             $microIsEmpty = true;
         } elseif (
             (VersionInterface::IGNORE_MICRO_IF_EMPTY & $mode)
             || (VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
             || (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode)
         ) {
-            if (empty($versions['micro']) || '00' === $versions['micro']) {
+            if (empty($versions[self::MICRO]) || self::CONST_00_ === $versions[self::MICRO]) {
                 $microIsEmpty = true;
             }
 
             if ($microIsEmpty && (VersionInterface::IGNORE_MICRO_IF_EMPTY & $mode)) {
-                unset($versions['micro'], $versions['patch'], $versions['micropatch'], $versions['stability'], $versions['build']);
+                unset($versions[self::MICRO], $versions[self::PATCH], $versions[self::MICROPATCH], $versions[self::STABILITY], $versions[self::BUILD]);
             }
         }
 
         $minorIsEmpty = false;
 
-        if (VersionInterface::IGNORE_MINOR & $mode) {
-            unset($versions['minor'], $versions['micro'], $versions['patch'], $versions['micropatch'], $versions['stability'], $versions['build']);
+        if (0 !== (VersionInterface::IGNORE_MINOR & $mode)) {
+            unset($versions[self::MINOR], $versions[self::MICRO], $versions[self::PATCH], $versions[self::MICROPATCH], $versions[self::STABILITY], $versions[self::BUILD]);
             $minorIsEmpty = true;
         } elseif (
             (VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
             || (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode)
         ) {
-            if ($microIsEmpty && (empty($versions['minor']) || '00' === $versions['minor'])) {
+            if ($microIsEmpty && (empty($versions[self::MINOR]) || self::CONST_00_ === $versions[self::MINOR])) {
                 $minorIsEmpty = true;
             }
 
             if ($minorIsEmpty && (VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)) {
-                unset($versions['minor'], $versions['micro'], $versions['patch'], $versions['micropatch'], $versions['stability'], $versions['build']);
+                unset($versions[self::MINOR], $versions[self::MICRO], $versions[self::PATCH], $versions[self::MICROPATCH], $versions[self::STABILITY], $versions[self::BUILD]);
             }
         }
 
         $macroIsEmpty = false;
 
-        if (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode) {
-            if ($minorIsEmpty && (empty($versions['major']) || '00' === $versions['major'])) {
+        if (0 !== (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode)) {
+            if ($minorIsEmpty && (empty($versions[self::MAJOR]) || self::CONST_00_ === $versions[self::MAJOR])) {
                 $macroIsEmpty = true;
             }
 
             if ($macroIsEmpty) {
-                unset($versions['major'], $versions['minor'], $versions['micro'], $versions['patch'], $versions['micropatch'], $versions['stability'], $versions['build']);
+                unset($versions[self::MAJOR], $versions[self::MINOR], $versions[self::MICRO], $versions[self::PATCH], $versions[self::MICROPATCH], $versions[self::STABILITY], $versions[self::BUILD]);
             }
         }
 
-        if (!isset($versions['major'])) {
-            if (VersionInterface::GET_ZERO_IF_EMPTY & $mode) {
+        if (!isset($versions[self::MAJOR])) {
+            if (0 !== (VersionInterface::GET_ZERO_IF_EMPTY & $mode)) {
                 return '0';
             }
 
             return '';
         }
 
-        return $versions['major']
-            . (isset($versions['minor']) ? '.' . $versions['minor'] : '')
-            . (isset($versions['micro']) ? '.' . $versions['micro'] . (isset($versions['patch']) ? '.' . $versions['patch'] . (isset($versions['micropatch']) ? '.' . $versions['micropatch'] : '') : '') : '')
-            . (isset($versions['stability']) && 'stable' !== $versions['stability'] ? '-' . $versions['stability'] : '')
-            . (isset($versions['build']) ? '+' . $versions['build'] : '');
+        return $versions[self::MAJOR]
+            . (isset($versions[self::MINOR]) ? '.' . $versions[self::MINOR] : '')
+            . (isset($versions[self::MICRO]) ? '.' . $versions[self::MICRO] . (isset($versions[self::PATCH]) ? '.' . $versions[self::PATCH] . (isset($versions[self::MICROPATCH]) ? '.' . $versions[self::MICROPATCH] : '') : '') : '')
+            . (isset($versions[self::STABILITY]) && self::STABLE !== $versions[self::STABILITY] ? '-' . $versions[self::STABILITY] : '')
+            . (isset($versions[self::BUILD]) ? '+' . $versions[self::BUILD] : '');
     }
 }

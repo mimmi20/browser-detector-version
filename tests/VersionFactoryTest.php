@@ -23,6 +23,13 @@ use UnexpectedValueException;
 
 final class VersionFactoryTest extends TestCase
 {
+    private const MAJOR     = '4';
+    private const MINOR     = '0';
+    private const MICRO     = '0';
+    private const PATCH     = '0';
+    private const STABILITY = 'beta';
+    private const BUILD     = '8';
+
     /**
      * @throws ExpectationFailedException
      * @throws Exception
@@ -235,34 +242,28 @@ final class VersionFactoryTest extends TestCase
      */
     public function testFromArray(): void
     {
-        $major      = '4';
-        $minor      = '0';
-        $micro      = '0';
-        $patch      = '0';
         $micropatch = null;
-        $stability  = 'beta';
-        $build      = '8';
 
         $data   = [
-            'major' => $major,
-            'minor' => $minor,
-            'micro' => $micro,
-            'patch' => $patch,
+            'major' => self::MAJOR,
+            'minor' => self::MINOR,
+            'micro' => self::MICRO,
+            'patch' => self::PATCH,
             'micropatch' => $micropatch,
-            'stability' => $stability,
-            'build' => $build,
+            'stability' => self::STABILITY,
+            'build' => self::BUILD,
         ];
         $object = VersionFactory::fromArray($data);
 
         self::assertInstanceOf(Version::class, $object);
 
-        self::assertSame($major, $object->getMajor(), 'major is wrong');
-        self::assertSame($minor, $object->getMinor(), 'minor is wrong');
-        self::assertSame($micro, $object->getMicro(), 'micro is wrong');
-        self::assertSame($patch, $object->getPatch(), 'patch is wrong');
+        self::assertSame(self::MAJOR, $object->getMajor(), 'major is wrong');
+        self::assertSame(self::MINOR, $object->getMinor(), 'minor is wrong');
+        self::assertSame(self::MICRO, $object->getMicro(), 'micro is wrong');
+        self::assertSame(self::PATCH, $object->getPatch(), 'patch is wrong');
         self::assertNull($object->getMicropatch(), 'micropatch is wrong');
-        self::assertSame($stability, $object->getStability(), 'stability is wrong');
-        self::assertSame($build, $object->getBuild(), 'build is wrong');
+        self::assertSame(self::STABILITY, $object->getStability(), 'stability is wrong');
+        self::assertSame(self::BUILD, $object->getBuild(), 'build is wrong');
         self::assertTrue($object->isBeta());
         self::assertFalse($object->isAlpha());
     }

@@ -24,7 +24,16 @@ use function urldecode;
 
 final class VersionFactory implements VersionFactoryInterface
 {
-    private string $regex = VersionFactoryInterface::REGEX;
+    private const MAJOR                       = 'major';
+    private const MINOR                       = 'minor';
+    private const MICRO                       = 'micro';
+    private const PATCH                       = 'patch';
+    private const MICROPATCH                  = 'micropatch';
+    private const STABILITY                   = 'stability';
+    private const BUILD                       = 'build';
+    private const REGEX_NUMBERS_AND_STABILITY = '(?P<version>\d+(?!:)[\d._\-+~ abcdehlprstv]*)';
+    private const REGEX_NUMBERS_ONLY          = '(?P<version>\d+[\d.]+\(\d+)';
+    private string $regex                     = VersionFactoryInterface::REGEX;
 
     public function __construct(?string $regex = null)
     {
@@ -63,20 +72,20 @@ final class VersionFactory implements VersionFactoryInterface
             return new NullVersion();
         }
 
-        $major = (array_key_exists('major', $numbers) ? $numbers['major'] : '0');
-        $minor = (array_key_exists('minor', $numbers) ? $numbers['minor'] : '0');
+        $major = (array_key_exists(self::MAJOR, $numbers) ? $numbers[self::MAJOR] : '0');
+        $minor = (array_key_exists(self::MINOR, $numbers) ? $numbers[self::MINOR] : '0');
 
-        if (array_key_exists('micro', $numbers)) {
-            $micro      = $numbers['micro'];
-            $patch      = (array_key_exists('patch', $numbers) ? $numbers['patch'] : null);
-            $micropatch = (array_key_exists('micropatch', $numbers) ? $numbers['micropatch'] : null);
+        if (array_key_exists(self::MICRO, $numbers)) {
+            $micro      = $numbers[self::MICRO];
+            $patch      = ($numbers[self::PATCH] ?? null);
+            $micropatch = ($numbers[self::MICROPATCH] ?? null);
         } else {
             $micro      = '0';
             $patch      = null;
             $micropatch = null;
         }
 
-        $stability = array_key_exists('stability', $numbers) ? $numbers['stability'] : null;
+        $stability = $numbers[self::STABILITY] ?? null;
 
         if (null === $stability || 0 === mb_strlen($stability)) {
             $stability = 'stable';
@@ -90,7 +99,7 @@ final class VersionFactory implements VersionFactoryInterface
                 break;
             case 'pl':
             case 'p':
-                $stability = 'patch';
+                $stability = self::PATCH;
 
                 break;
             case 'b':
@@ -108,7 +117,7 @@ final class VersionFactory implements VersionFactoryInterface
                 break;
         }
 
-        $build = array_key_exists('build', $numbers) ? $numbers['build'] : null;
+        $build = $numbers[self::BUILD] ?? null;
 
         return new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
     }
@@ -122,16 +131,13 @@ final class VersionFactory implements VersionFactoryInterface
      */
     public function detectVersion(string $useragent, array $searches = []): VersionInterface
     {
-        $regexNumbersAndStability = '(?P<version>\d+(?!:)[\d._\-+~ abcdehlprstv]*)';
-        $regexNumbersOnly         = '(?P<version>\d+[\d.]+\(\d+)';
-
         $modifiers = [
-            '\/' . $regexNumbersOnly . '[;\)]',
-            '\/[\d.]+ ?\(' . $regexNumbersAndStability,
-            '\/' . $regexNumbersAndStability,
-            '\(' . $regexNumbersAndStability,
-            ' \(' . $regexNumbersAndStability,
-            ' ?' . $regexNumbersAndStability,
+            '\/' . self::REGEX_NUMBERS_ONLY . '[;\)]',
+            '\/[\d.]+ ?\(' . self::REGEX_NUMBERS_AND_STABILITY,
+            '\/' . self::REGEX_NUMBERS_AND_STABILITY,
+            '\(' . self::REGEX_NUMBERS_AND_STABILITY,
+            ' \(' . self::REGEX_NUMBERS_AND_STABILITY,
+            ' ?' . self::REGEX_NUMBERS_AND_STABILITY,
         ];
 
         if (false !== mb_strpos($useragent, '%')) {
@@ -170,26 +176,26 @@ final class VersionFactory implements VersionFactoryInterface
      */
     public static function fromArray(array $data): VersionInterface
     {
-        assert(array_key_exists('major', $data), '"major" property is required');
-        assert(array_key_exists('minor', $data), '"minor" property is required');
-        assert(array_key_exists('micro', $data), '"micro" property is required');
-        assert(array_key_exists('patch', $data), '"patch" property is required');
-        assert(array_key_exists('micropatch', $data), '"micropatch" property is required');
-        assert(array_key_exists('stability', $data), '"stability" property is required');
-        assert(array_key_exists('build', $data), '"build" property is required');
+        assert(array_key_exists(self::MAJOR, $data), '"major" property is required');
+        assert(array_key_exists(self::MINOR, $data), '"minor" property is required');
+        assert(array_key_exists(self::MICRO, $data), '"micro" property is required');
+        assert(array_key_exists(self::PATCH, $data), '"patch" property is required');
+        assert(array_key_exists(self::MICROPATCH, $data), '"micropatch" property is required');
+        assert(array_key_exists(self::STABILITY, $data), '"stability" property is required');
+        assert(array_key_exists(self::BUILD, $data), '"build" property is required');
 
-        assert(is_string($data['major']));
-        assert(is_string($data['minor']));
-        assert(is_string($data['micro']));
-        assert(is_string($data['stability']));
+        assert(is_string($data[self::MAJOR]));
+        assert(is_string($data[self::MINOR]));
+        assert(is_string($data[self::MICRO]));
+        assert(is_string($data[self::STABILITY]));
 
-        $major      = $data['major'];
-        $minor      = $data['minor'];
-        $micro      = $data['micro'];
-        $patch      = $data['patch'];
-        $micropatch = $data['micropatch'];
-        $stability  = $data['stability'];
-        $build      = $data['build'];
+        $major      = $data[self::MAJOR];
+        $minor      = $data[self::MINOR];
+        $micro      = $data[self::MICRO];
+        $patch      = $data[self::PATCH];
+        $micropatch = $data[self::MICROPATCH];
+        $stability  = $data[self::STABILITY];
+        $build      = $data[self::BUILD];
 
         return new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
     }
@@ -203,32 +209,32 @@ final class VersionFactory implements VersionFactoryInterface
     {
         $numbers = [];
 
-        if (array_key_exists('major', $matches)) {
-            $numbers['major'] = $matches['major'];
+        if (array_key_exists(self::MAJOR, $matches)) {
+            $numbers[self::MAJOR] = $matches[self::MAJOR];
         }
 
-        if (array_key_exists('minor', $matches) && mb_strlen($matches['minor'])) {
-            $numbers['minor'] = $matches['minor'];
+        if (array_key_exists(self::MINOR, $matches) && mb_strlen($matches[self::MINOR])) {
+            $numbers[self::MINOR] = $matches[self::MINOR];
         }
 
-        if (array_key_exists('micro', $matches) && mb_strlen($matches['micro'])) {
-            $numbers['micro'] = $matches['micro'];
+        if (array_key_exists(self::MICRO, $matches) && mb_strlen($matches[self::MICRO])) {
+            $numbers[self::MICRO] = $matches[self::MICRO];
         }
 
-        if (array_key_exists('patch', $matches) && mb_strlen($matches['patch'])) {
-            $numbers['patch'] = $matches['patch'];
+        if (array_key_exists(self::PATCH, $matches) && mb_strlen($matches[self::PATCH])) {
+            $numbers[self::PATCH] = $matches[self::PATCH];
         }
 
-        if (array_key_exists('micropatch', $matches) && mb_strlen($matches['micropatch'])) {
-            $numbers['micropatch'] = $matches['micropatch'];
+        if (array_key_exists(self::MICROPATCH, $matches) && mb_strlen($matches[self::MICROPATCH])) {
+            $numbers[self::MICROPATCH] = $matches[self::MICROPATCH];
         }
 
-        if (array_key_exists('stability', $matches) && mb_strlen($matches['stability'])) {
-            $numbers['stability'] = $matches['stability'];
+        if (array_key_exists(self::STABILITY, $matches) && mb_strlen($matches[self::STABILITY])) {
+            $numbers[self::STABILITY] = $matches[self::STABILITY];
         }
 
-        if (array_key_exists('build', $matches) && mb_strlen($matches['build'])) {
-            $numbers['build'] = $matches['build'];
+        if (array_key_exists(self::BUILD, $matches) && mb_strlen($matches[self::BUILD])) {
+            $numbers[self::BUILD] = $matches[self::BUILD];
         }
 
         return $numbers;

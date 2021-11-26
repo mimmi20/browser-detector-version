@@ -25,6 +25,14 @@ use function sprintf;
 
 final class VersionTest extends TestCase
 {
+    private const MAJOR      = '4';
+    private const MINOR      = '0';
+    private const MICRO      = '0';
+    private const PATCH      = '1';
+    private const STABILITY  = 'beta';
+    private const BUILD      = '8';
+    private const MICROPATCH = '4';
+
     /**
      * @throws InvalidArgumentException
      */
@@ -120,23 +128,17 @@ final class VersionTest extends TestCase
      */
     public function testToarray(): void
     {
-        $major      = '4';
-        $minor      = '0';
-        $micro      = '0';
-        $patch      = '1';
         $micropatch = null;
-        $stability  = 'beta';
-        $build      = '8';
 
-        $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
+        $version = new Version(self::MAJOR, self::MINOR, self::MICRO, self::PATCH, $micropatch, self::STABILITY, self::BUILD);
 
-        self::assertSame($major, $version->getMajor());
-        self::assertSame($minor, $version->getMinor());
-        self::assertSame($micro, $version->getMicro());
-        self::assertSame($patch, $version->getPatch());
+        self::assertSame(self::MAJOR, $version->getMajor());
+        self::assertSame(self::MINOR, $version->getMinor());
+        self::assertSame(self::MICRO, $version->getMicro());
+        self::assertSame(self::PATCH, $version->getPatch());
         self::assertNull($version->getMicropatch());
-        self::assertSame($stability, $version->getStability());
-        self::assertSame($build, $version->getBuild());
+        self::assertSame(self::STABILITY, $version->getStability());
+        self::assertSame(self::BUILD, $version->getBuild());
 
         $array = $version->toArray();
 
@@ -495,18 +497,17 @@ final class VersionTest extends TestCase
         self::assertSame($patch, $version->getPatch());
         self::assertNull($version->getMicropatch());
 
-        $major      = '0';
-        $minor      = '1';
-        $micro      = '2';
-        $patch      = '3';
-        $micropatch = '4';
+        $major = '0';
+        $minor = '1';
+        $micro = '2';
+        $patch = '3';
 
-        $version = new Version($major, $minor, $micro, $patch, $micropatch);
+        $version = new Version($major, $minor, $micro, $patch, self::MICROPATCH);
 
         self::assertSame($major, $version->getMajor());
         self::assertSame($minor, $version->getMinor());
         self::assertSame($micro, $version->getMicro());
         self::assertSame($patch, $version->getPatch());
-        self::assertSame($micropatch, $version->getMicropatch());
+        self::assertSame(self::MICROPATCH, $version->getMicropatch());
     }
 }
