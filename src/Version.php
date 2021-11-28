@@ -57,7 +57,7 @@ final class Version implements VersionInterface
 
             if (null === $patch && array_key_exists(1, $parts)) {
                 $patch      = $parts[1];
-                $micropatch = array_key_exists(2, $parts) ? $parts[2] : null;
+                $micropatch = $parts[2] ?? null;
             }
         }
 
