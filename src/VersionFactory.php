@@ -68,15 +68,15 @@ final class VersionFactory implements VersionFactoryInterface
 
         if (array_key_exists('micro', $numbers)) {
             $micro      = $numbers['micro'];
-            $patch      = (array_key_exists('patch', $numbers) ? $numbers['patch'] : null);
-            $micropatch = (array_key_exists('micropatch', $numbers) ? $numbers['micropatch'] : null);
+            $patch      = ($numbers['patch'] ?? null);
+            $micropatch = ($numbers['micropatch'] ?? null);
         } else {
             $micro      = '0';
             $patch      = null;
             $micropatch = null;
         }
 
-        $stability = array_key_exists('stability', $numbers) ? $numbers['stability'] : null;
+        $stability = $numbers['stability'] ?? null;
 
         if (null === $stability || 0 === mb_strlen($stability)) {
             $stability = 'stable';
@@ -108,7 +108,7 @@ final class VersionFactory implements VersionFactoryInterface
                 break;
         }
 
-        $build = array_key_exists('build', $numbers) ? $numbers['build'] : null;
+        $build = $numbers['build'] ?? null;
 
         return new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
     }
