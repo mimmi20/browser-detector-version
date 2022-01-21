@@ -352,7 +352,15 @@ final class VersionTest extends TestCase
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
         self::assertSame('0.0.1.1-beta+8', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
+    }
 
+    /**
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
+     */
+    public function testGetversionWithoutEmptyMajor2(): void
+    {
         $major      = '0';
         $minor      = '0';
         $micro      = '0';
@@ -364,7 +372,15 @@ final class VersionTest extends TestCase
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
         self::assertSame('', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
+    }
 
+    /**
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
+     */
+    public function testGetversionWithoutEmptyMajor3(): void
+    {
         $major      = '00';
         $minor      = '0';
         $micro      = '0';
@@ -376,7 +392,15 @@ final class VersionTest extends TestCase
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
         self::assertSame('', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
+    }
 
+    /**
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
+     */
+    public function testGetversionWithoutEmptyMajor4(): void
+    {
         $major      = '0';
         $minor      = '1';
         $micro      = '0';
@@ -388,7 +412,15 @@ final class VersionTest extends TestCase
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
         self::assertSame('', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::IGNORE_MINOR));
+    }
 
+    /**
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
+     */
+    public function testGetversionWithoutEmptyMajor5(): void
+    {
         $major      = '0';
         $minor      = '0';
         $micro      = '0';
@@ -420,7 +452,14 @@ final class VersionTest extends TestCase
         self::assertSame($micro, $version->getMicro());
         self::assertSame($patch, $version->getPatch());
         self::assertNull($version->getMicropatch());
+    }
 
+    /**
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function testMicrowithDot2(): void
+    {
         $major = '0';
         $minor = '1';
         $micro = '2';
@@ -433,7 +472,14 @@ final class VersionTest extends TestCase
         self::assertSame($micro, $version->getMicro());
         self::assertSame($patch, $version->getPatch());
         self::assertNull($version->getMicropatch());
+    }
 
+    /**
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function testMicrowithDot3(): void
+    {
         $major      = '0';
         $minor      = '1';
         $micro      = '2';
@@ -447,7 +493,14 @@ final class VersionTest extends TestCase
         self::assertSame($micro, $version->getMicro());
         self::assertSame($patch, $version->getPatch());
         self::assertSame($micropatch, $version->getMicropatch());
+    }
 
+    /**
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function testMicrowithDot4(): void
+    {
         $major = '0';
         $minor = '1';
         $micro = '2';
@@ -460,7 +513,14 @@ final class VersionTest extends TestCase
         self::assertSame($micro, $version->getMicro());
         self::assertSame($patch, $version->getPatch());
         self::assertNull($version->getMicropatch());
+    }
 
+    /**
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function testMicrowithDot5(): void
+    {
         $major      = '0';
         $minor      = '1';
         $micro      = '2';
@@ -494,8 +554,15 @@ final class VersionTest extends TestCase
         self::assertSame($micro, $version->getMicro());
         self::assertSame($patch, $version->getPatch());
         self::assertNull($version->getMicropatch());
+    }
 
-        $major      = '0';
+    /**
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function testMicrowithoutDot2(): void
+    {
+       $major      = '0';
         $minor      = '1';
         $micro      = '2';
         $patch      = '3';
