@@ -562,7 +562,7 @@ final class VersionTest extends TestCase
      */
     public function testMicrowithoutDot2(): void
     {
-       $major      = '0';
+        $major      = '0';
         $minor      = '1';
         $micro      = '2';
         $patch      = '3';
