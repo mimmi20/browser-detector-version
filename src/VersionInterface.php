@@ -2,7 +2,7 @@
 /**
  * This file is part of the browser-detector-version package.
  *
- * Copyright (c) 2016-2021, Thomas Mueller <mimmi20@live.de>
+ * Copyright (c) 2016-2023, Thomas Mueller <mimmi20@live.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -35,28 +35,39 @@ interface VersionInterface
      *
      * @throws UnexpectedValueException
      */
-    public function getVersion(int $mode = self::COMPLETE): ?string;
+    public function getVersion(int $mode = self::COMPLETE): string | null;
 
     /**
      * @return array<string, string|null>
+     *
+     * @throws void
      */
     public function toArray(): array;
 
-    public function getMajor(): ?string;
+    /** @throws void */
+    public function getMajor(): string | null;
 
-    public function getMinor(): ?string;
+    /** @throws void */
+    public function getMinor(): string | null;
 
-    public function getMicro(): ?string;
+    /** @throws void */
+    public function getMicro(): string | null;
 
-    public function getPatch(): ?string;
+    /** @throws void */
+    public function getPatch(): string | null;
 
-    public function getMicropatch(): ?string;
+    /** @throws void */
+    public function getMicropatch(): string | null;
 
-    public function getBuild(): ?string;
+    /** @throws void */
+    public function getBuild(): string | null;
 
-    public function getStability(): ?string;
+    /** @throws void */
+    public function getStability(): string | null;
 
-    public function isAlpha(): ?bool;
+    /** @throws void */
+    public function isAlpha(): bool | null;
 
-    public function isBeta(): ?bool;
+    /** @throws void */
+    public function isBeta(): bool | null;
 }

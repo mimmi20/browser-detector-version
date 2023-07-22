@@ -2,7 +2,7 @@
 /**
  * This file is part of the browser-detector-version package.
  *
- * Copyright (c) 2016-2021, Thomas Mueller <mimmi20@live.de>
+ * Copyright (c) 2016-2023, Thomas Mueller <mimmi20@live.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -26,20 +26,23 @@ final class VersionFactory implements VersionFactoryInterface
 {
     private string $regex = VersionFactoryInterface::REGEX;
 
-    public function __construct(?string $regex = null)
+    /** @throws void */
+    public function __construct(string | null $regex = null)
     {
-        if (null === $regex) {
+        if ($regex === null) {
             return;
         }
 
         $this->setRegex($regex);
     }
 
+    /** @throws void */
     public function setRegex(string $regex): void
     {
         $this->regex = $regex;
     }
 
+    /** @throws void */
     public function getRegex(): string
     {
         return $this->regex;
@@ -59,7 +62,7 @@ final class VersionFactory implements VersionFactoryInterface
             $numbers = $this->mapMatches($matches);
         }
 
-        if ([] === $numbers) {
+        if ($numbers === []) {
             return new NullVersion();
         }
 
@@ -78,11 +81,12 @@ final class VersionFactory implements VersionFactoryInterface
 
         $stability = $numbers['stability'] ?? null;
 
-        if (null === $stability || 0 === mb_strlen($stability)) {
+        if ($stability === null || mb_strlen($stability) === 0) {
             $stability = 'stable';
         }
 
         $stability = mb_strtolower($stability);
+
         switch ($stability) {
             case 'rc':
                 $stability = 'RC';
@@ -134,7 +138,7 @@ final class VersionFactory implements VersionFactoryInterface
             ' ?' . $regexNumbersAndStability,
         ];
 
-        if (false !== mb_strpos($useragent, '%')) {
+        if (mb_strpos($useragent, '%') !== false) {
             $useragent = urldecode($useragent);
         }
 
@@ -143,7 +147,7 @@ final class VersionFactory implements VersionFactoryInterface
                 continue;
             }
 
-            if (false !== mb_strpos($search, '%')) {
+            if (mb_strpos($search, '%') !== false) {
                 $search = urldecode($search);
             }
 
@@ -198,6 +202,8 @@ final class VersionFactory implements VersionFactoryInterface
      * @param array<string, string> $matches
      *
      * @return array<string, string>
+     *
+     * @throws void
      */
     private function mapMatches(array $matches): array
     {

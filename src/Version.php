@@ -2,7 +2,7 @@
 /**
  * This file is part of the browser-detector-version package.
  *
- * Copyright (c) 2016-2021, Thomas Mueller <mimmi20@live.de>
+ * Copyright (c) 2016-2023, Thomas Mueller <mimmi20@live.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,49 +20,56 @@ use function mb_strpos;
 final class Version implements VersionInterface
 {
     /** @var string the detected major version */
-    private string $major;
+    private readonly string $major;
 
     /** @var string the detected minor version */
-    private string $minor;
+    private readonly string $minor;
 
     /** @var string the detected micro version */
-    private string $micro;
+    private readonly string $micro;
 
     /** @var string|null the detected patch version */
-    private ?string $patch = null;
+    private string | null $patch = null;
 
     /** @var string|null the detected micropatch version */
-    private ?string $micropatch = null;
+    private string | null $micropatch = null;
 
-    private string $stability = 'stable';
-
-    private ?string $build = null;
-
-    /**
-     * @throws NotNumericException
-     */
-    public function __construct(string $major, string $minor = '0', string $micro = '0', ?string $patch = null, ?string $micropatch = null, string $stability = 'stable', ?string $build = null)
-    {
+    /** @throws NotNumericException */
+    public function __construct(
+        string $major,
+        string $minor = '0',
+        string $micro = '0',
+        string | null $patch = null,
+        string | null $micropatch = null,
+        private readonly string $stability = 'stable',
+        private readonly string | null $build = null,
+    ) {
         if (!is_numeric($major) || '0' > $major) {
-            throw new NotNumericException('Major version must be a non-negative number formatted as string');
+            throw new NotNumericException(
+                'Major version must be a non-negative number formatted as string',
+            );
         }
 
         if (!is_numeric($minor) || '0' > $minor) {
-            throw new NotNumericException('Minor version must be a non-negative number formatted as string');
+            throw new NotNumericException(
+                'Minor version must be a non-negative number formatted as string',
+            );
         }
 
-        if (false !== mb_strpos($micro, '.')) {
+        if (mb_strpos($micro, '.') !== false) {
             $parts = explode('.', $micro);
             $micro = $parts[0];
 
-            if (null === $patch && array_key_exists(1, $parts)) {
+            if ($patch === null && array_key_exists(1, $parts)) {
                 $patch      = $parts[1];
                 $micropatch = $parts[2] ?? null;
             }
         }
 
         if (!is_numeric($micro) || '0' > $micro) {
-            throw new NotNumericException('Patch version must be a non-negative number formatted as string');
+            throw new NotNumericException(
+                'Patch version must be a non-negative number formatted as string',
+            );
         }
 
         $this->major      = $major;
@@ -70,12 +77,12 @@ final class Version implements VersionInterface
         $this->micro      = $micro;
         $this->patch      = $patch;
         $this->micropatch = $micropatch;
-        $this->stability  = $stability;
-        $this->build      = $build;
     }
 
     /**
      * @return array<string, string|null>
+     *
+     * @throws void
      */
     public function toArray(): array
     {
@@ -90,53 +97,64 @@ final class Version implements VersionInterface
         ];
     }
 
+    /** @throws void */
     public function getMajor(): string
     {
         return $this->major;
     }
 
+    /** @throws void */
     public function getMinor(): string
     {
         return $this->minor;
     }
 
+    /** @throws void */
     public function getMicro(): string
     {
         return $this->micro;
     }
 
-    public function getPatch(): ?string
+    /** @throws void */
+    public function getPatch(): string | null
     {
         return $this->patch;
     }
 
-    public function getMicropatch(): ?string
+    /** @throws void */
+    public function getMicropatch(): string | null
     {
         return $this->micropatch;
     }
 
-    public function getBuild(): ?string
+    /** @throws void */
+    public function getBuild(): string | null
     {
         return $this->build;
     }
 
+    /** @throws void */
     public function getStability(): string
     {
         return $this->stability;
     }
 
+    /** @throws void */
     public function isAlpha(): bool
     {
-        return 'alpha' === $this->stability;
+        return $this->stability === 'alpha';
     }
 
+    /** @throws void */
     public function isBeta(): bool
     {
-        return 'beta' === $this->stability;
+        return $this->stability === 'beta';
     }
 
     /**
      * returns the detected version
+     *
+     * @throws void
      */
     public function getVersion(int $mode = VersionInterface::COMPLETE): string
     {
@@ -151,7 +169,7 @@ final class Version implements VersionInterface
             || (VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
             || (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode)
         ) {
-            if (empty($versions['micro']) || '00' === $versions['micro']) {
+            if (empty($versions['micro']) || $versions['micro'] === '00') {
                 $microIsEmpty = true;
             }
 
@@ -169,7 +187,7 @@ final class Version implements VersionInterface
             (VersionInterface::IGNORE_MINOR_IF_EMPTY & $mode)
             || (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode)
         ) {
-            if ($microIsEmpty && (empty($versions['minor']) || '00' === $versions['minor'])) {
+            if ($microIsEmpty && (empty($versions['minor']) || $versions['minor'] === '00')) {
                 $minorIsEmpty = true;
             }
 
@@ -181,7 +199,7 @@ final class Version implements VersionInterface
         $macroIsEmpty = false;
 
         if (VersionInterface::IGNORE_MAJOR_IF_EMPTY & $mode) {
-            if ($minorIsEmpty && (empty($versions['major']) || '00' === $versions['major'])) {
+            if ($minorIsEmpty && (empty($versions['major']) || $versions['major'] === '00')) {
                 $macroIsEmpty = true;
             }
 
@@ -201,7 +219,7 @@ final class Version implements VersionInterface
         return $versions['major']
             . (isset($versions['minor']) ? '.' . $versions['minor'] : '')
             . (isset($versions['micro']) ? '.' . $versions['micro'] . (isset($versions['patch']) ? '.' . $versions['patch'] . (isset($versions['micropatch']) ? '.' . $versions['micropatch'] : '') : '') : '')
-            . (isset($versions['stability']) && 'stable' !== $versions['stability'] ? '-' . $versions['stability'] : '')
+            . (isset($versions['stability']) && $versions['stability'] !== 'stable' ? '-' . $versions['stability'] : '')
             . (isset($versions['build']) ? '+' . $versions['build'] : '');
     }
 }

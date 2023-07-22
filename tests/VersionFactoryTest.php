@@ -2,7 +2,7 @@
 /**
  * This file is part of the browser-detector-version package.
  *
- * Copyright (c) 2016-2021, Thomas Mueller <mimmi20@live.de>
+ * Copyright (c) 2016-2023, Thomas Mueller <mimmi20@live.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,10 +16,10 @@ use BrowserDetector\Version\NullVersion;
 use BrowserDetector\Version\Version;
 use BrowserDetector\Version\VersionFactory;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
-use UnexpectedValueException;
 
 final class VersionFactoryTest extends TestCase
 {
@@ -27,18 +27,16 @@ final class VersionFactoryTest extends TestCase
      * @throws ExpectationFailedException
      * @throws Exception
      * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
-     *
-     * @dataProvider providerSet
      */
+    #[DataProvider('providerSet')]
     public function testVersionSet(
         string $version,
         string $major,
         string $minor,
         string $micro,
         string $stability,
-        ?string $build,
-        string $complete
+        string | null $build,
+        string $complete,
     ): void {
         $object = (new VersionFactory())->set($version);
 
@@ -54,8 +52,10 @@ final class VersionFactoryTest extends TestCase
 
     /**
      * @return array<int, array<int, string|null>>
+     *
+     * @throws void
      */
-    public function providerSet(): array
+    public static function providerSet(): array
     {
         return [
             ['34.0.1760.0', '34', '0', '1760', 'stable', null, '34.0.1760.0'],
@@ -92,10 +92,8 @@ final class VersionFactoryTest extends TestCase
      * @throws ExpectationFailedException
      * @throws Exception
      * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
-     *
-     * @dataProvider providerSetNull
      */
+    #[DataProvider('providerSetNull')]
     public function testNullVersionSet(string $version): void
     {
         $object = (new VersionFactory())->set($version);
@@ -116,8 +114,10 @@ final class VersionFactoryTest extends TestCase
 
     /**
      * @return array<int, array<int, string|null>>
+     *
+     * @throws void
      */
-    public function providerSetNull(): array
+    public static function providerSetNull(): array
     {
         return [
             ['abc'],
@@ -144,10 +144,8 @@ final class VersionFactoryTest extends TestCase
      * @throws ExpectationFailedException
      * @throws Exception
      * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
-     *
-     * @dataProvider providerDetectVersion
      */
+    #[DataProvider('providerDetectVersion')]
     public function testVersionDetectVersion(
         string $uapart,
         array $searches,
@@ -155,8 +153,8 @@ final class VersionFactoryTest extends TestCase
         string $minor,
         string $micro,
         string $stability,
-        ?string $build,
-        string $complete
+        string | null $build,
+        string $complete,
     ): void {
         $object = (new VersionFactory())->detectVersion($uapart, $searches);
 
@@ -171,9 +169,11 @@ final class VersionFactoryTest extends TestCase
     }
 
     /**
-     * @return array<int, array<int, (string|array<int, (null|bool|string)>|null)>>
+     * @return array<int, array<int, (array<int, (bool|string|null)>|string|null)>>
+     *
+     * @throws void
      */
-    public function providerDetectVersion(): array
+    public static function providerDetectVersion(): array
     {
         return [
             ['Chrome/34.0.1760.0', ['Chrome'], '34', '0', '1760', 'stable', null, '34.0.1760.0'],
@@ -208,7 +208,6 @@ final class VersionFactoryTest extends TestCase
      * @throws ExpectationFailedException
      * @throws Exception
      * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
      */
     public function testVersionDetectNullVersion(): void
     {

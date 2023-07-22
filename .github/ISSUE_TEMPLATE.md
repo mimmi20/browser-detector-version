@@ -1,7 +1,7 @@
-| Q                                | A
-| ---------------------------------| ---------------
-| browser-detector-version version | x.y.z
-| PHP version                      | x.y.z
+| Q                                | A              |
+| ---------------------------------| ---------------|
+| browser-detector-version version | x.y.z          |
+| PHP version                      | x.y.z          |
 
 
 <!--
