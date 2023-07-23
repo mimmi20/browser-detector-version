@@ -31,6 +31,7 @@ final class VersionTest extends TestCase
         $this->expectExceptionMessage(
             'Major version must be a non-negative number formatted as string',
         );
+        $this->expectExceptionCode(0);
 
         new Version('-1');
     }
@@ -42,6 +43,7 @@ final class VersionTest extends TestCase
         $this->expectExceptionMessage(
             'Major version must be a non-negative number formatted as string',
         );
+        $this->expectExceptionCode(0);
 
         new Version('a');
     }
@@ -53,6 +55,7 @@ final class VersionTest extends TestCase
         $this->expectExceptionMessage(
             'Minor version must be a non-negative number formatted as string',
         );
+        $this->expectExceptionCode(0);
 
         new Version('0', '-1');
     }
@@ -64,6 +67,7 @@ final class VersionTest extends TestCase
         $this->expectExceptionMessage(
             'Minor version must be a non-negative number formatted as string',
         );
+        $this->expectExceptionCode(0);
 
         new Version('0', 'b');
     }
@@ -73,8 +77,9 @@ final class VersionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Patch version must be a non-negative number formatted as string',
+            'Micro version must be a non-negative number formatted as string',
         );
+        $this->expectExceptionCode(0);
 
         new Version('0', '0', '-1');
     }
@@ -84,8 +89,9 @@ final class VersionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Patch version must be a non-negative number formatted as string',
+            'Micro version must be a non-negative number formatted as string',
         );
+        $this->expectExceptionCode(0);
 
         new Version('0', '0', '-1.dev');
     }
@@ -95,8 +101,9 @@ final class VersionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Patch version must be a non-negative number formatted as string',
+            'Micro version must be a non-negative number formatted as string',
         );
+        $this->expectExceptionCode(0);
 
         new Version('0', '0', '.dev');
     }
@@ -106,8 +113,9 @@ final class VersionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Patch version must be a non-negative number formatted as string',
+            'Micro version must be a non-negative number formatted as string',
         );
+        $this->expectExceptionCode(0);
 
         new Version('0', '0', 'c');
     }

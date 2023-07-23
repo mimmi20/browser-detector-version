@@ -16,9 +16,9 @@ use function array_key_exists;
 use function assert;
 use function is_string;
 use function mb_strlen;
-use function mb_strpos;
 use function mb_strtolower;
 use function preg_match;
+use function str_contains;
 use function str_replace;
 use function urldecode;
 
@@ -138,7 +138,7 @@ final class VersionFactory implements VersionFactoryInterface
             ' ?' . $regexNumbersAndStability,
         ];
 
-        if (mb_strpos($useragent, '%') !== false) {
+        if (str_contains($useragent, '%')) {
             $useragent = urldecode($useragent);
         }
 
@@ -147,7 +147,7 @@ final class VersionFactory implements VersionFactoryInterface
                 continue;
             }
 
-            if (mb_strpos($search, '%') !== false) {
+            if (str_contains($search, '%')) {
                 $search = urldecode($search);
             }
 

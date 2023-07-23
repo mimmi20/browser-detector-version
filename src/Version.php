@@ -15,32 +15,25 @@ namespace BrowserDetector\Version;
 use function array_key_exists;
 use function explode;
 use function is_numeric;
-use function mb_strpos;
+use function str_contains;
 
 final class Version implements VersionInterface
 {
-    /** @var string the detected major version */
-    private readonly string $major;
-
-    /** @var string the detected minor version */
-    private readonly string $minor;
-
-    /** @var string the detected micro version */
-    private readonly string $micro;
-
-    /** @var string|null the detected patch version */
-    private string | null $patch = null;
-
-    /** @var string|null the detected micropatch version */
-    private string | null $micropatch = null;
-
-    /** @throws NotNumericException */
+    /**
+     * @param string      $major      the detected major version
+     * @param string      $minor      the detected minor version
+     * @param string      $micro      the detected micro version
+     * @param string|null $patch      the detected patch version
+     * @param string|null $micropatch the detected micropatch version
+     *
+     * @throws NotNumericException
+     */
     public function __construct(
-        string $major,
-        string $minor = '0',
-        string $micro = '0',
-        string | null $patch = null,
-        string | null $micropatch = null,
+        private readonly string $major,
+        private readonly string $minor = '0',
+        private string $micro = '0',
+        private string | null $patch = null,
+        private string | null $micropatch = null,
         private readonly string $stability = 'stable',
         private readonly string | null $build = null,
     ) {
@@ -56,27 +49,21 @@ final class Version implements VersionInterface
             );
         }
 
-        if (mb_strpos($micro, '.') !== false) {
-            $parts = explode('.', $micro);
-            $micro = $parts[0];
+        if (str_contains($micro, '.')) {
+            $parts       = explode('.', $micro);
+            $this->micro = $parts[0];
 
             if ($patch === null && array_key_exists(1, $parts)) {
-                $patch      = $parts[1];
-                $micropatch = $parts[2] ?? null;
+                $this->patch      = $parts[1];
+                $this->micropatch = $parts[2] ?? null;
             }
         }
 
-        if (!is_numeric($micro) || '0' > $micro) {
+        if (!is_numeric($this->micro) || '0' > $this->micro) {
             throw new NotNumericException(
-                'Patch version must be a non-negative number formatted as string',
+                'Micro version must be a non-negative number formatted as string',
             );
         }
-
-        $this->major      = $major;
-        $this->minor      = $minor;
-        $this->micro      = $micro;
-        $this->patch      = $patch;
-        $this->micropatch = $micropatch;
     }
 
     /**
