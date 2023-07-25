@@ -2,7 +2,7 @@
 /**
  * This file is part of the browser-detector-version package.
  *
- * Copyright (c) 2016-2021, Thomas Mueller <mimmi20@live.de>
+ * Copyright (c) 2016-2023, Thomas Mueller <mimmi20@live.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,96 +19,103 @@ use InvalidArgumentException;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
-use UnexpectedValueException;
 
 use function sprintf;
 
 final class VersionTest extends TestCase
 {
-    /**
-     * @throws InvalidArgumentException
-     */
+    /** @throws InvalidArgumentException */
     public function testNegativeMajor(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Major version must be a non-negative number formatted as string');
+        $this->expectExceptionMessage(
+            'Major version must be a non-negative number formatted as string',
+        );
+        $this->expectExceptionCode(0);
 
         new Version('-1');
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
+    /** @throws InvalidArgumentException */
     public function testNotNumericMajor(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Major version must be a non-negative number formatted as string');
+        $this->expectExceptionMessage(
+            'Major version must be a non-negative number formatted as string',
+        );
+        $this->expectExceptionCode(0);
 
         new Version('a');
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
+    /** @throws InvalidArgumentException */
     public function testNegativeMinor(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Minor version must be a non-negative number formatted as string');
+        $this->expectExceptionMessage(
+            'Minor version must be a non-negative number formatted as string',
+        );
+        $this->expectExceptionCode(0);
 
         new Version('0', '-1');
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
+    /** @throws InvalidArgumentException */
     public function testNotNumericMinor(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Minor version must be a non-negative number formatted as string');
+        $this->expectExceptionMessage(
+            'Minor version must be a non-negative number formatted as string',
+        );
+        $this->expectExceptionCode(0);
 
         new Version('0', 'b');
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
+    /** @throws InvalidArgumentException */
     public function testNegativeMicro(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Patch version must be a non-negative number formatted as string');
+        $this->expectExceptionMessage(
+            'Micro version must be a non-negative number formatted as string',
+        );
+        $this->expectExceptionCode(0);
 
         new Version('0', '0', '-1');
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
+    /** @throws InvalidArgumentException */
     public function testNegativeMicro2(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Patch version must be a non-negative number formatted as string');
+        $this->expectExceptionMessage(
+            'Micro version must be a non-negative number formatted as string',
+        );
+        $this->expectExceptionCode(0);
 
         new Version('0', '0', '-1.dev');
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
+    /** @throws InvalidArgumentException */
     public function testNegativeMicro3(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Patch version must be a non-negative number formatted as string');
+        $this->expectExceptionMessage(
+            'Micro version must be a non-negative number formatted as string',
+        );
+        $this->expectExceptionCode(0);
 
         new Version('0', '0', '.dev');
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
+    /** @throws InvalidArgumentException */
     public function testNotNumericMicro(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Patch version must be a non-negative number formatted as string');
+        $this->expectExceptionMessage(
+            'Micro version must be a non-negative number formatted as string',
+        );
+        $this->expectExceptionCode(0);
 
         new Version('0', '0', 'c');
     }
@@ -161,7 +168,6 @@ final class VersionTest extends TestCase
     /**
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
      */
     public function testGetversionWithoutMicro(): void
     {
@@ -175,7 +181,12 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        self::assertSame('4.0', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::IGNORE_MICRO));
+        self::assertSame(
+            '4.0',
+            $version->getVersion(
+                VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::IGNORE_MICRO,
+            ),
+        );
 
         $major      = '4';
         $minor      = '0';
@@ -193,7 +204,6 @@ final class VersionTest extends TestCase
     /**
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
      */
     public function testGetversionWithoutMinor(): void
     {
@@ -225,7 +235,6 @@ final class VersionTest extends TestCase
     /**
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
      */
     public function testGetversionWithoutEmptyMicro(): void
     {
@@ -239,7 +248,10 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        self::assertSame('4.0.1.2-beta+8', $version->getVersion(VersionInterface::IGNORE_MICRO_IF_EMPTY));
+        self::assertSame(
+            '4.0.1.2-beta+8',
+            $version->getVersion(VersionInterface::IGNORE_MICRO_IF_EMPTY),
+        );
 
         $major      = '4';
         $minor      = '0';
@@ -269,7 +281,6 @@ final class VersionTest extends TestCase
     /**
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
      */
     public function testGetversionWithoutEmptyMinor(): void
     {
@@ -283,7 +294,10 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        self::assertSame('4.0.1.1-beta+8', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
+        self::assertSame(
+            '4.0.1.1-beta+8',
+            $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY),
+        );
 
         $major      = '4';
         $minor      = '0';
@@ -319,7 +333,12 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        self::assertSame('4', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY | VersionInterface::IGNORE_MICRO));
+        self::assertSame(
+            '4',
+            $version->getVersion(
+                VersionInterface::IGNORE_MINOR_IF_EMPTY | VersionInterface::IGNORE_MICRO,
+            ),
+        );
 
         $major      = '4';
         $minor      = '1';
@@ -331,13 +350,15 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        self::assertSame('4.1.0.3-beta+8', $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY));
+        self::assertSame(
+            '4.1.0.3-beta+8',
+            $version->getVersion(VersionInterface::IGNORE_MINOR_IF_EMPTY),
+        );
     }
 
     /**
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
      */
     public function testGetversionWithoutEmptyMajor(): void
     {
@@ -351,13 +372,15 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        self::assertSame('0.0.1.1-beta+8', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY));
+        self::assertSame(
+            '0.0.1.1-beta+8',
+            $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY),
+        );
     }
 
     /**
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
      */
     public function testGetversionWithoutEmptyMajor2(): void
     {
@@ -377,7 +400,6 @@ final class VersionTest extends TestCase
     /**
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
      */
     public function testGetversionWithoutEmptyMajor3(): void
     {
@@ -397,7 +419,6 @@ final class VersionTest extends TestCase
     /**
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
      */
     public function testGetversionWithoutEmptyMajor4(): void
     {
@@ -411,13 +432,17 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        self::assertSame('', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::IGNORE_MINOR));
+        self::assertSame(
+            '',
+            $version->getVersion(
+                VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::IGNORE_MINOR,
+            ),
+        );
     }
 
     /**
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
      */
     public function testGetversionWithoutEmptyMajor5(): void
     {
@@ -431,7 +456,12 @@ final class VersionTest extends TestCase
 
         $version = new Version($major, $minor, $micro, $patch, $micropatch, $stability, $build);
 
-        self::assertSame('0', $version->getVersion(VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::GET_ZERO_IF_EMPTY));
+        self::assertSame(
+            '0',
+            $version->getVersion(
+                VersionInterface::IGNORE_MAJOR_IF_EMPTY | VersionInterface::GET_ZERO_IF_EMPTY,
+            ),
+        );
     }
 
     /**

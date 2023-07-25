@@ -2,7 +2,7 @@
 /**
  * This file is part of the browser-detector-version package.
  *
- * Copyright (c) 2016-2021, Thomas Mueller <mimmi20@live.de>
+ * Copyright (c) 2016-2023, Thomas Mueller <mimmi20@live.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,9 +16,9 @@ use function array_key_exists;
 use function assert;
 use function is_string;
 use function mb_strlen;
-use function mb_strpos;
 use function mb_strtolower;
 use function preg_match;
+use function str_contains;
 use function str_replace;
 use function urldecode;
 
@@ -26,20 +26,23 @@ final class VersionFactory implements VersionFactoryInterface
 {
     private string $regex = VersionFactoryInterface::REGEX;
 
-    public function __construct(?string $regex = null)
+    /** @throws void */
+    public function __construct(string | null $regex = null)
     {
-        if (null === $regex) {
+        if ($regex === null) {
             return;
         }
 
         $this->setRegex($regex);
     }
 
+    /** @throws void */
     public function setRegex(string $regex): void
     {
         $this->regex = $regex;
     }
 
+    /** @throws void */
     public function getRegex(): string
     {
         return $this->regex;
@@ -59,7 +62,7 @@ final class VersionFactory implements VersionFactoryInterface
             $numbers = $this->mapMatches($matches);
         }
 
-        if ([] === $numbers) {
+        if ($numbers === []) {
             return new NullVersion();
         }
 
@@ -78,11 +81,12 @@ final class VersionFactory implements VersionFactoryInterface
 
         $stability = $numbers['stability'] ?? null;
 
-        if (null === $stability || 0 === mb_strlen($stability)) {
+        if ($stability === null || mb_strlen($stability) === 0) {
             $stability = 'stable';
         }
 
         $stability = mb_strtolower($stability);
+
         switch ($stability) {
             case 'rc':
                 $stability = 'RC';
@@ -134,7 +138,7 @@ final class VersionFactory implements VersionFactoryInterface
             ' ?' . $regexNumbersAndStability,
         ];
 
-        if (false !== mb_strpos($useragent, '%')) {
+        if (str_contains($useragent, '%')) {
             $useragent = urldecode($useragent);
         }
 
@@ -143,7 +147,7 @@ final class VersionFactory implements VersionFactoryInterface
                 continue;
             }
 
-            if (false !== mb_strpos($search, '%')) {
+            if (str_contains($search, '%')) {
                 $search = urldecode($search);
             }
 
@@ -198,6 +202,8 @@ final class VersionFactory implements VersionFactoryInterface
      * @param array<string, string> $matches
      *
      * @return array<string, string>
+     *
+     * @throws void
      */
     private function mapMatches(array $matches): array
     {
