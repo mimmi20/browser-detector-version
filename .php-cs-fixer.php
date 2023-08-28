@@ -9,6 +9,7 @@
  */
 
 declare(strict_types = 1);
+
 $header = <<<'EOF'
     This file is part of the browser-detector-version package.
 
