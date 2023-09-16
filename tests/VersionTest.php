@@ -13,7 +13,7 @@ declare(strict_types = 1);
 namespace BrowserDetectorTest\Version;
 
 use BrowserDetector\Version\Version;
-use BrowserDetector\Version\VersionFactory;
+use BrowserDetector\Version\VersionBuilder;
 use BrowserDetector\Version\VersionInterface;
 use InvalidArgumentException;
 use PHPUnit\Framework\Exception;
@@ -160,7 +160,7 @@ final class VersionTest extends TestCase
         self::assertIsString($array['stability']);
         self::assertArrayHasKey('build', $array);
 
-        $object = VersionFactory::fromArray($array);
+        $object = VersionBuilder::fromArray($array);
 
         self::assertEquals($version, $object);
     }

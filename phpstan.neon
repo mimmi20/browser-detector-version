@@ -94,5 +94,5 @@ parameters:
       missingCheckedExceptionInThrows: true
       tooWideThrowType: true
 
-#  ignoreErrors:
-#    - '~MockObject~'
+  ignoreErrors:
+    - '~Property BrowserDetector\\Version\\VersionBuilder::\$logger is never read, only written~'
