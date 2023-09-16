@@ -12,8 +12,13 @@ declare(strict_types = 1);
 
 namespace BrowserDetector\Version;
 
-interface VersionFactoryInterface
+use Psr\Log\LoggerInterface;
+
+final class VersionBuilderFactory
 {
-    /** @throws NotNumericException */
-    public function detectVersion(string $useragent): VersionInterface;
+    /** @throws void */
+    public function __invoke(LoggerInterface $logger, string | null $regex = null): VersionBuilder
+    {
+        return new VersionBuilder($logger, $regex);
+    }
 }

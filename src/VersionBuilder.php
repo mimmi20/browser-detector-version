@@ -12,6 +12,8 @@ declare(strict_types = 1);
 
 namespace BrowserDetector\Version;
 
+use Psr\Log\LoggerInterface;
+
 use function array_key_exists;
 use function assert;
 use function is_string;
@@ -22,12 +24,12 @@ use function str_contains;
 use function str_replace;
 use function urldecode;
 
-final class VersionFactory implements VersionFactoryInterface
+final class VersionBuilder implements VersionBuilderInterface
 {
-    private string $regex = VersionFactoryInterface::REGEX;
+    private string $regex = VersionBuilderInterface::REGEX;
 
     /** @throws void */
-    public function __construct(string | null $regex = null)
+    public function __construct(private readonly LoggerInterface $logger, string | null $regex = null)
     {
         if ($regex === null) {
             return;

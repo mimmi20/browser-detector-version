@@ -14,14 +14,15 @@ namespace BrowserDetectorTest\Version;
 
 use BrowserDetector\Version\NullVersion;
 use BrowserDetector\Version\Version;
-use BrowserDetector\Version\VersionFactory;
+use BrowserDetector\Version\VersionBuilder;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 
-final class VersionFactoryTest extends TestCase
+final class VersionBuilderTest extends TestCase
 {
     /**
      * @throws ExpectationFailedException
@@ -38,7 +39,7 @@ final class VersionFactoryTest extends TestCase
         string | null $build,
         string $complete,
     ): void {
-        $object = (new VersionFactory())->set($version);
+        $object = (new VersionBuilder(new NullLogger()))->set($version);
 
         self::assertInstanceOf(Version::class, $object);
 
@@ -96,7 +97,7 @@ final class VersionFactoryTest extends TestCase
     #[DataProvider('providerSetNull')]
     public function testNullVersionSet(string $version): void
     {
-        $object = (new VersionFactory())->set($version);
+        $object = (new VersionBuilder(new NullLogger()))->set($version);
 
         self::assertInstanceOf(NullVersion::class, $object);
 
@@ -132,7 +133,7 @@ final class VersionFactoryTest extends TestCase
      */
     public function testVersionSetXp(): void
     {
-        $object = (new VersionFactory())->set('XP');
+        $object = (new VersionBuilder(new NullLogger()))->set('XP');
 
         self::assertInstanceOf(NullVersion::class, $object);
         self::assertNull($object->getMajor(), 'major is wrong');
@@ -156,7 +157,7 @@ final class VersionFactoryTest extends TestCase
         string | null $build,
         string $complete,
     ): void {
-        $object = (new VersionFactory())->detectVersion($uapart, $searches);
+        $object = (new VersionBuilder(new NullLogger()))->detectVersion($uapart, $searches);
 
         self::assertInstanceOf(Version::class, $object);
 
@@ -211,7 +212,7 @@ final class VersionFactoryTest extends TestCase
      */
     public function testVersionDetectNullVersion(): void
     {
-        $object = (new VersionFactory())->detectVersion('Firefox/4.0b8', ['Chrome']);
+        $object = (new VersionBuilder(new NullLogger()))->detectVersion('Firefox/4.0b8', ['Chrome']);
 
         self::assertInstanceOf(NullVersion::class, $object);
 
@@ -251,7 +252,7 @@ final class VersionFactoryTest extends TestCase
             'stability' => $stability,
             'build' => $build,
         ];
-        $object = VersionFactory::fromArray($data);
+        $object = VersionBuilder::fromArray($data);
 
         self::assertInstanceOf(Version::class, $object);
 
@@ -274,7 +275,7 @@ final class VersionFactoryTest extends TestCase
     public function testWithParameter(): void
     {
         $regex     = '/^v?(?<major>\d+)(?:[-|\.](?<minor>\d+))?(?:[-|\.](?<micro>\d+))?(?:[-|\.](?<patch>\d+))?(?:[-|\.](?<micropatch>\d+))?(?:[-_.+ ]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*))?.*$/i';
-        $object    = new VersionFactory($regex);
+        $object    = new VersionBuilder(new NullLogger(), $regex);
         $useragent = 'Mozilla/4.0 (compatible; MSIE 10.0; Trident/6.0; Windows 98; MyIE2)';
 
         $result = $object->detectVersion($useragent, ['MyIE']);
@@ -292,11 +293,13 @@ final class VersionFactoryTest extends TestCase
     public function testSetRegex(): void
     {
         $regex  = '/^v?(?<major>\d+)(?:[-|\.](?<minor>\d+))?(?:[-|\.](?<micro>\d+))?(?:[-|\.](?<patch>\d+))?(?:[-|\.](?<micropatch>\d+))?(?:[-_.+ ]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*))?.*$/i';
-        $object = new VersionFactory();
+        $object = new VersionBuilder(new NullLogger());
         self::assertNotSame($regex, $object->getRegex());
         $object->setRegex($regex);
         $useragent = 'Mozilla/4.0 (compatible; MSIE 10.0; Trident/6.0; Windows 98; MyIE2)';
-        $result    = $object->detectVersion($useragent, ['MyIE']);
+
+        $result = $object->detectVersion($useragent, ['MyIE']);
+
         self::assertInstanceOf(Version::class, $result);
         self::assertSame('2', $result->getMajor(), 'major is wrong');
         self::assertSame($regex, $object->getRegex());
