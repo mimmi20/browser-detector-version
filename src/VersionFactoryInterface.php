@@ -12,8 +12,13 @@ declare(strict_types = 1);
 
 namespace BrowserDetector\Version;
 
+use UnexpectedValueException;
+
 interface VersionFactoryInterface
 {
-    /** @throws NotNumericException */
+    /**
+     * @throws NotNumericException
+     * @throws UnexpectedValueException
+     */
     public function detectVersion(string $useragent): VersionInterface;
 }
