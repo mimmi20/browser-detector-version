@@ -14,11 +14,8 @@ namespace BrowserDetector\Version;
 
 use Psr\Log\LoggerInterface;
 
-final class VersionBuilderFactory implements VersionBuilderFactoryInterface
+interface VersionBuilderFactoryInterface
 {
     /** @throws void */
-    public function __invoke(LoggerInterface $logger, string | null $regex = null): VersionBuilderInterface
-    {
-        return new VersionBuilder($logger, $regex);
-    }
+    public function __invoke(LoggerInterface $logger, string | null $regex = null): VersionBuilderInterface;
 }
