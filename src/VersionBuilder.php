@@ -12,6 +12,7 @@ declare(strict_types = 1);
 
 namespace BrowserDetector\Version;
 
+use BrowserDetector\Version\Exception\NotNumericException;
 use Psr\Log\LoggerInterface;
 
 use function array_key_exists;
@@ -45,7 +46,11 @@ final class VersionBuilder implements VersionBuilderInterface
         $this->regex = $regex;
     }
 
-    /** @throws void */
+    /**
+     * @throws void
+     *
+     * @api
+     */
     public function getRegex(): string
     {
         return $this->regex;

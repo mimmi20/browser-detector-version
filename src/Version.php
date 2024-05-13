@@ -12,6 +12,8 @@ declare(strict_types = 1);
 
 namespace BrowserDetector\Version;
 
+use BrowserDetector\Version\Exception\NotNumericException;
+
 use function array_key_exists;
 use function explode;
 use function is_numeric;

@@ -12,6 +12,8 @@ declare(strict_types = 1);
 
 namespace BrowserDetector\Version;
 
+use BrowserDetector\Version\Exception\NotNumericException;
+
 interface VersionBuilderInterface extends VersionFactoryInterface
 {
     public const REGEX = '/^v?(?P<major>\d+)(?:[-\.](?P<minor>\d+))?(?:[-\.](?P<micro>\d+))?(?:[-\.\(](?P<patch>\d+))?(?:[-\.](?P<micropatch>\d+))?(?:(?:[-_+~]?(?P<stability>rc|alpha|a|beta|b|patch|pre|pl?|stable|dev|d)[-_.+ \(]?| build |\+|[_\.]r)(?P<build>\d*))?.*$/i';
