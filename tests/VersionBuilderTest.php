@@ -123,6 +123,7 @@ final class VersionBuilderTest extends TestCase
         return [
             ['abc'],
             ['x6~b1'],
+            [''],
         ];
     }
 
