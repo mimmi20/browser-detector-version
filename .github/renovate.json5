@@ -45,7 +45,7 @@
   "rangeStrategy": "bump",
   "recreateWhen": "never",
   "rollbackPrs": true,
-  "schedule": ["before 4am on Monday"],
+  "schedule": ["before 4am on Friday"],
   "packageRules": [
     {
       "matchPackageNames": [
