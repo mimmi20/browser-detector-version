@@ -13,6 +13,7 @@ declare(strict_types = 1);
 namespace BrowserDetector\Version;
 
 use BrowserDetector\Version\Exception\NotNumericException;
+use Override;
 use Psr\Log\LoggerInterface;
 
 use function array_key_exists;
@@ -41,6 +42,7 @@ final class VersionBuilder implements VersionBuilderInterface
     }
 
     /** @throws void */
+    #[Override]
     public function setRegex(string $regex): void
     {
         $this->regex = $regex;
@@ -61,6 +63,7 @@ final class VersionBuilder implements VersionBuilderInterface
      *
      * @throws NotNumericException
      */
+    #[Override]
     public function set(string $version): VersionInterface
     {
         $matches = [];
@@ -132,6 +135,7 @@ final class VersionBuilder implements VersionBuilderInterface
      *
      * @throws NotNumericException
      */
+    #[Override]
     public function detectVersion(string $useragent, array $searches = []): VersionInterface
     {
         $regexNumbersAndStability = '(?P<version>\d+(?![:x])(?:[\d._\-+~ abdehprstv]|l(?!i)|c(?!fnetwork))*)';
@@ -180,6 +184,7 @@ final class VersionBuilder implements VersionBuilderInterface
      *
      * @throws NotNumericException
      */
+    #[Override]
     public static function fromArray(array $data): VersionInterface
     {
         assert(array_key_exists('major', $data), '"major" property is required');

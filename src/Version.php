@@ -13,6 +13,7 @@ declare(strict_types = 1);
 namespace BrowserDetector\Version;
 
 use BrowserDetector\Version\Exception\NotNumericException;
+use Override;
 
 use function array_key_exists;
 use function explode;
@@ -73,6 +74,7 @@ final class Version implements VersionInterface
      *
      * @throws void
      */
+    #[Override]
     public function toArray(): array
     {
         return [
@@ -87,54 +89,63 @@ final class Version implements VersionInterface
     }
 
     /** @throws void */
+    #[Override]
     public function getMajor(): string
     {
         return $this->major;
     }
 
     /** @throws void */
+    #[Override]
     public function getMinor(): string
     {
         return $this->minor;
     }
 
     /** @throws void */
+    #[Override]
     public function getMicro(): string
     {
         return $this->micro;
     }
 
     /** @throws void */
+    #[Override]
     public function getPatch(): string | null
     {
         return $this->patch;
     }
 
     /** @throws void */
+    #[Override]
     public function getMicropatch(): string | null
     {
         return $this->micropatch;
     }
 
     /** @throws void */
+    #[Override]
     public function getBuild(): string | null
     {
         return $this->build;
     }
 
     /** @throws void */
+    #[Override]
     public function getStability(): string
     {
         return $this->stability;
     }
 
     /** @throws void */
+    #[Override]
     public function isAlpha(): bool
     {
         return $this->stability === 'alpha';
     }
 
     /** @throws void */
+    #[Override]
     public function isBeta(): bool
     {
         return $this->stability === 'beta';
@@ -145,6 +156,7 @@ final class Version implements VersionInterface
      *
      * @throws void
      */
+    #[Override]
     public function getVersion(int $mode = VersionInterface::COMPLETE): string
     {
         $versions     = $this->toArray();

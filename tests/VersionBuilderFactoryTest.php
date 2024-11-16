@@ -14,6 +14,7 @@ namespace BrowserDetectorTest\Version;
 
 use BrowserDetector\Version\VersionBuilder;
 use BrowserDetector\Version\VersionBuilderFactory;
+use Override;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
@@ -24,6 +25,7 @@ final class VersionBuilderFactoryTest extends TestCase
     private VersionBuilderFactory $object;
 
     /** @throws void */
+    #[Override]
     protected function setUp(): void
     {
         $this->object = new VersionBuilderFactory();
