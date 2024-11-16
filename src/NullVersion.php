@@ -12,6 +12,8 @@ declare(strict_types = 1);
 
 namespace BrowserDetector\Version;
 
+use Override;
+
 final class NullVersion implements VersionInterface
 {
     /**
@@ -19,6 +21,7 @@ final class NullVersion implements VersionInterface
      *
      * @throws void
      */
+    #[Override]
     public function toArray(): array
     {
         return [
@@ -33,54 +36,63 @@ final class NullVersion implements VersionInterface
     }
 
     /** @throws void */
+    #[Override]
     public function getMajor(): string | null
     {
         return null;
     }
 
     /** @throws void */
+    #[Override]
     public function getMinor(): string | null
     {
         return null;
     }
 
     /** @throws void */
+    #[Override]
     public function getMicro(): string | null
     {
         return null;
     }
 
     /** @throws void */
+    #[Override]
     public function getPatch(): string | null
     {
         return null;
     }
 
     /** @throws void */
+    #[Override]
     public function getMicropatch(): string | null
     {
         return null;
     }
 
     /** @throws void */
+    #[Override]
     public function getBuild(): string | null
     {
         return null;
     }
 
     /** @throws void */
+    #[Override]
     public function getStability(): string | null
     {
         return null;
     }
 
     /** @throws void */
+    #[Override]
     public function isAlpha(): bool | null
     {
         return null;
     }
 
     /** @throws void */
+    #[Override]
     public function isBeta(): bool | null
     {
         return null;
@@ -93,6 +105,7 @@ final class NullVersion implements VersionInterface
      *
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
      */
+    #[Override]
     public function getVersion(int $mode = VersionInterface::COMPLETE): string | null
     {
         return null;

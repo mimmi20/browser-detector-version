@@ -13,6 +13,7 @@ declare(strict_types = 1);
 namespace BrowserDetector\Version;
 
 use BrowserDetector\Version\Exception\NotNumericException;
+use Override;
 
 interface VersionBuilderInterface extends VersionFactoryInterface
 {
@@ -33,6 +34,7 @@ interface VersionBuilderInterface extends VersionFactoryInterface
      *
      * @throws NotNumericException
      */
+    #[Override]
     public function detectVersion(string $useragent, array $searches = []): VersionInterface;
 
     /**
