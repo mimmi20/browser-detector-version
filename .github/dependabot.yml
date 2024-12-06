@@ -15,26 +15,6 @@ updates:
       time: "04:00"
       timezone: "Europe/Berlin"
 
-    groups:
-      security-updates:
-        applies-to: "security-updates"
-        patterns:
-          - "*"
-        exclude-patterns:
-          - "friendsofphp/php-cs-fixer"
-          - "sirbrillig/phpcs-variable-analysis"
-          - "slevomat/coding-standard"
-          - "squizlabs/php_codesniffer"
-      version-updates:
-        applies-to: "version-updates"
-        patterns:
-          - "*"
-        exclude-patterns:
-          - "friendsofphp/php-cs-fixer"
-          - "sirbrillig/phpcs-variable-analysis"
-          - "slevomat/coding-standard"
-          - "squizlabs/php_codesniffer"
-
     open-pull-requests-limit: 10
 
     reviewers:

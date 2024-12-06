@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the browser-detector-version package.
  *
@@ -17,7 +18,7 @@ use Override;
 
 interface VersionBuilderInterface extends VersionFactoryInterface
 {
-    public const REGEX = '/^v?(?P<major>\d+)(?:[-\.](?P<minor>\d+))?(?:[-\.](?P<micro>\d+))?(?:[-\.\(](?P<patch>\d+))?(?:[-\.](?P<micropatch>\d+))?(?:(?:[-_+~]?(?P<stability>rc|alpha|a|beta|b|patch|pre|pl?|stable|dev|d)[-_.+ \(]?| build |\+|[_\.]r)(?P<build>\d*))?.*$/i';
+    public const string REGEX = '/^v?(?P<major>\d+)(?:[-\.](?P<minor>\d+))?(?:[-\.](?P<micro>\d+))?(?:[-\.\(](?P<patch>\d+))?(?:[-\.](?P<micropatch>\d+))?(?:(?:[-_+~]?(?P<stability>rc|alpha|a|beta|b|patch|pre|pl?|stable|dev|d)[-_.+ \(]?| build |\+|[_\.]r)(?P<build>\d*))?.*$/i';
 
     /** @throws void */
     public function setRegex(string $regex): void;
