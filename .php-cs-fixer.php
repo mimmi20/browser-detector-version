@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the browser-detector-version package.
  *
@@ -10,10 +11,12 @@
 
 declare(strict_types = 1);
 
-$header = <<<'EOF'
+$year = date('Y');
+
+$header = <<<EOF
     This file is part of the browser-detector-version package.
 
-    Copyright (c) 2016-2024, Thomas Mueller <mimmi20@live.de>
+    Copyright (c) 2016-{$year}, Thomas Mueller <mimmi20@live.de>
 
     For the full copyright and license information, please view the LICENSE
     file that was distributed with this source code.

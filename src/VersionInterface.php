@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the browser-detector-version package.
  *
@@ -16,19 +17,19 @@ use UnexpectedValueException;
 
 interface VersionInterface
 {
-    public const COMPLETE = 0;
+    public const int COMPLETE = 0;
 
-    public const IGNORE_MINOR = 1;
+    public const int IGNORE_MINOR = 1;
 
-    public const IGNORE_MICRO = 2;
+    public const int IGNORE_MICRO = 2;
 
-    public const IGNORE_MINOR_IF_EMPTY = 4;
+    public const int IGNORE_MINOR_IF_EMPTY = 4;
 
-    public const IGNORE_MICRO_IF_EMPTY = 8;
+    public const int IGNORE_MICRO_IF_EMPTY = 8;
 
-    public const IGNORE_MAJOR_IF_EMPTY = 16;
+    public const int IGNORE_MAJOR_IF_EMPTY = 16;
 
-    public const GET_ZERO_IF_EMPTY = 32;
+    public const int GET_ZERO_IF_EMPTY = 32;
 
     /**
      * returns the detected version
