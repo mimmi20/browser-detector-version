@@ -19,7 +19,6 @@ use Override;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\NullLogger;
 
 final class VersionBuilderFactoryTest extends TestCase
 {
@@ -38,7 +37,7 @@ final class VersionBuilderFactoryTest extends TestCase
      */
     public function testInvoke(): void
     {
-        $result = ($this->object)(new NullLogger());
+        $result = ($this->object)();
 
         self::assertInstanceOf(VersionBuilder::class, $result);
     }

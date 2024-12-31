@@ -21,7 +21,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\NullLogger;
 
 final class VersionBuilderTest extends TestCase
 {
@@ -40,7 +39,7 @@ final class VersionBuilderTest extends TestCase
         string | null $build,
         string $complete,
     ): void {
-        $object = (new VersionBuilder(new NullLogger()))->set($version);
+        $object = (new VersionBuilder())->set($version);
 
         self::assertInstanceOf(Version::class, $object);
 
@@ -98,7 +97,7 @@ final class VersionBuilderTest extends TestCase
     #[DataProvider('providerSetNull')]
     public function testNullVersionSet(string $version): void
     {
-        $object = (new VersionBuilder(new NullLogger()))->set($version);
+        $object = (new VersionBuilder())->set($version);
 
         self::assertInstanceOf(NullVersion::class, $object);
 
@@ -135,7 +134,7 @@ final class VersionBuilderTest extends TestCase
      */
     public function testVersionSetXp(): void
     {
-        $object = (new VersionBuilder(new NullLogger()))->set('XP');
+        $object = (new VersionBuilder())->set('XP');
 
         self::assertInstanceOf(NullVersion::class, $object);
         self::assertNull($object->getMajor(), 'major is wrong');
@@ -159,7 +158,7 @@ final class VersionBuilderTest extends TestCase
         string | null $build,
         string $complete,
     ): void {
-        $object = (new VersionBuilder(new NullLogger()))->detectVersion($uapart, $searches);
+        $object = (new VersionBuilder())->detectVersion($uapart, $searches);
 
         self::assertInstanceOf(Version::class, $object);
 
@@ -216,7 +215,7 @@ final class VersionBuilderTest extends TestCase
      */
     public function testVersionDetectNullVersion(): void
     {
-        $object = (new VersionBuilder(new NullLogger()))->detectVersion('Firefox/4.0b8', ['Chrome']);
+        $object = (new VersionBuilder())->detectVersion('Firefox/4.0b8', ['Chrome']);
 
         self::assertInstanceOf(NullVersion::class, $object);
 
@@ -279,7 +278,7 @@ final class VersionBuilderTest extends TestCase
     public function testWithParameter(): void
     {
         $regex     = '/^v?(?<major>\d+)(?:[-|\.](?<minor>\d+))?(?:[-|\.](?<micro>\d+))?(?:[-|\.](?<patch>\d+))?(?:[-|\.](?<micropatch>\d+))?(?:[-_.+ ]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*))?.*$/i';
-        $object    = new VersionBuilder(new NullLogger(), $regex);
+        $object    = new VersionBuilder($regex);
         $useragent = 'Mozilla/4.0 (compatible; MSIE 10.0; Trident/6.0; Windows 98; MyIE2)';
 
         $result = $object->detectVersion($useragent, ['MyIE']);
@@ -297,7 +296,7 @@ final class VersionBuilderTest extends TestCase
     public function testSetRegex(): void
     {
         $regex  = '/^v?(?<major>\d+)(?:[-|\.](?<minor>\d+))?(?:[-|\.](?<micro>\d+))?(?:[-|\.](?<patch>\d+))?(?:[-|\.](?<micropatch>\d+))?(?:[-_.+ ]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*))?.*$/i';
-        $object = new VersionBuilder(new NullLogger());
+        $object = new VersionBuilder();
         self::assertNotSame($regex, $object->getRegex());
         $object->setRegex($regex);
         $useragent = 'Mozilla/4.0 (compatible; MSIE 10.0; Trident/6.0; Windows 98; MyIE2)';

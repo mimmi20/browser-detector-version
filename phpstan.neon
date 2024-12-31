@@ -107,8 +107,8 @@ parameters:
     no_mixed: true
     narrow_param: true
 
-  ignoreErrors:
-    - '~Property BrowserDetector\\Version\\VersionBuilder::\$logger is never read, only written~'
+#  ignoreErrors:
+#    - '~Property BrowserDetector\\Version\\VersionBuilder::\$logger is never read, only written~'
 
 rules:
   # code complexity

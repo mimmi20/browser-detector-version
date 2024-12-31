@@ -13,10 +13,8 @@ declare(strict_types = 1);
 
 namespace BrowserDetector\Version;
 
-use Psr\Log\LoggerInterface;
-
 interface VersionBuilderFactoryInterface
 {
     /** @throws void */
-    public function __invoke(LoggerInterface $logger, string | null $regex = null): VersionBuilderInterface;
+    public function __invoke(string | null $regex = null): VersionBuilderInterface;
 }
