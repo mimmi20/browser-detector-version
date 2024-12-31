@@ -15,7 +15,6 @@ namespace BrowserDetector\Version;
 
 use BrowserDetector\Version\Exception\NotNumericException;
 use Override;
-use Psr\Log\LoggerInterface;
 
 use function array_key_exists;
 use function assert;
@@ -33,7 +32,7 @@ final class VersionBuilder implements VersionBuilderInterface
     private string $regex = VersionBuilderInterface::REGEX;
 
     /** @throws void */
-    public function __construct(private readonly LoggerInterface $logger, string | null $regex = null)
+    public function __construct(string | null $regex = null)
     {
         if ($regex === null) {
             return;

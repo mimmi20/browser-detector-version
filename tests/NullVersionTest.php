@@ -24,7 +24,7 @@ final class NullVersionTest extends TestCase
      * @throws ExpectationFailedException
      * @throws Exception
      */
-    public function testToarray(): void
+    public function testToArray(): void
     {
         $version = new NullVersion();
 

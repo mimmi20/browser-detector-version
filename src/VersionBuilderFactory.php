@@ -14,14 +14,13 @@ declare(strict_types = 1);
 namespace BrowserDetector\Version;
 
 use Override;
-use Psr\Log\LoggerInterface;
 
 final class VersionBuilderFactory implements VersionBuilderFactoryInterface
 {
     /** @throws void */
     #[Override]
-    public function __invoke(LoggerInterface $logger, string | null $regex = null): VersionBuilderInterface
+    public function __invoke(string | null $regex = null): VersionBuilderInterface
     {
-        return new VersionBuilder($logger, $regex);
+        return new VersionBuilder($regex);
     }
 }
