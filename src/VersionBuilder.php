@@ -21,10 +21,10 @@ use function assert;
 use function is_string;
 use function mb_strlen;
 use function mb_strtolower;
+use function mb_trim;
 use function preg_match;
 use function str_contains;
 use function str_replace;
-use function trim;
 use function urldecode;
 
 final class VersionBuilder implements VersionBuilderInterface
@@ -169,7 +169,7 @@ final class VersionBuilder implements VersionBuilderInterface
                 $doMatch       = preg_match($compareString, $useragent, $matches);
 
                 if ($doMatch) {
-                    $version = mb_strtolower(str_replace('_', '.', trim($matches['version'])));
+                    $version = mb_strtolower(str_replace('_', '.', mb_trim($matches['version'])));
 
                     return $this->set($version);
                 }
