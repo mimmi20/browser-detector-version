@@ -209,13 +209,16 @@ final class VersionBuilderTest extends TestCase
     }
 
     /**
+     * @param array<int, (bool|string|null)> $searches
+     *
      * @throws ExpectationFailedException
      * @throws Exception
      * @throws InvalidArgumentException
      */
-    public function testVersionDetectNullVersion(): void
+    #[DataProvider('providerDetectVersionNullVersion')]
+    public function testVersionDetectNullVersion(string $uapart, array $searches): void
     {
-        $object = (new VersionBuilder())->detectVersion('Firefox/4.0b8', ['Chrome']);
+        $object = (new VersionBuilder())->detectVersion($uapart, $searches);
 
         self::assertInstanceOf(NullVersion::class, $object);
 
@@ -229,6 +232,19 @@ final class VersionBuilderTest extends TestCase
         self::assertNull($object->getVersion(), 'complete is wrong');
         self::assertNull($object->isBeta(), 'beta is wrong');
         self::assertNull($object->isAlpha(), 'alpha is wrong');
+    }
+
+    /**
+     * @return array<int, array<int, (array<int, string>|string|null)>>
+     *
+     * @throws void
+     */
+    public static function providerDetectVersionNullVersion(): array
+    {
+        return [
+            ['Firefox/4.0b8', ['Chrome']],
+            ['Mozilla/4.0 (compatible;Android;320x480)', ['andr[0o]id[;_ ]']],
+        ];
     }
 
     /**

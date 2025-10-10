@@ -138,16 +138,16 @@ final class VersionBuilder implements VersionBuilderInterface
     #[Override]
     public function detectVersion(string $useragent, array $searches = []): VersionInterface
     {
-        $regexNumbersAndStability = '(?P<version>\d+(?![:x])(?:[\d._\-+~ abdehprstv]|l(?!i)|c(?!fnetwork))*)';
-        $regexNumbersOnly         = '(?P<version>\d+[\d.]+\(\d+(?![:x]))';
+        $regexNumbersAndStability    = '(?P<version>\d+(?![:x])(?:[\d._\-+~ abdehprstv]|l(?!i)|c(?!fnetwork))*)';
+        $regexNumbersOnly            = '(?P<version>\d+[\d.]+\(\d+(?![:x]))';
+        $regexNumbersAndStabilityNot = '(?P<version>\d+[:x](?:[\d._\-+~ abdehprstv]|l(?!i)|c(?!fnetwork))*)';
 
         $modifiers = [
-            '\/' . $regexNumbersOnly . '[;\)]',
-            '\/[\d.]+ ?\(' . $regexNumbersAndStability,
-            '\/' . $regexNumbersAndStability,
-            '\(' . $regexNumbersAndStability,
-            ' \(' . $regexNumbersAndStability,
-            ' ?' . $regexNumbersAndStability,
+            '\/[\d.]+ ?\(',
+            '\/',
+            '\(',
+            ' \(',
+            ' ?',
         ];
 
         if (str_contains($useragent, '%')) {
@@ -163,12 +163,26 @@ final class VersionBuilder implements VersionBuilderInterface
                 $search = urldecode($search);
             }
 
-            foreach ($modifiers as $modifier) {
-                $compareString = '/' . $search . $modifier . '/i';
-                $matches       = [];
-                $doMatch       = preg_match($compareString, $useragent, $matches);
+            $doMatch = preg_match(
+                '/' . $search . '\/' . $regexNumbersOnly . '[;\)]/i',
+                $useragent,
+                $matches,
+            );
 
-                if ($doMatch) {
+            if ($doMatch) {
+                $version = mb_strtolower(str_replace('_', '.', mb_trim($matches['version'])));
+
+                return $this->set($version);
+            }
+
+            foreach ($modifiers as $modifier) {
+                $compareStringNegative = '/' . $search . $modifier . $regexNumbersAndStabilityNot . '/i';
+                $compareString         = '/' . $search . $modifier . $regexNumbersAndStability . '/i';
+                $matches               = [];
+                $doMatchNegative       = preg_match($compareStringNegative, $useragent);
+                $doMatchPositive       = preg_match($compareString, $useragent, $matches);
+
+                if (!$doMatchNegative && $doMatchPositive) {
                     $version = mb_strtolower(str_replace('_', '.', mb_trim($matches['version'])));
 
                     return $this->set($version);
