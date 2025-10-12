@@ -38,7 +38,7 @@ $config
     ->ignoreErrorsOnPackage('phpstan/phpstan-deprecation-rules', [ErrorType::UNUSED_DEPENDENCY])
     ->ignoreErrorsOnPackage(
         'mimmi20/browser-detector-versioninterface',
-        [ErrorType::DEV_DEPENDENCY_IN_PROD],
+        [ErrorType::PROD_DEPENDENCY_ONLY_IN_DEV],
     )
 
     // Adjust analysis
