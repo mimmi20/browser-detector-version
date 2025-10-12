@@ -25,6 +25,7 @@
   "require": {
     "php": "~8.4.0 || ~8.5.0",
     "ext-mbstring": "*",
+    "mimmi20/browser-detector-versioninterface": "^1.0.0",
     "psr/log": "^3.0.2"
   },
   "require-dev": {
