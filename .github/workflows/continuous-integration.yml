@@ -11,7 +11,7 @@ on:
 permissions:
   contents: read
   security-events: read
-  id-token: read
+#  id-token: read
   issues: read
   pull-requests: read
   checks: read
