@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="6.13.1@1e3b7f0a8ab32b23197b91107adc0a7ed8a05b51">
+  <file src="src/NullVersion.php">
+    <ReservedWord>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+    </ReservedWord>
+  </file>
+  <file src="src/Version.php">
+    <ReservedWord>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+    </ReservedWord>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[empty($versions['major'])]]></code>
+      <code><![CDATA[empty($versions['micro'])]]></code>
+      <code><![CDATA[empty($versions['minor'])]]></code>
+    </RiskyTruthyFalsyComparison>
+  </file>
+  <file src="src/VersionBuilder.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$this->regex]]></code>
+    </ArgumentTypeCoercion>
+    <MixedArgumentTypeCoercion>
+      <code><![CDATA[$matches]]></code>
+    </MixedArgumentTypeCoercion>
+    <ReservedWord>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+    </ReservedWord>
+  </file>
+  <file src="src/VersionBuilderFactory.php">
+    <ReservedWord>
+      <code><![CDATA[void]]></code>
+    </ReservedWord>
+  </file>
+  <file src="src/VersionBuilderFactoryInterface.php">
+    <ReservedWord>
+      <code><![CDATA[void]]></code>
+    </ReservedWord>
+  </file>
+  <file src="src/VersionBuilderInterface.php">
+    <ReservedWord>
+      <code><![CDATA[void]]></code>
+    </ReservedWord>
+  </file>
+  <file src="tests/VersionBuilderTest.php">
+    <ReservedWord>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+    </ReservedWord>
+  </file>
+</files>
