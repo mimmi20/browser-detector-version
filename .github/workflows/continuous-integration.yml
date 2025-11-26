@@ -61,6 +61,10 @@ jobs:
       # Required when publishing results (badge / API / code scanning)
       security-events: write
       id-token: write
+      contents: read
+      issues: read
+      pull-requests: read
+      checks: read
 
     needs: "install"
 
