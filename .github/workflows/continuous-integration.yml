@@ -11,6 +11,10 @@ on:
 permissions:
   contents: read
   security-events: read
+  id-token: read
+  issues: read
+  pull-requests: read
+  checks: read
 
 concurrency:
   group: "${{ github.event_name }}-${{ github.workflow }}-${{ github.head_ref || github.run_id }}-${{ github.ref }}"
@@ -52,6 +56,11 @@ jobs:
 
   analytics:
     name: "Project Analysis"
+
+    permissions:
+      # Required when publishing results (badge / API / code scanning)
+      security-events: write
+      id-token: write
 
     needs: "install"
 
