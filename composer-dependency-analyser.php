@@ -40,6 +40,10 @@ $config
         'mimmi20/browser-detector-versioninterface',
         [ErrorType::PROD_DEPENDENCY_ONLY_IN_DEV],
     )
+    ->ignoreErrorsOnPackage(
+        'jbelien/phpstan-sarif-formatter',
+        [ErrorType::UNUSED_DEPENDENCY],
+    )
 
     // Adjust analysis
     // dev packages are often used only in CI, so this is not enabled by default
