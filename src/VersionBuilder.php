@@ -175,6 +175,18 @@ final class VersionBuilder implements VersionBuilderInterface
                 return $this->set($version);
             }
 
+            $doMatch = preg_match(
+                '/' . $regexNumbersOnly . '\/' . $search . '[;\)]/i',
+                $useragent,
+                $matches,
+            );
+
+            if ($doMatch) {
+                $version = mb_strtolower(str_replace('_', '.', mb_trim($matches['version'])));
+
+                return $this->set($version);
+            }
+
             foreach ($modifiers as $modifier) {
                 $compareStringNegative = '/' . $search . $modifier . $regexNumbersAndStabilityNot . '/i';
                 $compareString         = '/' . $search . $modifier . $regexNumbersAndStability . '/i';

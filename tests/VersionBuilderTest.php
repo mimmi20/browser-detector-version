@@ -205,6 +205,7 @@ final class VersionBuilderTest extends TestCase
             ['Mozilla/5.0 (Macintosh; ARM Mac OS X) AppleWebKit/538.15 (KHTML, like Gecko) Safari/538.15 Version/6.0 Debian/8.0 (1:3.8.2.0-0) Epiphany/3.8.2', ['Debian'], '8', '0', '0', 'stable', null, '8.0.0'],
             ['Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x63090621)XWEB/8379 Flue', ['MicroMessenger'], '7', '0', '20', 'stable', null, '7.0.20.1781'],
             ['browseripad/42012 CFNetwork/711.3.18 Darwin/14.0.0', ['ipad'], '42012', '0', '0', 'stable', null, '42012.0.0'],
+            ['פודקאסטים/1420.35 CFNetwork/1120 Darwin/19.0.0', ['פודקאסטים'], '1420', '35', '0', 'stable', null, '1420.35.0'],
         ];
     }
 
