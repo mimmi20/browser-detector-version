@@ -206,6 +206,7 @@ final class VersionBuilderTest extends TestCase
             ['Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x63090621)XWEB/8379 Flue', ['MicroMessenger'], '7', '0', '20', 'stable', null, '7.0.20.1781'],
             ['browseripad/42012 CFNetwork/711.3.18 Darwin/14.0.0', ['ipad'], '42012', '0', '0', 'stable', null, '42012.0.0'],
             ['פודקאסטים/1420.35 CFNetwork/1120 Darwin/19.0.0', ['פודקאסטים'], '1420', '35', '0', 'stable', null, '1420.35.0'],
+            ['Mozilla/4_77 [en] (X11; I; IRIX;64 6_5 IP30', ['Mozilla'], '4', '77', '0', 'stable', null, '4.77.0'],
         ];
     }
 
