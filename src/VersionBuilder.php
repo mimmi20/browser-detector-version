@@ -170,7 +170,7 @@ final class VersionBuilder implements VersionBuilderInterface
             );
 
             if ($doMatch) {
-                $version = mb_strtolower(str_replace('_', '.', mb_trim($matches['version'])));
+                $version = mb_strtolower(mb_trim($matches['version']));
 
                 return $this->set($version);
             }
