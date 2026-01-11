@@ -138,9 +138,9 @@ final class VersionBuilder implements VersionBuilderInterface
     #[Override]
     public function detectVersion(string $useragent, array $searches = []): VersionInterface
     {
-        $regexNumbersAndStability    = '(?P<version>\d+(?![:x])(?:[\d._\-+~ abdehprstv]|l(?!i)|c(?!fnetwork))*)';
+        $regexNumbersAndStability    = '(?P<version>\d+(?![:x])(?:[\d._\-+~ abehprstv]|l(?!i)|c(?!fnetwork)|d(?!ebian))*)';
         $regexNumbersOnly            = '(?P<version>\d+[\d.]+\(\d+(?![:x]))';
-        $regexNumbersAndStabilityNot = '(?P<version>\d+[:x](?:[\d._\-+~ abdehprstv]|l(?!i)|c(?!fnetwork))*)';
+        $regexNumbersAndStabilityNot = '(?P<version>\d+[:x](?:[\d._\-+~ abehprstv]|l(?!i)|c(?!fnetwork)|d(?!ebian))*)';
 
         $modifiers = [
             '\/[\d.]+ ?\(',

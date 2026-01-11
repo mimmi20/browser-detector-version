@@ -207,6 +207,7 @@ final class VersionBuilderTest extends TestCase
             ['browseripad/42012 CFNetwork/711.3.18 Darwin/14.0.0', ['ipad'], '42012', '0', '0', 'stable', null, '42012.0.0'],
             ['פודקאסטים/1420.35 CFNetwork/1120 Darwin/19.0.0', ['פודקאסטים'], '1420', '35', '0', 'stable', null, '1420.35.0'],
             ['Mozilla/4_77 [en] (X11; I; IRIX;64 6_5 IP30', ['Mozilla'], '4', '77', '0', 'stable', null, '4.77.0'],
+            ['ELinks/0.11.1-1.2-debian (textmode; Linux 2.6.15-1-k7 i686; 80x38-2)', ['ELinks'], '0', '11', '1', 'stable', null, '0.11.1.1.2'],
         ];
     }
 
