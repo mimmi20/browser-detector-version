@@ -143,7 +143,6 @@ final class VersionBuilder implements VersionBuilderInterface
         $regexNumbersAndStabilityNot = '(?P<version>\d+[:x](?:[\d._\-+~ abehprstv]|l(?!i)|c(?!fnetwork)|d(?!ebian))*)';
 
         $modifiers = [
-            '\/[\d.]+ ?\(',
             '\/',
             '\(',
             ' \(',
