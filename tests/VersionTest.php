@@ -29,7 +29,7 @@ final class VersionTest extends TestCase
     public function testNegativeMajor(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
+        $this->expectExceptionMessageIsOrContains(
             'Major version must be a non-negative number formatted as string',
         );
         $this->expectExceptionCode(0);
@@ -41,7 +41,7 @@ final class VersionTest extends TestCase
     public function testNotNumericMajor(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
+        $this->expectExceptionMessageIsOrContains(
             'Major version must be a non-negative number formatted as string',
         );
         $this->expectExceptionCode(0);
@@ -53,7 +53,7 @@ final class VersionTest extends TestCase
     public function testNegativeMinor(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
+        $this->expectExceptionMessageIsOrContains(
             'Minor version must be a non-negative number formatted as string',
         );
         $this->expectExceptionCode(0);
@@ -65,7 +65,7 @@ final class VersionTest extends TestCase
     public function testNotNumericMinor(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
+        $this->expectExceptionMessageIsOrContains(
             'Minor version must be a non-negative number formatted as string',
         );
         $this->expectExceptionCode(0);
@@ -77,7 +77,7 @@ final class VersionTest extends TestCase
     public function testNegativeMicro(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
+        $this->expectExceptionMessageIsOrContains(
             'Micro version must be a non-negative number formatted as string',
         );
         $this->expectExceptionCode(0);
@@ -89,7 +89,7 @@ final class VersionTest extends TestCase
     public function testNegativeMicro2(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
+        $this->expectExceptionMessageIsOrContains(
             'Micro version must be a non-negative number formatted as string',
         );
         $this->expectExceptionCode(0);
@@ -101,7 +101,7 @@ final class VersionTest extends TestCase
     public function testNegativeMicro3(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
+        $this->expectExceptionMessageIsOrContains(
             'Micro version must be a non-negative number formatted as string',
         );
         $this->expectExceptionCode(0);
@@ -113,7 +113,7 @@ final class VersionTest extends TestCase
     public function testNotNumericMicro(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
+        $this->expectExceptionMessageIsOrContains(
             'Micro version must be a non-negative number formatted as string',
         );
         $this->expectExceptionCode(0);
