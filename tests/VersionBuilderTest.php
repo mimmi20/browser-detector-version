@@ -29,7 +29,7 @@ final class VersionBuilderTest extends TestCase
      * @throws Exception
      * @throws InvalidArgumentException
      */
-    #[DataProvider('providerSet')]
+    #[DataProvider(methodName: 'providerSet')]
     public function testVersionSet(
         string $version,
         string $major,
@@ -94,7 +94,7 @@ final class VersionBuilderTest extends TestCase
      * @throws Exception
      * @throws InvalidArgumentException
      */
-    #[DataProvider('providerSetNull')]
+    #[DataProvider(methodName: 'providerSetNull')]
     public function testNullVersionSet(string $version): void
     {
         $object = (new VersionBuilder())->set($version);
@@ -134,10 +134,10 @@ final class VersionBuilderTest extends TestCase
      */
     public function testVersionSetXp(): void
     {
-        $object = (new VersionBuilder())->set('XP');
+        $version = (new VersionBuilder())->set('XP');
 
-        self::assertInstanceOf(NullVersion::class, $object);
-        self::assertNull($object->getMajor(), 'major is wrong');
+        self::assertInstanceOf(NullVersion::class, $version);
+        self::assertNull($version->getMajor(), 'major is wrong');
     }
 
     /**
@@ -147,7 +147,7 @@ final class VersionBuilderTest extends TestCase
      * @throws Exception
      * @throws InvalidArgumentException
      */
-    #[DataProvider('providerDetectVersion')]
+    #[DataProvider(methodName: 'providerDetectVersion')]
     public function testVersionDetectVersion(
         string $uapart,
         array $searches,
@@ -158,16 +158,16 @@ final class VersionBuilderTest extends TestCase
         string | null $build,
         string $complete,
     ): void {
-        $object = (new VersionBuilder())->detectVersion($uapart, $searches);
+        $version = (new VersionBuilder())->detectVersion($uapart, $searches);
 
-        self::assertInstanceOf(Version::class, $object);
+        self::assertInstanceOf(Version::class, $version);
 
-        self::assertSame($major, $object->getMajor(), 'major is wrong');
-        self::assertSame($minor, $object->getMinor(), 'minor is wrong');
-        self::assertSame($micro, $object->getMicro(), 'patch is wrong');
-        self::assertSame($stability, $object->getStability(), 'stability is wrong');
-        self::assertSame($build, $object->getBuild(), 'build is wrong');
-        self::assertSame($complete, $object->getVersion(), 'complete is wrong');
+        self::assertSame($major, $version->getMajor(), 'major is wrong');
+        self::assertSame($minor, $version->getMinor(), 'minor is wrong');
+        self::assertSame($micro, $version->getMicro(), 'patch is wrong');
+        self::assertSame($stability, $version->getStability(), 'stability is wrong');
+        self::assertSame($build, $version->getBuild(), 'build is wrong');
+        self::assertSame($complete, $version->getVersion(), 'complete is wrong');
     }
 
     /**
@@ -218,23 +218,23 @@ final class VersionBuilderTest extends TestCase
      * @throws Exception
      * @throws InvalidArgumentException
      */
-    #[DataProvider('providerDetectVersionNullVersion')]
+    #[DataProvider(methodName: 'providerDetectVersionNullVersion')]
     public function testVersionDetectNullVersion(string $uapart, array $searches): void
     {
-        $object = (new VersionBuilder())->detectVersion($uapart, $searches);
+        $version = (new VersionBuilder())->detectVersion($uapart, $searches);
 
-        self::assertInstanceOf(NullVersion::class, $object);
+        self::assertInstanceOf(NullVersion::class, $version);
 
-        self::assertNull($object->getMajor(), 'major is wrong');
-        self::assertNull($object->getMinor(), 'minor is wrong');
-        self::assertNull($object->getMicro(), 'micro is wrong');
-        self::assertNull($object->getPatch(), 'patch is wrong');
-        self::assertNull($object->getMicropatch(), 'micropatch is wrong');
-        self::assertNull($object->getStability(), 'stability is wrong');
-        self::assertNull($object->getBuild(), 'build is wrong');
-        self::assertNull($object->getVersion(), 'complete is wrong');
-        self::assertNull($object->isBeta(), 'beta is wrong');
-        self::assertNull($object->isAlpha(), 'alpha is wrong');
+        self::assertNull($version->getMajor(), 'major is wrong');
+        self::assertNull($version->getMinor(), 'minor is wrong');
+        self::assertNull($version->getMicro(), 'micro is wrong');
+        self::assertNull($version->getPatch(), 'patch is wrong');
+        self::assertNull($version->getMicropatch(), 'micropatch is wrong');
+        self::assertNull($version->getStability(), 'stability is wrong');
+        self::assertNull($version->getBuild(), 'build is wrong');
+        self::assertNull($version->getVersion(), 'complete is wrong');
+        self::assertNull($version->isBeta(), 'beta is wrong');
+        self::assertNull($version->isAlpha(), 'alpha is wrong');
     }
 
     /**
@@ -265,7 +265,7 @@ final class VersionBuilderTest extends TestCase
         $stability  = 'beta';
         $build      = '8';
 
-        $data   = [
+        $data    = [
             'major' => $major,
             'minor' => $minor,
             'micro' => $micro,
@@ -274,19 +274,19 @@ final class VersionBuilderTest extends TestCase
             'stability' => $stability,
             'build' => $build,
         ];
-        $object = VersionBuilder::fromArray($data);
+        $version = VersionBuilder::fromArray($data);
 
-        self::assertInstanceOf(Version::class, $object);
+        self::assertInstanceOf(Version::class, $version);
 
-        self::assertSame($major, $object->getMajor(), 'major is wrong');
-        self::assertSame($minor, $object->getMinor(), 'minor is wrong');
-        self::assertSame($micro, $object->getMicro(), 'micro is wrong');
-        self::assertSame($patch, $object->getPatch(), 'patch is wrong');
-        self::assertNull($object->getMicropatch(), 'micropatch is wrong');
-        self::assertSame($stability, $object->getStability(), 'stability is wrong');
-        self::assertSame($build, $object->getBuild(), 'build is wrong');
-        self::assertTrue($object->isBeta());
-        self::assertFalse($object->isAlpha());
+        self::assertSame($major, $version->getMajor(), 'major is wrong');
+        self::assertSame($minor, $version->getMinor(), 'minor is wrong');
+        self::assertSame($micro, $version->getMicro(), 'micro is wrong');
+        self::assertSame($patch, $version->getPatch(), 'patch is wrong');
+        self::assertNull($version->getMicropatch(), 'micropatch is wrong');
+        self::assertSame($stability, $version->getStability(), 'stability is wrong');
+        self::assertSame($build, $version->getBuild(), 'build is wrong');
+        self::assertTrue($version->isBeta());
+        self::assertFalse($version->isAlpha());
     }
 
     /**
@@ -296,15 +296,15 @@ final class VersionBuilderTest extends TestCase
      */
     public function testWithParameter(): void
     {
-        $regex     = '/^v?(?<major>\d+)(?:[-|\.](?<minor>\d+))?(?:[-|\.](?<micro>\d+))?(?:[-|\.](?<patch>\d+))?(?:[-|\.](?<micropatch>\d+))?(?:[-_.+ ]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*))?.*$/i';
-        $object    = new VersionBuilder($regex);
-        $useragent = 'Mozilla/4.0 (compatible; MSIE 10.0; Trident/6.0; Windows 98; MyIE2)';
+        $regex          = '/^v?(?<major>\d+)(?:[-|\.](?<minor>\d+))?(?:[-|\.](?<micro>\d+))?(?:[-|\.](?<patch>\d+))?(?:[-|\.](?<micropatch>\d+))?(?:[-_.+ ]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*))?.*$/i';
+        $versionBuilder = new VersionBuilder($regex);
+        $useragent      = 'Mozilla/4.0 (compatible; MSIE 10.0; Trident/6.0; Windows 98; MyIE2)';
 
-        $result = $object->detectVersion($useragent, ['MyIE']);
+        $version = $versionBuilder->detectVersion($useragent, ['MyIE']);
 
-        self::assertInstanceOf(Version::class, $result);
-        self::assertSame('2', $result->getMajor(), 'major is wrong');
-        self::assertSame($regex, $object->getRegex());
+        self::assertInstanceOf(Version::class, $version);
+        self::assertSame('2', $version->getMajor(), 'major is wrong');
+        self::assertSame($regex, $versionBuilder->getRegex());
     }
 
     /**
@@ -314,16 +314,16 @@ final class VersionBuilderTest extends TestCase
      */
     public function testSetRegex(): void
     {
-        $regex  = '/^v?(?<major>\d+)(?:[-|\.](?<minor>\d+))?(?:[-|\.](?<micro>\d+))?(?:[-|\.](?<patch>\d+))?(?:[-|\.](?<micropatch>\d+))?(?:[-_.+ ]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*))?.*$/i';
-        $object = new VersionBuilder();
-        self::assertNotSame($regex, $object->getRegex());
-        $object->setRegex($regex);
+        $regex          = '/^v?(?<major>\d+)(?:[-|\.](?<minor>\d+))?(?:[-|\.](?<micro>\d+))?(?:[-|\.](?<patch>\d+))?(?:[-|\.](?<micropatch>\d+))?(?:[-_.+ ]?(?<stability>rc|alpha|a|beta|b|patch|pl?|stable|dev|d)[-_.+ ]?(?<build>\d*))?.*$/i';
+        $versionBuilder = new VersionBuilder();
+        self::assertNotSame($regex, $versionBuilder->getRegex());
+        $versionBuilder->setRegex($regex);
         $useragent = 'Mozilla/4.0 (compatible; MSIE 10.0; Trident/6.0; Windows 98; MyIE2)';
 
-        $result = $object->detectVersion($useragent, ['MyIE']);
+        $version = $versionBuilder->detectVersion($useragent, ['MyIE']);
 
-        self::assertInstanceOf(Version::class, $result);
-        self::assertSame('2', $result->getMajor(), 'major is wrong');
-        self::assertSame($regex, $object->getRegex());
+        self::assertInstanceOf(Version::class, $version);
+        self::assertSame('2', $version->getMajor(), 'major is wrong');
+        self::assertSame($regex, $versionBuilder->getRegex());
     }
 }

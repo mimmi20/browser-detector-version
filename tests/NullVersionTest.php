@@ -26,20 +26,20 @@ final class NullVersionTest extends TestCase
      */
     public function testToArray(): void
     {
-        $version = new NullVersion();
+        $nullVersion = new NullVersion();
 
-        self::assertNull($version->getMajor(), 'major is wrong');
-        self::assertNull($version->getMinor(), 'minor is wrong');
-        self::assertNull($version->getMicro(), 'micro is wrong');
-        self::assertNull($version->getPatch(), 'patch is wrong');
-        self::assertNull($version->getMicropatch(), 'micropatch is wrong');
-        self::assertNull($version->getStability(), 'stability is wrong');
-        self::assertNull($version->getBuild(), 'build is wrong');
-        self::assertNull($version->isBeta(), 'beta is wrong');
-        self::assertNull($version->isAlpha(), 'alpha is wrong');
-        self::assertNull($version->getVersion(), 'complete is wrong');
+        self::assertNull($nullVersion->getMajor(), 'major is wrong');
+        self::assertNull($nullVersion->getMinor(), 'minor is wrong');
+        self::assertNull($nullVersion->getMicro(), 'micro is wrong');
+        self::assertNull($nullVersion->getPatch(), 'patch is wrong');
+        self::assertNull($nullVersion->getMicropatch(), 'micropatch is wrong');
+        self::assertNull($nullVersion->getStability(), 'stability is wrong');
+        self::assertNull($nullVersion->getBuild(), 'build is wrong');
+        self::assertNull($nullVersion->isBeta(), 'beta is wrong');
+        self::assertNull($nullVersion->isAlpha(), 'alpha is wrong');
+        self::assertNull($nullVersion->getVersion(), 'complete is wrong');
 
-        $array = $version->toArray();
+        $array = $nullVersion->toArray();
 
         self::assertArrayHasKey('major', $array);
         self::assertNull($array['major']);
