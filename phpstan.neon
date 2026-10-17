@@ -116,7 +116,10 @@ parameters:
   ignoreErrors:
     -
       identifier: argument.named
-#    - '~Property BrowserDetector\\Version\\VersionBuilder::\$logger is never read, only written~'
+    -
+      identifier: symplify.requiredInterfaceContractNamespace
+    -
+      identifier: symplify.forbiddenSwitch
 
 services:
   errorFormatter.sarif:
